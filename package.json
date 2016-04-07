@@ -4,7 +4,8 @@
   "description": "Lifetime of the research reactor",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha tests"
+    "test": "./node_modules/mocha/bin/mocha tests",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

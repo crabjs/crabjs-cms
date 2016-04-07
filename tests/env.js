@@ -8,8 +8,8 @@
  */
 
 "use strict";
-let env = require('../config/env');
-let assert = require('assert'),
+let env = require('../config/env'),
+    assert = require('assert'),
     should = require('should');
 
 let testEnv = new env();
