@@ -10,7 +10,8 @@
 "use strict";
 
 let glob = require('glob'),
-    chalk = require('chalk');
+    chalk = require('chalk'),
+    environment = ['development', 'test', 'production'];
 
 class env {
     constructors() {
@@ -68,14 +69,28 @@ class env {
 
     static init(e) {
         if (process.env.NODE_ENV) {
-            if (['development', 'test', 'production'].indexOf(process.env.NODE_ENV) >= 0) {
-                console.log(chalk.bold.green(`\nApplication loaded using the ${process.env.NODE_ENV} environment configuration.\n`));
+            if (environment.indexOf(process.env.NODE_ENV) >= 0) {
+                console.log(chalk.bold.green(`\n[NODE_ENV] Application loaded using the ${process.env.NODE_ENV} environment configuration.\n`));
             } else {
-                console.error(chalk.red(`\nConfiguration not found for ${process.env.NODE_ENV} environment using development instead.\n`));
+                console.error(chalk.red(`\n[Warning] Configuration not found for ${process.env.NODE_ENV} environment using [development, test, production] instead.\n`));
+                process.exit(0);
             }
+        } else if (environment.indexOf(e) >= 0) {
+            console.log(chalk.bold.green(`\n[Initialize] Application loaded using the ${e} environment configuration.\n`));
+
         } else {
-            console.error(chalk.red(`\nNODE_ENV is not defined! Using default product environment.\n`));
-            process.env.NODE_ENV = e || 'production';
+            console.error(chalk.red(`\n[Default] NODE_ENV is not defined! Using default product environment.\n`));
+        }
+        env.checkEnv(e || 'production');
+    }
+
+    static checkEnv(e) {
+        if (e == 'development') {
+            global.__env = env.development();
+        } else if(e == 'test') {
+            global.__env = env.test();
+        } else {
+            global.__env = env.production();
         }
     }
 
@@ -86,9 +101,11 @@ class env {
                 options: {logging: true, replset: false, auth: false}
             },
             redis: {
-                auth: {host: 'localhost', port: '6379'},
+                host: 'localhost',
+                port: '6379',
                 prefix_acl: 'acl_',
-                prefix_menu: 'menu_'
+                prefix_menu: 'menu_',
+                prefix_session: '100dayproject_'
             },
             facebookAuth: {
                 clientID: process.env.FACEBOOK_ID || '429763933888491',
@@ -128,7 +145,6 @@ class env {
             }
         }
     }
-
 }
 
 module.exports = env;

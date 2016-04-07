@@ -103,7 +103,7 @@ module.exports = function () {
     /**
      * Application router loader modules
      */
-    // appLoader.routeLoader(app);
+    appLoader.routeLoader(app);
 
     /**
      * Logging exception error any status

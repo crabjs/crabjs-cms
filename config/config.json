@@ -11,14 +11,6 @@
   "admin_prefix": "admin",
   "modules": [
     "mod_google_analytics",
-    "mod_articles",
     "mod_seo"
-  ],
-  "settings": true,
-  "browsers": true,
-  "redis": {
-    "host": "127.0.0.1",
-    "port": "6379",
-    "prefix_session": "100dayproject_"
-  }
+  ]
 }

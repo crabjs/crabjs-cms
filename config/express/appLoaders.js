@@ -10,35 +10,27 @@
 
 "use strict";
 
-let sep = require('path').sep;
-
 exports.routeLoader = function (app) {
-    let layer = Object.keys(__config.appLayer);
-    __.logger.info(`[Router loader] use ${layer.join(' & ')} router.\n`);
-    let corePath = __base + ['app', 'modules', 'core_route'].join(sep);
-
-    let moduleIgnore = '' || '*';
-
-    let frontendPath = __base + ['app', 'modules', moduleIgnore, 'frontend', 'route.js'].join(sep);
-    let backendPath = __base + ['app', 'modules', moduleIgnore, 'backend', 'route.js'].join(sep);
 
     /**
      * Core routing loader
+     * @type {Array}
      */
-    require(corePath)(app);
+    require(__base + '/core/router')(app);
 
     /**
-     * Frontend routing loader
+     * Backend interface routing loader
+     * @type {Array}
      */
-    __.getGlobbedFiles(frontendPath).forEach(function (routePath) {
+    __.getGlobbedFiles(__base + '/administrator/modules/*/route.js').forEach(function (routePath) {
         require(routePath)(app);
     });
 
     /**
-     * Backend routing loader, route protection name prefix for security
-     * between frontend and backend difference
+     * User interface routing loader
+     * @type {Array}
      */
-    __.getGlobbedFiles(backendPath).forEach(function (routePath) {
+    __.getGlobbedFiles(__base + '/modules/*/route.js').forEach(function (routePath) {
         app.use('/' + __config.admin_prefix, require(routePath));
     });
 };

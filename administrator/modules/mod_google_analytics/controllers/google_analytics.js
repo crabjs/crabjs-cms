@@ -9,36 +9,37 @@
 
 "use strict";
 
-let module_name = 'google_analytics',
+let services = require('../services'),
+    module_name = 'google_analytics',
     _module = new __viewRender(module_name);
 
 _module.list = function (req, res) {
-    res.locals.structure = [
-        {
-            column: '_id',
-            width: '1%',
-            header: ''
-        }, {
-            column: 'doctor_id',
-            width: '15%',
-            header: 'Tên bác sỹ',
-            type: 'text'
-        }
-    ];
-
-    let toolbar = new __.Toolbar();
-    toolbar.custom({
-        refreshButton: {link: `/${__config.admin_prefix}/${moduleName}`},
-        createButton: {access: true, link: `/${__config.admin_prefix}/${moduleName}/create`, text: ' Thêm bệnh viện'},
-        searchButton: {},
-        deleteButton: {access: true}
-    });
-
-    // Call service web api
-
-    _module.render(req, res, 'index', {
-        title: 'Google analytics'
-    })
+    // res.locals.structure = [
+    //     {
+    //         column: '_id',
+    //         width: '1%',
+    //         header: ''
+    //     }, {
+    //         column: 'doctor_id',
+    //         width: '15%',
+    //         header: 'Tên bác sỹ',
+    //         type: 'text'
+    //     }
+    // ];
+    //
+    // let toolbar = new __.Toolbar();
+    // toolbar.custom({
+    //     refreshButton: {link: `/${__config.admin_prefix}/${moduleName}`},
+    //     createButton: {access: true, link: `/${__config.admin_prefix}/${moduleName}/create`, text: ' Thêm bệnh viện'},
+    //     searchButton: {},
+    //     deleteButton: {access: true}
+    // });
+    //
+    // // Call service web api
+    //
+    // _module.render(req, res, 'index', {
+    //     title: 'Google analytics'
+    // })
 };
 
 module.exports = _module;

@@ -85,10 +85,19 @@ let questions = [{
 
 inquirer.prompt(questions, function (re) {
     if (re.settings) {
-        console.log(JSON.stringify(re, null, '  '));
-        __.logger.info("OK! That's this, server running...");
 
+        let runServer = false;
         if (re.settings && re.browsers) {
+            runServer = true;
+        }
+        delete re.settings;
+        delete re.browsers;
+
+        console.log(JSON.stringify(re, null, 2));
+
+        __.writeFile(__base + `${require('path').sep}config${require('path').sep}config.json`, JSON.stringify(re, null, 2));
+        if (runServer) {
+            __.logger.info("OK! That's this, server running...");
             require('../install/web');
         } else {
             process.exit(0);

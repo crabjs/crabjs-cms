@@ -8,10 +8,18 @@
  */
 
 "use strict";
-let express = require('express'),
-    router = express.Router();
-// let ga = require('./controllers/google_analytics');
 
-router.route('/ga').get(function(req, res) {});
+module.exports = function (app) {
+    app.get('*', function (req, res, next) {
+        res.locals.user = req.user;
+        next();
+    });
 
-module.exports = router;
+    app.use(`/${__config.admin_prefix}(*)`, function (req, res, next) {
+        if (!req.isAuthenticated() || !req.user) {
+            return res.redirect(`/${__config.admin_prefix}/login`);
+        }
+        next();
+    });
+};
+
