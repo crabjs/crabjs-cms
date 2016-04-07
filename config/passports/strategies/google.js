@@ -7,6 +7,8 @@
  * Code distributed by 100dayproject as part of the life.
  */
 
+"use strict";
+
 let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 module.exports = function(passport) {

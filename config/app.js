@@ -12,9 +12,6 @@
 module.exports = {
     app: {
         name: 'CrabJS',
-        copyright: '100dayProject.org',
-        favicon: "favicon.ico",
-        logo: "logo.png",
         title: "CrabJS! The CMS on NodeJS for their Websites and API Service",
         description: "LifeParser | LifeParser v2 | CrabJS | CMS on NodeJS | 100dayproject",
         keywords: "LifeParser, LifeParser v2, Open source, 100dayproject, CrabJS | CMS on NodeJS",

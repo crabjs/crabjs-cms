@@ -33,7 +33,7 @@ exports.configure = function (app) {
         if (!err) return next();
 
         __.logger.error(err);
-        if (process.env.NODE_ENV == __config.env.development) __.logger.error(err.stack);
+        if (process.env.NODE_ENV == 'development') __.logger.error(err.stack);
 
         let env = new __viewRender(layer);
         env.render_error(req, res, '500');

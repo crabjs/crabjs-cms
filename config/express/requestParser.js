@@ -14,7 +14,8 @@ let bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     cookieParser = require('cookie-parser');
 let session = require('express-session'),
-    RedisStore = require('connect-redis')(session);
+    RedisStore = require('connect-redis')(session),
+    config = require('../config.json');
 
 // Request body parsing middleware should be above methodOverride
 exports.configure = function (app) {
@@ -31,9 +32,9 @@ exports.configure = function (app) {
 
     app.use(session({
         store: new RedisStore({
-            host: __config.redis.host,
-            port: __config.redis.port,
-            prefix: __config.redis.prefix_session
+            host: config.redis.host,
+            port: config.redis.port,
+            prefix: config.redis.prefix_session
         }),
         saveUninitialized: true,
         resave: true, // don't save session if unmodified

@@ -21,7 +21,7 @@ let path = require('path'),
     flash = require('./flash'),
     appLoader = require('./appLoaders'),
     throwError = require('./throwError'),
-    passport = require('../passport');
+    passport = require('../passports');
 
 module.exports = function () {
 
@@ -103,7 +103,7 @@ module.exports = function () {
     /**
      * Application router loader modules
      */
-    appLoader.routeLoader(app);
+    // appLoader.routeLoader(app);
 
     /**
      * Logging exception error any status

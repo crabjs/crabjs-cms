@@ -17,7 +17,6 @@ class env {
         let self = this;
     }
 
-
     /**
      * Check configuration user define new config instance
      * @returns {boolean}
@@ -40,6 +39,7 @@ class env {
      * })
      * @param ip
      */
+
     static _validIP(ip) {
         return RegExp("^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$").test(ip) ? true : false;
     }
@@ -65,6 +65,7 @@ class env {
      * Before we begin, lets set the environment variable
      * We'll Look for a valid NODE_ENV variable and if one cannot be found load the development NODE_ENV
      */
+
     static init(e) {
         if (process.env.NODE_ENV) {
             if (['development', 'test', 'production'].indexOf(process.env.NODE_ENV) >= 0) {

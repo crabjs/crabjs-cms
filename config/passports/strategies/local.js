@@ -7,6 +7,8 @@
  * Code distributed by 100dayproject as part of the life.
  */
 
+"use strict";
+
 let LocalStrategy = require('passport-local').Strategy,
     randToken = require('rand-token');
 

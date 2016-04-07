@@ -6,3 +6,9 @@
  * The complete set of contributors may be found at http://100dayproject.github.io/CONTRIBUTORS.txt
  * Code distributed by 100dayproject as part of the life.
  */
+
+module.exports = function (env) {
+    env.addFilter('get_menu', function() {
+        return '';
+    })
+};

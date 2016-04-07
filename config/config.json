@@ -1,0 +1,24 @@
+{
+  "name": "life-parser",
+  "description": "Lifetime of the research reactor",
+  "keywords": [
+    "life-parser",
+    "nodejs",
+    "WebSphere"
+  ],
+  "language": "en_US",
+  "port": "1337",
+  "admin_prefix": "admin",
+  "modules": [
+    "mod_google_analytics",
+    "mod_articles",
+    "mod_seo"
+  ],
+  "settings": true,
+  "browsers": true,
+  "redis": {
+    "host": "127.0.0.1",
+    "port": "6379",
+    "prefix_session": "100dayproject_"
+  }
+}

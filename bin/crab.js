@@ -11,29 +11,29 @@
 
 let env = require('../config/env').init('development');
 
-let conf = {
-    db: {
-        host: '127.0.0.1:27017',
-        database: 'uDoctor-production',
-        dialect: 'mongodb',
-        options: {
-            logging: true,
-            replset: false,
-            auth: false
-        }
-    }
-};
+// let conf = {
+//     db: {
+//         host: '127.0.0.1:27017',
+//         database: 'uDoctor-production',
+//         dialect: 'mongodb',
+//         options: {
+//             logging: true,
+//             replset: false,
+//             auth: false
+//         }
+//     }
+// };
+//
+// new env({
+//     name: 'social', config: {conf}
+// });
 
-new env({
-    name: 'social', config: {conf}
-});
-
-
-require("../config/env")();
-global.__ = require("../libs/global_function");
+global.__ = require("../libraries/global_function");
 global.__config = require("../config/app");
 global.__models = require("../libraries/models_manager");
 global.__viewRender = require("../libraries/render_manager");
+
+console.log(__viewRender);
 
 /**
  * Crab main application <life-parser version 2>
@@ -41,14 +41,15 @@ global.__viewRender = require("../libraries/render_manager");
 class crab {
 
     start(port, opt) {
+
         let app = require("../config/express")();
         let PORT = process.env.PORT || port || __config.site.port;
         app.listen(PORT);
         if (opt && opt.debug) {
             __.logger.info(`Application config information:
-            => Template engine: ${__config.site.templateEngine}
-            => Model database: ${__config.db.dialect}
-            => Theme current: ${__config.site.theme.name}\n`);
+            => Template engine: Nunjucks
+            => Model database: Mongodb
+            => Theme current: Bootstrap\n`);
 
             __.logger.info(`=> Listening on port ${PORT}. Process ID: ${process.pid}`);
         }

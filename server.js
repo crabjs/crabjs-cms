@@ -15,15 +15,13 @@ if (require('fs').existsSync('./config/config.json')) {
 
     // Install already
     let crab = require('./bin/crab');
-
     let app = new crab();
-
     app.start(1337, {
         debug: true
     });
 
     module.exports = app;
 } else {
-    require('./install/web');
+    require('./bin/generator')
 }
 

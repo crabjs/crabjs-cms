@@ -7,8 +7,10 @@
  * Code distributed by 100dayproject as part of the life.
  */
 
+"use strict";
+
 module.exports = function (env) {
-    env.addGlobal('app_name', function() {
+    env.addFilter('test', function() {
         return '';
     })
 };

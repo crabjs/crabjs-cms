@@ -33,8 +33,7 @@ class Nunjucks {
      */
     configure(setting, opts) {
         if (!setting) setting = {};
-        let config = __config.viewEngine.nunjucks;
-        this.app.set('view engine', config.settings.ext);
+        this.app.set('view engine', 'crab');
 
         let env = nunjucks.configure(setting.path, {
             express: this.app,
@@ -48,10 +47,12 @@ class Nunjucks {
 
         if (opts) {
             if (opts.showConfigure) Nunjucks.showConfigure(env);
-            opts.filter ? Nunjucks.require(env, opts.filter) : Nunjucks.require(env, __base + config.customFilter);
-            opts.addGlobal ? Nunjucks.require(env, opts.addGlobal) : Nunjucks.require(env, __base + config.addGlobal);
-        }
+            opts.filter ? Nunjucks.require(env, opts.filter) : Nunjucks.require(env, __base + '/customs/filters/*.js');
+            opts.addGlobal ? Nunjucks.require(env, opts.addGlobal) : Nunjucks.require(env, __base + '/customs/global/*.js');
 
+            Nunjucks.require(env, __base + '/core/nunjucks_global/*.js');
+            Nunjucks.require(env, __base + '/core/nunjucks_filter/*.js');
+        }
         return env;
     }
 

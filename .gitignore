@@ -5,3 +5,6 @@ node_modules/
 /index.html
 /404.html
 /public/components
+/npm-debug.log
+/logs/exceptions.log
+/logs/webInstall.log
