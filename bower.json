@@ -1,0 +1,29 @@
+{
+  "name": "life-parser",
+  "description": "Lifetime of the research reactor",
+  "main": "server.js",
+  "authors": [
+    "Vietworm"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "life-parser",
+    "nodejs",
+    "WebSphere"
+  ],
+  "moduleType": [],
+  "homepage": "http://100dayproject.org",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "paper-material": "PolymerElements/paper-material#^1.0.6",
+    "polymer": "Polymer/polymer#^1.4.0",
+    "paper-spinner": "PolymerElements/paper-spinner#^1.1.1",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.1.2"
+  }
+}
