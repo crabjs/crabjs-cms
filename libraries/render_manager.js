@@ -136,7 +136,7 @@ class Render {
             if (fn) {
                 this.env.render(view, _.assign(obj, res.locals, options), fn);
             } else {
-                this.env.render(view, _.assign(obj, res.locals, options), function (err, re) {
+                this.env.render(view, _.assign(obj, res.locals, options), function (err, html) {
                     if (err) {
                         __.logger.error({
                             "File": 'Error: render_manager.js ',
@@ -148,6 +148,18 @@ class Render {
                         res.redirect(`/${__config.admin_prefix}/dashboard`);
                         //res.send(err.stack);
                     } else {
+                        var re = require('html-minifier').minify(html, {
+                            removeAttributeQuotes: true,
+                            collapseWhitespace: true,
+                            minifyCSS: true,
+                            minifyJS: true,
+                            minifyURLs: true,
+                            removeComments: true,
+                            removeEmptyAttributes: true,
+                            removeEmptyElements: true,
+                            removeOptionalTags: true,
+                            removeTagWhitespace: true
+                        });
                         res.send(re);
                     }
                 })
