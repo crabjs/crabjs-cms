@@ -86,64 +86,11 @@ class env {
 
     static checkEnv(e) {
         if (e == 'development') {
-            global.__env = env.development();
+            global.__env = require('./env-development');
         } else if(e == 'test') {
-            global.__env = env.test();
+            global.__env = require('./env-test');
         } else {
-            global.__env = env.production();
-        }
-    }
-
-    static development() {
-        return {
-            db: {
-                host: '127.0.0.1:27017', database: 'uDoctor-production', dialect: 'mongodb',
-                options: {logging: true, replset: false, auth: false}
-            },
-            redis: {
-                host: 'localhost',
-                port: '6379',
-                prefix_acl: 'acl_',
-                prefix_menu: 'menu_',
-                prefix_session: '100dayproject_'
-            },
-            facebookAuth: {
-                clientID: process.env.FACEBOOK_ID || '429763933888491',
-                clientSecret: process.env.FACEBOOK_SECRET || 'c567934b2f135384a9f3f74e06a40048',
-                callbackURL: process.env.FACEBOOK_URL || 'http://localhost:1337/auth/facebook/callback'
-            },
-            googleAuth: {
-                clientID: process.env.GOOGLE_ID || '',
-                clientSecret: process.env.GOOGLE_SECRET || '',
-                callbackURL: process.env.GOOGLE_URL || ''
-            },
-            authentication: false
-        }
-    }
-
-    static test() {
-        return {
-            db: {
-                host: '127.0.0.1:27017', database: 'uDoctor-production', dialect: 'mongodb',
-                options: {
-                    logging: true,
-                    replset: false,
-                    auth: false
-                }
-            }
-        }
-    }
-
-    static production() {
-        return {
-            db: {
-                host: '127.0.0.1:27017', database: 'uDoctor-production', dialect: 'mongodb',
-                options: {
-                    logging: true,
-                    replset: false,
-                    auth: false
-                }
-            }
+            global.__env = require('./env-production');
         }
     }
 }
