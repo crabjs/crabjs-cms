@@ -74,6 +74,13 @@ let questions = [{
         }
     ]
 }, {
+    type: 'input',
+    message: 'Default theme settings',
+    name: 'theme',
+    default: function () {
+        return pkg.crabJS.theme
+    }
+}, {
     type: 'confirm',
     name: 'settings',
     message: 'Do you like settings?'

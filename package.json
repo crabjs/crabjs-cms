@@ -65,6 +65,7 @@
   "crabJS": {
     "language": "en_US",
     "port": "1337",
-    "admin_prefix": "admin"
+    "admin_prefix": "admin",
+    "theme": "adminlte"
   }
 }

@@ -11,6 +11,8 @@
   "admin_prefix": "admin",
   "modules": [
     "mod_google_analytics",
+    "mod_articles",
     "mod_seo"
-  ]
+  ],
+  "theme": "adminlte"
 }
