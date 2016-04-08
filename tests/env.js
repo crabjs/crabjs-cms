@@ -62,7 +62,8 @@ describe('ENV', function () {
 
         it('[Static] Validate default environment values', function () {
             function dev() {
-                return env.development().db && env.development().db.host && env.development().db.database && env.development().db.dialect ? true : false;
+                let dev = require('../config/env-development');
+                return dev.db && dev.db.host && dev.db.database && dev.db.dialect ? true : false;
             }
 
             assert.equal(dev(), true);
