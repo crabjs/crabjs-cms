@@ -122,13 +122,14 @@ class Render {
             viewEngine.require(this.env, __base + '/core/nunjucks_global/*.js');
             viewEngine.require(this.env, __base + '/core/nunjucks_filter/*.js');
 
-            if (this.moduleName) {
-                if (this.moduleName.indexOf('/') == 0) {
-                    view = path.join(this.moduleName.substring(1), 'views', view);
-                } else if (this.moduleName.indexOf('./') == 0) {
-                    view = path.join(this.moduleName.slice(2), 'views', view);
+            let module = this.moduleName || this.layer;
+            if (module) {
+                if (module.indexOf('/') == 0) {
+                    view = path.join(module.substring(1), 'views', view);
+                } else if (module.indexOf('./') == 0) {
+                    view = path.join(module.slice(2), 'views', view);
                 } else {
-                    view = path.join(this.moduleName, 'views', view);
+                    view = path.join(module, 'views', view);
                 }
             }
 

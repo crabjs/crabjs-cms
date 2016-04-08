@@ -9,12 +9,13 @@
 
 "use strict";
 
-module.exports = function (env) {
-    env.addFilter('get_theme', function (fileLoader, layer) {
-        if (layer.toLowerCase().trim() === 'backend') {
-            return `${__base}/administrator/templates/${__config.theme}/${fileLoader}`;
-        } else {
-            return `${__base}/templates/${__config.theme}/${fileLoader}`;
-        }
-    })
+let module_name = 'mod_articles',
+    _module = new __viewRender(module_name);
+
+_module.list = function (req, res) {
+    _module.render(req, res, 'index');
 };
+
+module.exports = _module;
+
+

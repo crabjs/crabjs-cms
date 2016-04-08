@@ -9,12 +9,8 @@
 
 "use strict";
 
-module.exports = function (env) {
-    env.addFilter('get_theme', function (fileLoader, layer) {
-        if (layer.toLowerCase().trim() === 'backend') {
-            return `${__base}/administrator/templates/${__config.theme}/${fileLoader}`;
-        } else {
-            return `${__base}/templates/${__config.theme}/${fileLoader}`;
-        }
-    })
+let articles = require('./controllers/articles');
+
+module.exports = function (app) {
+  app.route('/articles').get(articles.list);
 };

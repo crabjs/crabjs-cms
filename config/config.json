@@ -14,5 +14,5 @@
     "mod_articles",
     "mod_seo"
   ],
-  "theme": "adminlte"
+  "theme": "bootstrap"
 }
