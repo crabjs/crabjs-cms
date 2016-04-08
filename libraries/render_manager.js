@@ -11,7 +11,7 @@
 
 let _ = require('lodash');
 let chalk = require('chalk');
-let pathJoin = require('path').join;
+let path = require('path');
 let nunjucks = require('nunjucks');
 let viewEngine = require('../config/express/nunjucks');
 
@@ -108,13 +108,13 @@ class Render {
                 this.multiplePath = Render.mapArray([
                     '/administrator/templates/',
                     '/administrator/modules/'
-                ]);
+                ], __base);
                 this.env = Render.systemLoader(this.multiplePath);
             } else {
                 this.multiplePath = Render.mapArray([
                     '/templates/',
                     '/modules/'
-                ]);
+                ], __base);
                 this.env = Render.systemLoader(this.multiplePath);
             }
 
@@ -124,11 +124,11 @@ class Render {
 
             if (this.moduleName) {
                 if (this.moduleName.indexOf('/') == 0) {
-                    view = pathJoin(this.moduleName.substring(1), 'views', view);
+                    view = path.join(this.moduleName.substring(1), 'views', view);
                 } else if (this.moduleName.indexOf('./') == 0) {
-                    view = pathJoin(this.moduleName.slice(2), 'views', view);
+                    view = path.join(this.moduleName.slice(2), 'views', view);
                 } else {
-                    view = pathJoin(this.moduleName, 'views', view);
+                    view = path.join(this.moduleName, 'views', view);
                 }
             }
 

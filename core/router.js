@@ -15,11 +15,12 @@ module.exports = function (app) {
         next();
     });
 
-    app.use(`/${__config.admin_prefix}(*)`, function (req, res, next) {
-        if (!req.isAuthenticated() || !req.user) {
-            return res.redirect(`/${__config.admin_prefix}/login`);
-        }
-        next();
-    });
+    if (__config.authentication) {
+        app.use(`/${__config.admin_prefix}(*)`, function (req, res, next) {
+            if (!req.isAuthenticated() || !req.user) {
+                return res.redirect(`/${__config.admin_prefix}/login`);
+            }
+            next();
+        });
+    }
 };
-

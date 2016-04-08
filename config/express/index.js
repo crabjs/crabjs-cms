@@ -15,10 +15,10 @@ let path = require('path'),
     express = require('express'),
     logger = require('morgan'),
     userAgent = require('express-useragent'),
+    flash = require('connect-flash'),
+    helmet = require('helmet'),
     viewEngine = require('./nunjucks'),
-    helmet = require('./helmet'),
     requestParser = require('./requestParser'),
-    flash = require('./flash'),
     appLoader = require('./appLoaders'),
     throwError = require('./throwError'),
     passport = require('../passports');
@@ -63,8 +63,16 @@ module.exports = function () {
 
     /**
      * Helmet module security express application.
+     * Use helmet to security web application, xss vulnerability,..
      */
-    helmet.secure(app);
+    app.use(helmet.xframe());
+    app.use(helmet.xssFilter());
+    app.use(helmet.noSniff());
+    app.use(helmet.ieNoOpen());
+    app.enable("trust proxy");
+    app.set("trust proxy", true);
+    app.use(helmet.hidePoweredBy({setTo: "PHP 4.2.0"}));
+    //app.disable("x-powered-by");
 
     /**
      * Request parser call bodyParser, cookie-parser, cookie-parser, express-session for storage
@@ -72,33 +80,30 @@ module.exports = function () {
      */
     requestParser.configure(app);
 
-    /*
-     View engine initialization support three method for configuration
-     1> configure: extend application for config settings and set view engine extension.
-     2> getCustomFilter: get path custom filter use glob module for load path.
-     3> showConfigure: show configuration view settings.
-     FIXME: options filter and addGlobal move to render_manager function call this.
-     FIXME: Env not exports to app, use Singleton pattern.
-     */
-
-    let viewOpts = {
-        path: __base, // path view engine loader
-        autoescape: false, // options nunjucks setting template engine
-        dev: true
-    };
 
     let view = new viewEngine(app);
-    view.configure(viewOpts, {
+    view.configure({
+        path: __base + '/',
+        autoescape: false,
+        dev: true
+    }, {
         showConfigure: true
     });
 
     /**
      * Connect-flash module middleware
      */
-    flash.configure(app);
+    app.use(flash());
+    app.use(function (req, res, next) {
+        res.locals.messages = req.session.flash;
+        delete req.session.flash;
+        next();
+    });
 
+    /**
+     * Passport strategies
+     */
     passport.configure(app);
-
 
     /**
      * Application router loader modules

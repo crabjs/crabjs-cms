@@ -10,8 +10,8 @@
 "use strict";
 let express = require('express'),
     router = express.Router();
-// let ga = require('./controllers/google_analytics');
+let ga = require('./controllers/google_analytics');
 
-router.route('/ga').get(function(req, res) {});
+router.route('/ga').get(ga.list);
 
 module.exports = router;

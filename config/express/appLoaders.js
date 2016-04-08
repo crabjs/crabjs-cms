@@ -23,7 +23,7 @@ exports.routeLoader = function (app) {
      * @type {Array}
      */
     __.getGlobbedFiles(__base + '/administrator/modules/*/route.js').forEach(function (routePath) {
-        require(routePath)(app);
+        app.use('/' + __config.admin_prefix, require(routePath));
     });
 
     /**
@@ -31,6 +31,6 @@ exports.routeLoader = function (app) {
      * @type {Array}
      */
     __.getGlobbedFiles(__base + '/modules/*/route.js').forEach(function (routePath) {
-        app.use('/' + __config.admin_prefix, require(routePath));
+        require(routePath)(app);
     });
 };

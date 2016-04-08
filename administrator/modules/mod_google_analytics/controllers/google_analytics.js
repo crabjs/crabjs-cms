@@ -10,10 +10,12 @@
 "use strict";
 
 let services = require('../services'),
-    module_name = 'google_analytics',
-    _module = new __viewRender(module_name);
+    module_name = 'mod_google_analytics',
+    _module = new __viewRender('backend', module_name);
 
 _module.list = function (req, res) {
+
+    console.log('gooo!');
     // res.locals.structure = [
     //     {
     //         column: '_id',
@@ -37,9 +39,9 @@ _module.list = function (req, res) {
     //
     // // Call service web api
     //
-    // _module.render(req, res, 'index', {
-    //     title: 'Google analytics'
-    // })
+    _module.render(req, res, 'index', {
+        title: 'Google analytics'
+    })
 };
 
 module.exports = _module;
