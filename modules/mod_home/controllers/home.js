@@ -9,11 +9,13 @@
 
 "use strict";
 
-let module_name = 'mod_articles',
+let module_name = 'mod_home',
     _module = new __viewRender(module_name);
 
-_module.list = function (req, res) {
-    _module.render(req, res, 'index');
+_module.index = function (req, res) {
+    _module.render(req, res, 'index', {
+        title: '100dayproject.org'
+    });
 };
 
 module.exports = _module;

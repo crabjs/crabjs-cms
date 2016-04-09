@@ -8,12 +8,3 @@
  */
 
 "use strict";
-
-let module_name = 'mod_articles',
-    _module = new __viewRender(module_name);
-
-_module.list = function (req, res) {
-    _module.render(req, res, 'index');
-};
-
-module.exports = _module;

@@ -9,11 +9,8 @@
 
 "use strict";
 
-let module_name = 'mod_articles',
-    _module = new __viewRender(module_name);
+let home = require('./controllers/archives');
 
-_module.list = function (req, res) {
-    _module.render(req, res, 'index');
+module.exports = function (app) {
+    app.route('/archives').get(home.list);
 };
-
-module.exports = _module;
