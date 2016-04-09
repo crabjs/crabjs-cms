@@ -1,69 +1,7 @@
 {% extends 'layout.crab' %}
 
 {% block cssExtends %}
-    <style>
-        .profile #wrapper {
-            padding: 100px 40px 0;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .profile #header {
-            border-bottom: 1px solid #eee;
-            margin-bottom: 40px;
-            padding-bottom: 40px;
-            text-align: center;
-            position: relative;
-        }
-        #wrapper.home {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 0 40px 20px;
-        }
-
-        .profile #avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-        }
-        .profile #avatar {
-            display: inline-block;
-        }
-        .profile h1 {
-            font-weight: 600;
-            letter-spacing: -2px;
-            color: #222;
-            margin: 0;
-            padding: 0;
-            font: 16px/1 "Helvetica Neue",Helvetica,Arial,sans-serif;
-            font-weight: 600;
-            font-size: 3em;
-        }
-        .profile h2 {
-            font-size: 20px;
-            font-weight: 300;
-            color: #aaa;
-        }
-        .home h2 {
-            font: italic 19px/1.3em Georgia,serif;
-            color: #bbb;
-        }
-        ul {
-            margin: 0 0 20px;
-            padding: 0;
-        }
-        li {
-            list-style-type: circle;
-            list-style-position: inside;
-        }
-        .highlight {
-            color: #EB298C;
-        }
-        a {
-            text-decoration: none;
-            color: #5694f1;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/home.css">
 {% endblock %}
 {% block content_body %}
     <div class="profile">
@@ -78,4 +16,7 @@
             <li><a href="https://github.com/vietworm/CrabJS">Crab.JS</a> - Easily build web application on Node.js
         </ul>
     </section>
+    <div class="thanks">
+        <p>Many thanks to: hailt, haipt, cuong@techmaster.vn, thanhnv, trquoccuong, chungvh, robinhuy.</p>
+    </div>
 {% endblock %}

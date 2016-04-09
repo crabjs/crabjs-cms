@@ -81,7 +81,7 @@ class env {
         } else {
             console.error(chalk.red(`\n[Default] NODE_ENV is not defined! Using default product environment.\n`));
         }
-        env.checkEnv(e || 'production');
+        env.checkEnv(process.env.NODE_ENV || e || 'production');
     }
 
     static checkEnv(e) {

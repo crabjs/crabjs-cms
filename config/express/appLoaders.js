@@ -16,7 +16,7 @@ exports.routeLoader = function (app) {
      * Core routing loader
      * @type {Array}
      */
-    require(__base + '/core/router')(app);
+    require(__base + '/core/core_route')(app);
 
     /**
      * Backend interface routing loader
