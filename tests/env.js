@@ -62,7 +62,7 @@ describe('ENV', function () {
 
         it('[Static] Validate default environment values', function () {
             function dev() {
-                let dev = require('../config/env-development');
+                let dev = require('../config/env-test');
                 return dev.db && dev.db.host && dev.db.database && dev.db.dialect ? true : false;
             }
 
