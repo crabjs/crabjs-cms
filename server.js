@@ -14,8 +14,7 @@ global.__base = __dirname;
 if (require('fs').existsSync('./config/config.json')) {
 
     // Install already
-    let crab = require('./bin/crab');
-    let app = new crab();
+    let app = require('./bin/crab');
     app.start(1337, {
         debug: true
     });

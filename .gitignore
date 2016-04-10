@@ -1,4 +1,5 @@
 /public/libs
+/models
 /config/env-test.js
 /config/env-production.js
 /config/env-development.js

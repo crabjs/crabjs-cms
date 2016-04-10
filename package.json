@@ -55,6 +55,7 @@
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.0",
     "passport-local": "^1.0.0",
+    "password-hash": "^1.2.2",
     "rand-token": "^0.2.1",
     "should": "^8.3.0",
     "winston": "^2.2.0"

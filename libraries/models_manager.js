@@ -12,7 +12,7 @@
 let mongoose = require('mongoose'),
     db = {};
 var extendServer = '/';
-if (__config.db.options.replset) extendServer = `,${__config.db.secondary}/`;
+if (__config.db.options.replset.status) extendServer = `,${__config.db.secondary}/`;
 
 let mongoUri = `mongodb://${__config.db.host}${extendServer}${__config.db.database}`;
 
@@ -26,7 +26,7 @@ var options = {
         authdb: 'admin'
     },
     replset: {
-        rs_name: "uDoctor",
+        rs_name: __config.db.options.replset.name,
         socketOptions: {keepAlive: 1}
     }
 };

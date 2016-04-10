@@ -23,7 +23,7 @@ global.__viewRender = require("../libraries/render_manager");
 
 class crab {
 
-    start(port, opt) {
+    static start(port, opt) {
 
         let app = require("../config/express")();
         let PORT = process.env.PORT || port || __config.port;
