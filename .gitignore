@@ -1,4 +1,7 @@
 /public/libs
+/config/env-test.js
+/config/env-production.js
+/config/env-development.js
 /webInstall.log
 .idea
 node_modules/

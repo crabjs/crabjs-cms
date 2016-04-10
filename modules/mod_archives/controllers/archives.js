@@ -14,7 +14,7 @@ let module_name = 'mod_archives',
 
 _module.list = function (req, res) {
     _module.render(req, res, 'index', {
-        title: '100dayProject - Archives & Research Collections'
+        title: '100dayproject - Archives & Research Collections'
     });
 };
 

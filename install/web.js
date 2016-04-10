@@ -28,20 +28,6 @@ function includes(env, pattern) {
     return env;
 }
 
-//if (process.env.NODE_ENV === 'development' || require('os').hostname() == 'DESKTOP-PSSOURR' || require('os').hostname() == 'Razor') {
-//    app.use(morgan('dev'));
-//
-//    /** Disable views cache */
-//    app.set('view cache', false);
-//    app.enable('verbose errors');
-//} else {
-//    app.locals.cache = 'memory';
-//    app.disabled('verbose errors');
-//
-//    /** trust first proxy */
-//    app.set('trust proxy', 1);
-//
-//}
 app.enable("trust proxy");
 
 app.set("showStackError", true);
@@ -77,13 +63,6 @@ let env = nunjucks.configure(`${__base}/install/views`, {
     noCache: true,
     watch: false
 });
-
-// Debugging information
-/*if (env.hasOwnProperty('loaders')) {
- let pathDefault = env.loaders[0].searchPaths;
- if (pathDefault == '.') pathDefault = 'None';
- winston.info(`[App] Nunjucks setting view loader: ${pathDefault}`);
- }*/
 
 // Load nunjucks filters and global variable views.
 includes(env, './filters/*.js');

@@ -90,7 +90,7 @@ let questions = [{
     message: 'Open web browsers to configuration database.?'
 }];
 
-inquirer.prompt(questions, function (re) {
+inquirer.prompt(questions).then(function (re) {
     if (re.settings) {
 
         let runServer = false;

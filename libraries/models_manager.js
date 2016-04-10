@@ -9,19 +9,47 @@
 
 "use strict";
 
-class models {
-    constructor(opts) {
-        this.debug = opts.debug;
-        this.multiple = opts.databases;
+let mongoose = require('mongoose'),
+    db = {};
+var extendServer = '/';
+if (__config.db.options.replset) extendServer = `,${__config.db.secondary}/`;
+
+let mongoUri = `mongodb://${__config.db.host}${extendServer}${__config.db.database}`;
+
+var options = {
+    db: {native_parser: true},
+    server: {
+        socketOptions: {keepAlive: 1},
+        poolSize: 5
+    },
+    auth: {
+        authdb: 'admin'
+    },
+    replset: {
+        rs_name: "uDoctor",
+        socketOptions: {keepAlive: 1}
     }
+};
 
-    sequelize() {
-
-    }
-
-    mongodb() {
-
-    }
+if (__config.db.options.auth) {
+    options.user = __config.db.username;
+    options.pass = __config.db.password
 }
 
-module.exports = models;
+mongoose.connect(mongoUri, options);
+mongoose.connection.on('error', function (err) {
+    if (err) throw err;
+});
+
+mongoose.set('debug', __config.db.options.logging);
+
+db.collections = [];
+__.getGlobbedFiles(__base + '/models/*.js').forEach(function (modelPath) {
+    let model = require(modelPath);
+    db[model.modelName] = model;
+    // db.collections.push(model.modelName);
+});
+
+__.logger.info(`[Success] Load all the models.\n`);
+
+module.exports = db;
