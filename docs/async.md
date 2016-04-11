@@ -1,3 +1,4 @@
+```js
 require('async').series([
             function (callback) {
                 var total = 0;
@@ -16,3 +17,4 @@ require('async').series([
             console.log(2);
             console.log(results[1]);
         });
+```

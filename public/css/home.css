@@ -22,6 +22,7 @@
     height: 80px;
     border-radius: 50%;
     margin-bottom: 20px;
+    -webkit-filter: contrast(130%);
 }
 
 .profile #avatar {

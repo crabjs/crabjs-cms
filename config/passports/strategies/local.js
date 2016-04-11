@@ -14,6 +14,36 @@ let LocalStrategy = require('passport-local').Strategy,
 
 module.exports = function (passport) {
 
+    passport.use('AdminLogin', new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true
+    }, function (req, email, passwd, done) {
+        process.nextTick(function () {
+            console.log(email);
+        })
+    }));
+
+    passport.use('ForgotPassword', new LocalStrategy({
+        usernameField: 'email',
+        passReqToCallback: true
+    }, function (req, email, done) {
+        process.nextTick(function () {
+            __models.Users.findOne({
+                email: 'email'
+            }, function (err, user) {
+                if (err) {
+                    return done(err);
+                }
+                if (user) {
+                    // Send email
+                } else {
+                    return done(null, false, req.flash('forgotMessage', 'That email does not exists!'));
+                }
+            })
+        })
+    }));
+
     passport.use('adminLogin', new LocalStrategy({
             usernameField: 'email',
             passwordField: 'password',

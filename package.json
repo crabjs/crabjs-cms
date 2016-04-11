@@ -24,6 +24,7 @@
   "homepage": "https://github.com/100dayproject/life-parser#readme",
   "dependencies": {
     "async": "^2.0.0-rc.2",
+    "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.3.0",
     "bluebird": "^3.3.4",
     "body-parser": "^1.15.0",

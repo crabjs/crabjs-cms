@@ -7,7 +7,23 @@
  * Code distributed by 100dayproject as part of the life.
  */
 
-module.exports = function (env) {
-    env.addGlobal('app_name', 'Crab.JS');
-    env.addGlobal('admin_prefix', __config.admin_prefix);
+"use strict";
+
+let services = require('../services'),
+    module_name = 'mod_users',
+    _module = new __viewRender('backend', module_name);
+
+_module.list = function (req, res) {
+
+};
+
+_module.addUser = function (req, res) {
+    services.addUser({
+        email: 'hailp@novaon.vn',
+        password: 'social',
+        displayName: 'Vietworm',
+        status: 'Pending'
+    }, function (err, re) {
+        console.log(err, re);
+    })
 };

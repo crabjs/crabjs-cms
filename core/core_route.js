@@ -14,32 +14,51 @@ let passport = require('passport'),
 
 module.exports = function (app) {
 
-    app.route(`/${__config.admin_prefix}/login`).get(function (req, res) {
+    /**
+     * Passport strategies AdminLogin
+     * Check authentication
+     */
+    app.route(`/${__config.admin_prefix}/login.crab`).get(function (req, res) {
         loginModule.render(req, res, 'login')
-    }).post(passport.authenticate('adminLogin', {
+    }).post(passport.authenticate('AdminLogin', {
         failureRedirect: `/${__config.admin_prefix}/login`,
         failureFlash: 'Tài khoản hoặc mật khẩu không đúng!',
         successRedirect: `/${__config.admin_prefix}/dashboard`
     }));
 
+    /**
+     * Passport strategies ForgotPassword
+     * Forgot password account
+     */
+    app.route(`/${__config.admin_prefix}/forgot_password.crab`).get(function (req, res) {
+        loginModule.render(req, res, 'forgot_password');
+    }).post(passport.authenticate('ForgotPassword', {
+        failureFlash: 'No email/password account exists with the provided email.',
+        successFlash: `An e-mail has been sent to you with further instructions.`,
+        successRedirect: `/${__config.admin_prefix}/login.crab`
+    }));
+
+    /**
+     * Sign out account and destroy session
+     */
     app.route(`/${__config.admin_prefix}/logout`).get(function (req, res) {
         req.logout();
         req.session.destroy();
-        res.redirect(`/${__config.admin_prefix}/login`);
+        res.redirect(`/${__config.admin_prefix}/login.crab`);
     });
 
-
+    /**
+     * Middleware get user account information
+     */
     app.get('*', function (req, res, next) {
         res.locals.user = req.user;
         next();
     });
 
-    if (__config.authentication) {
-        app.use(`/${__config.admin_prefix}(/)?`, function (req, res, next) {
-            if (!req.isAuthenticated() || !req.user) {
-                return res.redirect(`/${__config.admin_prefix}/login`);
-            }
-            next();
-        });
-    }
+    app.use(`/${__config.admin_prefix}(/)?`, function (req, res, next) {
+        if (!req.isAuthenticated() || !req.user) {
+            return res.redirect(`/${__config.admin_prefix}/login.crab`);
+        }
+        next();
+    });
 };
