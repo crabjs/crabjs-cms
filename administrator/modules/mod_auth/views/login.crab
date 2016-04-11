@@ -6,23 +6,29 @@
     <link rel="shortcut icon" href="/favicon-v1.1.ico" type="image/x-icon">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Login - 100dayproject</title>
-    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
     <link rel="stylesheet" href="/css/_login.css">
 </head>
 
 <body>
 <div class="login-form">
     <form method="post">
-        <h1>100dayproject</h1>
+        <h1>{{ app_name }}</h1>
+        {% if messages.error %}
+            <section class="animated fadeInUp">
+                <div class="messages animated">
+                    <span class="alert">{{ messages.error[0] }}</span>
+                </div>
+            </section>
+        {% endif %}
         <div class="form-group ">
-            <input tabindex="1" autofocus autocomplete="off" type="email" class="form-control" placeholder="Email" id="email" name="email">
-            <i class="fa fa-user"></i>
+            <input required tabindex="1" autofocus autocomplete="off" type="text" class="form-control"
+                   placeholder="Email" id="email" name="email">
         </div>
         <div class="form-group log-status">
-            <input tabindex="2" type="password" class="form-control" placeholder="Password" id="password" name="password">
-            <i class="fa fa-lock"></i>
+            <input required tabindex="2" type="password" class="form-control" placeholder="Password" id="password"
+                   name="password">
         </div>
-        <span class="alert">Invalid Credentials</span>
         <a tabindex="3" class="link" href="/{{ admin_prefix }}/forgot_password.crab">Lost your password?</a>
         <button tabindex="4" type="submit" class="log-btn">Sign in</button>
     </form>

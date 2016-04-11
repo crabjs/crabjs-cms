@@ -1,0 +1,5 @@
+{% extends 'layout.crab' %}
+
+{% block content_body %}
+    social
+{% endblock %}

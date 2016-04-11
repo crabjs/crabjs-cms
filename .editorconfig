@@ -1,6 +1,6 @@
 root = true
 
-[{*.js, *.css, *.twig, *.json}]
+[{*.js, *.css, *.twig, *.json *.crab *.html}]
 indent_style = tab
 end_of_line = lf
 charset = utf-8

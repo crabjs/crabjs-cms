@@ -22,17 +22,7 @@ exports.configure = function (app) {
 
     // Using for destroy session
     passport.deserializeUser(function (id, done) {
-        __models.User.findById(id, function (err, user) {
-            if (user)
-                return done(err, user);
-        });
-
-        __models.Admin.findById(id, function (err, user) {
-            if (user)
-                return done(err, user);
-        });
-
-        __models.Doctor.findById(id, function (err, user) {
+        __models.Users.findById(id, function (err, user) {
             if (user)
                 return done(err, user);
         });

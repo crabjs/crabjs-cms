@@ -8,11 +8,11 @@
 }
 
 body {
-    background: -webkit-linear-gradient(281deg,#0c63aa,#7ac4fa);
-    background: linear-gradient(169deg,#0c63aa,#7ac4fa);
+    background: -webkit-linear-gradient(281deg, #0c63aa, #7ac4fa);
+    background: linear-gradient(169deg, #0c63aa, #7ac4fa);
     background-color: #0c63aa;
     color: #ccc;
-    font-family: proxima-nova,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;;
+    font-family: proxima-nova, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;;
 }
 
 h1 {
@@ -22,9 +22,14 @@ h1 {
     font-size: 50px;
 }
 
+label.error {
+    color: #fe464d;
+    font-size: 13px;
+}
+
 .login-form {
     width: 350px;
-    padding: 40px 30px;
+    padding: 15px 30px 40px;
     background: #fff;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -58,7 +63,7 @@ h1 {
 }
 
 .form-control:focus, .form-control:focus + .fa {
-    border-color: #10CE88;
+    border: solid 1px #10CE88;
     color: #000;
 }
 
@@ -69,14 +74,9 @@ h1 {
     color: #999;
 }
 
-.log-status.wrong-entry {
-    -moz-animation: wrong-log 0.3s;
-    -webkit-animation: wrong-log 0.3s;
-    animation: wrong-log 0.3s;
-}
 
-.log-status.wrong-entry .form-control, .wrong-entry .form-control + .fa {
-    border-color: #ed1c24;
+.wrong-entry {
+    border: solid 1px #ed1c24;
     color: #ed1c24;
 }
 
@@ -108,45 +108,15 @@ h1 {
     color: #8C918F;
 }
 
-.alert {
-    display: none;
-    font-size: 12px;
-    color: #f00;
-    float: left;
-}
-
-@-moz-keyframes wrong-log {
-    0%, 100% {
-        left: 0px;
-    }
-    20%, 60% {
-        left: 15px;
-    }
-    40%, 80% {
-        left: -15px;
-    }
-}
-
-@-webkit-keyframes wrong-log {
-    0%, 100% {
-        left: 0px;
-    }
-    20%, 60% {
-        left: 15px;
-    }
-    40%, 80% {
-        left: -15px;
-    }
-}
-
-@keyframes wrong-log {
-    0%, 100% {
-        left: 0px;
-    }
-    20%, 60% {
-        left: 15px;
-    }
-    40%, 80% {
-        left: -15px;
-    }
+.messages {
+    background-color: rgba(254, 70, 77, .2);
+    color: #aa0107;
+    border: 1px solid #fe464d;
+    text-align: center;
+    padding: 9px 10px;
+    margin-bottom: 23px;
+    overflow: hidden;
+    border-radius: 3px;
+    line-height: 1.3em;
+    font-size: .95em;
 }

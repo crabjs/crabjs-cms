@@ -98,6 +98,13 @@ class Render {
         //     req: req
         // };
 
+        /**
+         * Have using req.user & req.session.flash
+         * when you need extends data to view render,
+         * but our using res.locals
+         * config/express/index.js, line: 98
+         */
+
         try {
             if (view.indexOf(this.ext) == -1) {
                 view += this.ext;

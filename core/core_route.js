@@ -21,8 +21,8 @@ module.exports = function (app) {
     app.route(`/${__config.admin_prefix}/login.crab`).get(function (req, res) {
         loginModule.render(req, res, 'login')
     }).post(passport.authenticate('AdminLogin', {
-        failureRedirect: `/${__config.admin_prefix}/login`,
-        failureFlash: 'Tài khoản hoặc mật khẩu không đúng!',
+        failureRedirect: `/${__config.admin_prefix}/login.crab`,
+        failureFlash: true,
         successRedirect: `/${__config.admin_prefix}/dashboard`
     }));
 
