@@ -6,7 +6,7 @@
 {% block content_body %}
     <div class="profile">
         <section id="wrapper">
-            <header id="header"><a href="/archives"><img id="avatar" src="/images/whynotbar.png"></a>
+            <header id="header"><a href="#"><img id="avatar" src="/images/whynotbar.png"></a>
                 <h1>Hai Phu Le</h1>
                 <h2>Engineer at 100dayproject working on <span class="highlight">web development</span></h2></header>
         </section>
@@ -17,6 +17,6 @@
         </ul>
     </section>
     <div class="thanks">
-        <p>Many thanks to: hailt, haipt, cuong@techmaster.vn, thanhnv, trquoccuong, chungvh, robinhuy.</p>
+        <p>Many thanks to: hailt, haipt, cuong@techmaster.vn, thanhnv, trquoccuong, chungvh, robinhuy, zaichi.</p>
     </div>
 {% endblock %}

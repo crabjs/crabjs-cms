@@ -22,11 +22,11 @@
           content="Join us to break out for at least once in your lifetime with our code and technical labs.">
 
     <meta property="og:title" content="100dayproject - Technical labs Ignore">
-    <meta property="og:site_name" content="100dayproject - Technical labs Ignore">
+    <meta property="og:site_name" content="100dayproject.org">
+    <meta property="og:locale" content="en_US"/>
     <meta property="og:type" content="website">
-    <meta property="og:description"
-          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
-    <meta property="og:type" content="Labs">
+    <meta property="og:description" content="Join us to break out for at least once in your lifetime with our code and technical labs.">
+    <meta property="og:image" content="/images/whynotbar.png"/>
     <!-- End meta data -->
     {% block cssExtends %}{% endblock %}
 </head>
@@ -34,5 +34,14 @@
 <body class="100dayproject">
 {% block content_body %}{% endblock %}
 {% block jsExtends %}{% endblock %}
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-53225314-3', 'auto');
+    ga('send', 'pageview');
+</script>
 </body>
 </html>
