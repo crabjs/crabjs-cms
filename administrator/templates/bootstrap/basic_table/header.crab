@@ -1,0 +1,17 @@
+{% macro thElement(title,width,type) %}
+    <th width="{{ width }}">
+        {% if type == '_id' %}
+            <input type="checkbox" onclick="checkAll(this)" title="Chọn tất cả">
+        {% else %}
+            <a class="sort-link" href="#">{{ title }}<i style="margin-top: 3px;" class="fa fa-sort pull-right"></i></a>
+        {% endif %}
+
+    </th>
+{% endmacro %}
+<tr class="heading">
+    {% for col in tableColumns %}
+        {% if not col.options and col.type != 'hidden' %}
+            {{ thElement(col.header,col.width, col.column) }}
+        {% endif %}
+    {% endfor %}
+</tr>

@@ -1,5 +1,225 @@
 {% extends 'layout.crab' %}
 
-{% block content_body %}
-    social
+{% block cssExtends %}
+    <style>
+        #activity img {
+            width: 19px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .list-group-item:first-child {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .list-group-item:last-child {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        #activity img {
+
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        img {
+            border: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>100</h3>
+
+                    <p>Câu hỏi</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="/{{ admin_prefix }}/question" class="small-box-footer">Xem chi tiết <i
+                            class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>4324</h3>
+
+                    <p>Câu trả lời</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-commenting-o"></i>
+                </div>
+                <a href="/{{ admin_prefix }}/answers" class="small-box-footer">Xem chi tiết <i
+                            class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>345</h3>
+
+                    <p>Người sử dụng</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="/{{ admin_prefix }}/users" class="small-box-footer">Xem chi tiết <i
+                            class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>432</h3>
+
+                    <p>Bác sỹ</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-user-md"></i>
+                </div>
+                <a href="/{{ admin_prefix }}/doctor" class="small-box-footer">Xem chi tiết <i
+                            class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin hệ thống</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                    class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-center">
+                                <h-realTime></h-realTime>
+                            </p>
+
+                            <div class="chart">
+                                <!-- Sales Chart Canvas -->
+                                <canvas id="salesChart" style="height: 177px; width: 651px;" width="651"
+                                        height="177"></canvas>
+                            </div>
+                            <!-- /.chart-responsive -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-md-6">
+                            <p class="text-center">
+                                <strong>Báo cáo tỉ lệ</strong>
+                            </p>
+
+                            <div class="progress-group">
+                                <span class="progress-text">Đã được trả lời / Tổng câu hỏi</span>
+                                <span title="{{ count[0] - count[4] }} câu hỏi cần trả lời"
+                                      class="progress-number"><b>{{ count[4] }}</b> / {{ count[0] }}</span>
+
+                                <div class="progress sm" title="{{ ((count[4] * 100) / count[0]) }}%">
+                                    <div class="progress-bar progress-bar-aqua"
+                                         style="width: {{ (count[4] * 100) / count[0] }}%"></div>
+                                </div>
+                            </div>
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Số lượng bác sỹ / Tổng đăng ký</span>
+                                <span class="progress-number"><b>{{ count[5] }}</b> / {{ count[3] }}</span>
+
+                                <div class="progress sm" title="{{ ((count[5] * 100) / count[3]) }}%">
+                                    <div class="progress-bar progress-bar-red"
+                                         style="width: {{ (count[5] * 100) / count[3] }}%"></div>
+                                </div>
+                            </div>
+                            <!-- /.progress-group -->
+                            <div class="progress-group">
+                                <span class="progress-text">Thành viên VIP</span>
+                                <span class="progress-number"><b>{{ count[6] }}</b> / {{ count[2] }}</span>
+
+                                <div class="progress sm" title="{{ ((count[6] * 100) / count[2]) }}%">
+                                    <div class="progress-bar progress-bar-green"
+                                         style="width: {{ ((count[6] * 100) / count[2]) }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- ./box-body -->
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header">Hiện có <a
+                                            href="/{{ admin_prefix }}/question/NotAnswered">{{ count[7] }}</a> câu
+                                    hỏi</h5>
+                                <span class="description-text">Chưa được trả lời</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-3 col-xs-6">
+                            <div class="description-block border-right">
+                                <h5 class="description-header">
+                                    <a href="/{{ admin_prefix }}/question/NotTopics">{{ count[8] }}</a> câu hỏi</h5>
+                                <span class="description-text">Chưa gán topics</span>
+                            </div>
+                            <!-- /.description-block -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="activity" class="box box-solid">
+                <div class="box-header">
+                    <div class="box-title">Hoạt động gần đây</div>
+                </div>
+                <div class="box-body">
+                    <ul class="todo-list ui-sortable">
+
+                        {% for i in range(0,7) %}
+                            <li>
+                                <img style="width: 19px;border-radius: 50%;margin-right: 6px;"
+                                     src="/images/noAvatar.gif" alt=""><a href="#">Lê Phú Hải </a>
+                                <span title="đã cập nhật hình ảnh cho bác sỹ Nguyễn Phạm Hùng">đã cập nhật hình ảnh cho bác ...</span>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <h-gear></h-gear>
+    </div>
 {% endblock %}

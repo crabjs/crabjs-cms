@@ -1,0 +1,46 @@
+<aside class="main-sidebar">
+
+    <section class="sidebar" style="height: auto;">
+
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu">
+            <li class="header">Hệ thống</li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-cog"></i> <span>Cấu hình hệ thống</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a class="link-active" href="/admin/settings"><i class="fa fa-circle-o"></i>Cấu hình
+                            website</a></li>
+                    <li><a class="link-active" href="/admin/SEO/settings"><i class="fa fa-circle-o"></i>Thiết lập
+                            SEO</a></li>
+                    <li><a class="link-active" href="/admin/modules/install"><i class="fa fa-circle-o"></i>Cài đặt
+                            modules</a></li>
+                </ul>
+            </li>
+            <li><a href="/admin/protectSystem"><i class="fa fa-unlock"></i> <span>Khóa hệ thống</span></a></li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-bug"></i> <span>Báo cáo hệ thống</span> <i
+                            class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a class="link-active" href="/admin/report/bugs"><i class="fa fa-circle-o"></i>Báo lỗi</a></li>
+                    <li><a class="link-active" href="/admin/report/featureRequest"><i class="fa fa-circle-o"></i>Yêu cầu
+                            chức năng</a></li>
+                    <li><a class="link-active" href="/admin/report/logs"><i class="fa fa-circle-o"></i>Kiểm soát lỗi</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#"><i class="fa fa-users"></i> <span>Quản lý phân quyền</span> <i
+                            class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a class="link-active" href="/admin/roles"><i class="fa fa-circle-o"></i>Danh sách quyền</a>
+                    </li>
+                    <li><a class="link-active" href="/admin/roles/create"><i class="fa fa-circle-o"></i>Tạo quyền
+                            mới</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+</aside>

@@ -7,8 +7,14 @@
  * Code distributed by 100dayproject as part of the life.
  */
 
-module.exports = function (env) {
-    env.addGlobal('app_name', 'Crab.JS');
-    env.addGlobal('admin_prefix', __config.admin_prefix);
-    env.addGlobal('themeName', __config.theme);
-};
+"use strict";
+
+"use strict";
+let express = require('express'),
+    router = express.Router();
+let settings = require('./controllers/settings');
+
+router.route('/settings').get(settings.web_settings);
+router.route('/modules/install').get(settings.module_install);
+
+module.exports = router;

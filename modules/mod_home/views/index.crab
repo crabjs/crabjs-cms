@@ -8,7 +8,8 @@
         <section id="wrapper">
             <header id="header"><a href="#"><img id="avatar" src="/images/whynotbar.png"></a>
                 <h1>Hai Phu Le</h1>
-                <h2>Engineer at 100dayproject working on <span class="highlight">web development</span></h2></header>
+                <h2>Engineer at 100dayproject working on <span class="highlight">web development</span></h2>
+            </header>
         </section>
     </div>
     <section id="wrapper" class="home"><h2>Publications</h2>

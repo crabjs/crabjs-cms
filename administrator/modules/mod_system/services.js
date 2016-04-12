@@ -7,8 +7,4 @@
  * Code distributed by 100dayproject as part of the life.
  */
 
-module.exports = function (env) {
-    env.addGlobal('app_name', 'Crab.JS');
-    env.addGlobal('admin_prefix', __config.admin_prefix);
-    env.addGlobal('themeName', __config.theme);
-};
+"use strict";

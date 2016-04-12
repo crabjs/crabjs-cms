@@ -1,0 +1,50 @@
+{% macro thElement(name, width='10%', type='text',buttonClass='fa fa-search', placeholder='',titleInput='', value='',buttonType='button') %}
+    <th width="{{ width }}">
+        {% if name != '_id' %}
+            {% if type == 'date' %}
+                <div class="input-group">
+                    <input type="{{ type }}" name="{{ name }}" class="form-control" value="{{ value }}"
+                           title="{{ titleInput }}" placeholder="{{ placeholder }}">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+                {% elif type|isObject and type.name == 'select' %}
+                <select name="{{ name }}" class="form-control">
+                    <option value="all">All</option>
+                    {% for key, name in type.values %}
+                        <option value="{{ key }}">{{ name }}</option>
+                    {% endfor %}
+
+                </select>
+            {% else %}
+                <div class="input-group">
+                    <input type="{{ type }}" name="{{ name }}" class="form-control" value="{{ value }}"
+                           title="{{ titleInput }}" placeholder="{{ placeholder }}">
+                <span class="input-group-btn">
+                    <button type="{{ buttonType }}" class="btn btn-default popover-btn" data-container="body"
+                            data-placement="bottom" data-toggle="popover"
+                            data-html="true" data-content="" data-original-title="">
+                        <i class="{{ buttonClass or 'fa fa-search' }}"></i>
+                    </button>
+                </span>
+                </div>
+            {% endif %}
+        {% endif %}
+    </th>
+{% endmacro %}
+<style>
+    .daterangepicker.dropdown-menu.show-calendar.opensright {
+        left: 620px !important;
+        margin-right: 166px;
+    }
+</style>
+<tr class="heading">
+    <form method="GET" id="search-form">
+        {% for col in tableColumns %}
+            {% if not col.options and col.type != 'hidden' %}
+                {{ thElement(col.column, col.width, col.type, col.buttonClass) }}
+            {% endif %}
+        {% endfor %}
+    </form>
+</tr>

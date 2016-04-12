@@ -109,6 +109,7 @@ class Render {
             if (view.indexOf(this.ext) == -1) {
                 view += this.ext;
             }
+            let layer = this.layer;
 
             if (this.layer == 'backend') {
                 // Search view path many location folders
@@ -156,26 +157,31 @@ class Render {
                         res.redirect(`/${__config.admin_prefix}/dashboard`);
                         //res.send(err.stack);
                     } else {
-                        var re = require('html-minifier').minify(html, {
-                            removeAttributeQuotes: true,
-                            collapseWhitespace: true,
-                            minifyCSS: true,
-                            minifyJS: true,
-                            minifyURLs: true,
-                            removeComments: true,
-                            removeEmptyAttributes: true,
-                            removeEmptyElements: true,
-                            removeOptionalTags: true,
-                            removeTagWhitespace: true
-                        });
-                        res.send(re);
+
+                        if (layer == 'backend') {
+                            res.send(html);
+                        } else {
+                            var re = require('html-minifier').minify(html, {
+                                removeAttributeQuotes: true,
+                                collapseWhitespace: true,
+                                minifyCSS: true,
+                                minifyJS: true,
+                                minifyURLs: true,
+                                removeComments: true,
+                                removeEmptyAttributes: true,
+                                removeEmptyElements: true,
+                                removeOptionalTags: true,
+                                removeTagWhitespace: true
+                            });
+                            res.send(re);
+                        }
                     }
                 })
             }
         } catch (e) {
-            __.logger.error(e);
-            req.flash('warning', 'Có lỗi xảy ra');
-            res.redirect(`/${__config.admin_prefix}/dashboard`);
+            // __.logger.error(e);
+            // req.flash('warning', 'Có lỗi xảy ra');
+            // res.redirect(`/${__config.admin_prefix}/dashboard`);
         }
     }
 }

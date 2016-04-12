@@ -10,7 +10,8 @@
 "use strict";
 
 let passport = require('passport'),
-    loginModule = new __viewRender('backend', 'mod_auth');
+    loginModule = new __viewRender('backend', 'mod_auth'),
+    dashboardModule = new __viewRender('backend', 'mod_dashboard');
 
 module.exports = function (app) {
 

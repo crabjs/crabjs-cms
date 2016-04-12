@@ -1,0 +1,36 @@
+{% extends 'layout.crab' %}
+
+{% block content_body %}
+    <div class="tab-content">
+        <div class="tab-pane active" id="site-setting">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="title">Site Title</label>
+                    <input type="text" name="title" id="title" class="form-control" value="{{ siteConfig.title }}">
+                </div>
+                <div class="form-group">
+                    <label for="description">Site Description</label>
+                    <input type="text" name="description" id="description" class="form-control"
+                           value="{{ siteConfig.description }}">
+                </div>
+                <div class="form-group">
+                    <label for="auto_save_delay">Auto save time delay (second)</label>
+                    <input type="text" name="auto_save_delay" id="auto_save_delay" class="form-control" value="10">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="language">Language Code</label>
+                    <select name="language" id="language" class="form-control">
+                        <option value="en_US" selected="">en_US</option>
+                        <option value="vi_VN">vi_VN</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="number_item">Item Per Page</label>
+                    <input type="text" name="number_item" id="number_item" class="form-control" value="10">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
