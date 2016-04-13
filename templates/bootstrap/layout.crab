@@ -26,7 +26,7 @@
     <meta property="og:locale" content="en_US"/>
     <meta property="og:type" content="website">
     <meta property="og:description" content="Join us to break out for at least once in your lifetime with our code and technical labs.">
-    <meta property="og:image" content="/images/whynotbar.png"/>
+    <meta property="og:image" content="http://100dayproject.org/images/whynotbar.png"/>
     <!-- End meta data -->
     {% block cssExtends %}{% endblock %}
 </head>
