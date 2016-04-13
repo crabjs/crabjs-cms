@@ -162,7 +162,7 @@ class Render {
                             res.send(html);
                         } else {
                             var re = require('html-minifier').minify(html, {
-                                removeAttributeQuotes: true,
+                                // removeAttributeQuotes: true,
                                 collapseWhitespace: true,
                                 minifyCSS: true,
                                 minifyJS: true,
@@ -170,7 +170,7 @@ class Render {
                                 removeComments: true,
                                 removeEmptyAttributes: true,
                                 removeEmptyElements: true,
-                                removeOptionalTags: true,
+                                // removeOptionalTags: true,
                                 removeTagWhitespace: true
                             });
                             res.send(re);
