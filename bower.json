@@ -34,6 +34,7 @@
     "moment": "^2.12.0",
     "AdminLTE": "admin-lte#^2.3.3",
     "font-awesome": "fontawesome#^4.6.0",
-    "Ionicons": "ionicons#^2.0.1"
+    "Ionicons": "ionicons#^2.0.1",
+    "hint.css": "^2.2.1"
   }
 }

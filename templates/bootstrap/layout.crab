@@ -36,6 +36,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US"/>
     <!-- End meta data -->
+    <link rel="stylesheet" href="/bower_components/hint.css/hint.min.css">
     {% block cssExtends %}{% endblock %}
 </head>
 

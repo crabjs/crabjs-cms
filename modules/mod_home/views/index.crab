@@ -6,7 +6,8 @@
 {% block content_body %}
     <div class="profile">
         <section id="wrapper">
-            <header id="header"><a href="#"><img id="avatar" src="/images/whynotbar.png"></a>
+            <header id="header"><a id="feel" onmouseover="javascript:feel()" class="hint--top" data-hint="WHY NOT BAR?">
+                    <img id="avatar" src="/images/whynotbar.png"></a>
                 <h1>Hai Phu Le</h1>
                 <h2>Engineer at 100dayproject working on <span class="highlight">web development</span></h2>
             </header>
@@ -20,4 +21,14 @@
     <div class="thanks">
         <p>Many thanks to: hailt, haipt, cuong@techmaster.vn, thanhnv, trquoccuong, chungvh, robinhuy, zaichi.</p>
     </div>
+{% endblock %}
+
+{% block jsExtends %}
+    <script>
+        function feel() {
+            var whyNot = ['BAR?', 'GYM?', 'HACKING?', 'GIRL FRIEND?', 'SLEEP?', 'HUMAN RIGHT?', 'FREE DOM?'];
+            var feel = whyNot[Math.floor(Math.random() * whyNot.length)];
+            document.getElementById("feel").setAttribute("data-hint", 'WHY NOT ' + feel);
+        }
+    </script>
 {% endblock %}
