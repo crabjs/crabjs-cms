@@ -158,23 +158,25 @@ class Render {
                         //res.send(err.stack);
                     } else {
 
-                        if (layer == 'backend') {
-                            res.send(html);
-                        } else {
-                            var re = require('html-minifier').minify(html, {
-                                // removeAttributeQuotes: true,
-                                collapseWhitespace: true,
-                                minifyCSS: true,
-                                minifyJS: true,
-                                minifyURLs: true,
-                                removeComments: true,
-                                removeEmptyAttributes: true,
-                                removeEmptyElements: true,
-                                // removeOptionalTags: true,
-                                removeTagWhitespace: true
-                            });
-                            res.send(re);
-                        }
+                        res.send(html);
+
+                        // if (layer == 'backend') {
+                        //     res.send(html);
+                        // } else {
+                        //     var re = require('html-minifier').minify(html, {
+                        //         // removeAttributeQuotes: true,
+                        //         collapseWhitespace: true,
+                        //         minifyCSS: true,
+                        //         minifyJS: true,
+                        //         minifyURLs: true,
+                        //         removeComments: true,
+                        //         removeEmptyAttributes: true,
+                        //         removeEmptyElements: true,
+                        //         // removeOptionalTags: true,
+                        //         removeTagWhitespace: true
+                        //     });
+                        //     res.send(re);
+                        // }
                     }
                 })
             }
