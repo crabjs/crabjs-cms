@@ -14,7 +14,7 @@ let module_name = 'mod_home',
 
 _module.index = function (req, res) {
     _module.render(req, res, 'index', {
-        title: '100dayproject.org'
+        title: 'Hainho - The 100dayproject of archives & research collections and quickly save my ideas'
     });
 };
 
