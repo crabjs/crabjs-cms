@@ -1,0 +1,18 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content_body %}
+    <div id="main">
+        <div id="banner" role="banner">
+            <img src="/images/HomePage_banner.jpg" alt="#The 100dayproject mindset idea">
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+{% endblock %}

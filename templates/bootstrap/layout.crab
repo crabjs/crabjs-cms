@@ -11,12 +11,21 @@
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
+    <meta name="google-site-verification" content="1eSDVqs-prrTDgY_xmlz2_gMK133d4OGwDVY3JnH8S0" />
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="white">
     <meta name="apple-mobile-web-app-title" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
     <link rel="canonical" href="http://100dayproject.org"/>
     <link rel="shortlink" href="http://100dayproject.org/" />
+    <meta name="geo.region" content="Vietnam"/>
+    <meta name="RATING" content="GENERAL"/>
+    <meta name="Googlebot" content="index,follow,archive">
+    <meta name="ROBOTS" content="INDEX, FOLLOW"/>
+    <meta name="DISTRIBUTION" content="GLOBAL"/>
+    <meta http-equiv="EXPIRES" content="0"/>
+    <meta name="RESOURCE-TYPE" content="DOCUMENT"/>
+    <meta name="COPYRIGHT" content="Copyright (c) by 100dayproject.org"/>
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@100dayproject" />

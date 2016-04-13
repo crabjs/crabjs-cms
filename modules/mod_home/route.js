@@ -13,4 +13,5 @@ let home = require('./controllers/home');
 
 module.exports = function (app) {
     app.route('/').get(home.index);
+    app.route('/home').get(home.home);
 };
