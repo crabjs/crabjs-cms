@@ -1,29 +1,38 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" lang="en" itemscope itemtype="http://schema.org/Thing">
 <head>
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description"
-          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
+    <meta name="description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days.">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
     <title>{{ title }}</title>
     <link id="favicon" rel="shortcut icon" type="image/x-icon" href="/favicon-v1.1.ico">
 
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="100dayproject - Technical labs Ignore">
+    <meta name="application-name" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
 
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="white">
-    <meta name="apple-mobile-web-app-title" content="100dayproject - Technical labs Ignore">
+    <meta name="apple-mobile-web-app-title" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
+    <link rel="canonical" href="http://100dayproject.org"/>
+    <link rel="shortlink" href="http://100dayproject.org/" />
 
-    <meta itemprop="name" content="100dayproject - Technical labs Ignore">
-    <meta itemprop="description"
-          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@100dayproject" />
+    <meta name="twitter:title" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas" />
+    <meta name="twitter:description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days." />
+    <meta name="twitter:image" content="http://100dayproject.org/images/whynotbar.png"/>
 
+
+    <meta property="og:image:width" content="200" />
+    <meta property="og:image:height" content="200" />
+
+    <meta itemprop="name" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
+    <meta itemprop="description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days.">
     <meta property="og:site_name" content="100dayproject">
-    <meta property="og:title" content="100dayproject - Technical labs Ignore">
-    <meta property="og:description" content="Join us to break out for at least once in your lifetime with our code and technical labs.">
+    <meta property="og:title" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
+    <meta property="og:description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days.">
     <meta property="og:image" content="http://100dayproject.org/images/whynotbar.png"/>
     <meta property="og:url" content="http://100dayproject.org">
     <meta property="og:type" content="website">
