@@ -20,4 +20,4 @@ bind('#host', '#bind-host');
 bind('#port', '#bind-port');
 bind('#dbUsername', '#bind-dbUsername');
 bind('#dbPassword', '#bind-dbPassword');
-bind('#dbName', '#bind-dbName')
+bind('#dbName', '#bind-dbName');
