@@ -22,7 +22,7 @@
             </section>
         {% endif %}
         <div class="form-group ">
-            <input required tabindex="1" autofocus autocomplete="off" type="text" class="form-control"
+            <input required tabindex="1" autofocus type="text" class="form-control"
                    placeholder="Email" id="email" name="email">
         </div>
         <div class="form-group log-status">
