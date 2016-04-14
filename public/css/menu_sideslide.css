@@ -1,15 +1,15 @@
 html, 
 body, 
-.container, 
+/*.container, */
 .content-wrap {
 	overflow: hidden;
 	width: 100%;
 	height: 100%;
 }
 
-.container {
-	background: #373a47;
-}
+/*.container {*/
+	/*background: #373a47;*/
+/*}*/
 
 .menu-wrap a {
 	color: #b8b7ad;

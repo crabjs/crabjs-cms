@@ -20,7 +20,7 @@ _module.index = function (req, res) {
 
 _module.home = function (req, res) {
     _module.render(req, res, 'home', {
-        title: 'Home page'
+        title: 'Blog of the 100dayproject'
     })
 };
 

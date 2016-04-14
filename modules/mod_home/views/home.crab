@@ -1,18 +1,472 @@
 {% extends 'layout.crab' %}
 
 {% block cssExtends %}
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
+          type="text/css">
+    <link rel="stylesheet" href="/css/menu_sideslide.css">
+    <style>
+        body {
+            overflow-x: hidden;
+            /*font: 20px VNFQuicksandRegular, sans-serif;*/
+            /*-webkit-font-smoothing: antialiased;*/
+        }
+
+        p {
+            font-size: 20px;
+        }
+
+        p.small {
+            font-size: 16px;
+        }
+
+        a, a:hover, a:focus, a:active {
+            outline: 0;
+            color: #18bc9c;
+        }
+
+        .btn-info:hover, .btn-info:focus, .btn-info:active {
+            color: #fff;
+            background-color: #465260;
+            border-color: #465260;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-transform: uppercase;
+            font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        hr.star-light,
+        hr.star-primary {
+            margin: 25px auto 30px;
+            padding: 0;
+            max-width: 250px;
+            border: 0;
+            border-top: solid 5px;
+            text-align: center;
+        }
+
+        hr.star-light {
+            border-color: #fff;
+        }
+
+        hr.star-light:after {
+            color: #fff;
+            background-color: #18bc9c;
+        }
+
+        header {
+            text-align: center;
+            color: #fff;
+            background: #485563; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #485563, #29323c); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #485563, #29323c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+        header .container {
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+
+        header img {
+            display: block;
+            margin: 0 auto 20px;
+        }
+
+        header .intro-text .name {
+            display: block;
+            text-transform: uppercase;
+            font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 2em;
+            font-weight: 700;
+        }
+
+        @media (min-width: 768px) {
+            header .intro-text .name {
+                font-size: 4.75em;
+            }
+
+            .navbar-default {
+                margin-bottom: 0;
+            }
+        }
+
+        .container {
+            background: inherit;
+        }
+
+        .navbar-default {
+            margin-bottom: 0;
+        }
+
+        .navbar {
+            text-transform: uppercase;
+            font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: 700;
+        }
+
+        .navbar a:focus {
+            outline: 0;
+        }
+
+        .navbar .navbar-nav {
+            letter-spacing: 1px;
+        }
+
+        .navbar .navbar-nav li a:focus {
+            outline: 0;
+        }
+
+        .navbar-default {
+            border: 0;
+        }
+
+        #highlight-btn {
+            margin: 0;
+        }
+
+        #highlight-btn div {
+            padding: 0 !important;
+        }
+
+        #highlight-btn .btn {
+            border-left: 1px solid #c6cbce !important;
+            border-bottom: 1px solid #c6cbce !important;
+            line-height: 30px !important;
+        }
+
+        .btn {
+            padding: 7px 12px;
+            font-size: 16px;
+            line-height: 15px;
+            text-align: center;
+            transition: all 0.2s ease-out;
+            -webkit-transition: all 0.2s ease-out;
+            -moz-transition: all 0.2s ease-out;
+            font-family: 'LightCon', sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            border: 1px solid #7a003c;
+        }
+
+        .btn-info {
+            background-color: #6a7882;
+            border-color: #6a7882 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-lg, .btn-group-lg > .btn {
+            padding: 9px 16px;
+            font-size: 20px;
+            line-height: 20px;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn, .well, .nav-tabs li a, .panel {
+            border-radius: 0 !important;
+        }
+
+        .btn {
+            white-space: nowrap;
+            vertical-align: middle;
+            margin-bottom: 0;
+            margin-top: 0;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+        }
+
+        header {
+            border-top: 5px solid #00796B;
+        }
+
+        .navbar {
+            padding-bottom: 85px !important;
+        }
+
+        .news-list .media img {
+            width: 110px;
+            height: 110px;
+        }
+
+        .news-list {
+            padding-left: 0;
+        }
+
+        .media {
+            padding-top: 15px;
+            padding-left: 0;
+        }
+
+        .news-list .media .media-heading {
+            padding-bottom: 29px;
+            font-size: 17px;
+            /*font-family: 'Roboto', sans-serif;*/
+        }
+
+        .media-heading {
+            margin: 0 0 0;
+        }
+
+        .media-body {
+            display: block !important;
+            width: inherit;
+            overflow: inherit;
+        }
+
+        a:link {
+            text-decoration: none;
+        }
+
+        #body a:link {
+            color: #ac1455;
+            text-decoration: none;
+            -webkit-transition: all 0.2s ease-out;
+            transition: all 0.2s ease-out;
+        }
+
+        a {
+            color: #ac1455;
+        }
+
+        a:hover {
+            outline: 0;
+            color: #23527c;
+        }
+
+        #body {
+            padding-top: 25px;
+        }
+
+        #view-more {
+            padding-top: 20px;
+        }
+
+        .event-list .event-calendar {
+            display: block;
+            /* background-color: #6a7882; */
+            background-color: #c6cbce;
+            text-align: center;
+            font-family: 'BoldCon';
+            padding: 1px 5px 5px 5px;
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+        }
+
+        .event-list .event-calendar .month {
+            /* color: #ffffff; */
+            color: #323e48;
+            display: inline-block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            text-transform: uppercase;
+            font-size: 16px;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .event-list .event-calendar .date {
+            /* color: #323e48; */
+            color: #6a7882;
+            background-color: #ffffff;
+            display: inline-block;
+            width: 100%;
+            font-size: 33px;
+            line-height: 1;
+            margin: 1px 0 0 0;
+            -webkit-transition: color 0.3s ease-out;
+            transition: color 0.3s ease-out;
+        }
+
+        .event-list small.time {
+            font-size: 14px;
+            line-height: 1;
+            height: 15px;
+            display: block;
+        }
+
+        #footer {
+            color: #fff;
+        }
+    </style>
 {% endblock %}
 
 {% block content_body %}
-    <div id="main">
-        <div id="banner" role="banner">
-            <img src="/images/HomePage_banner.jpg" alt="#The 100dayproject mindset idea">
-        </div>
+    <div class="menu-wrap">
+        <nav class="menu">
+            <div class="icon-list">
+                <a href="#"><i class="fa fa-fw fa-star-o"></i><span>Favorites</span></a>
+                <a href="#"><i class="fa fa-fw fa-bell-o"></i><span>Alerts</span></a>
+                <a href="#"><i class="fa fa-fw fa-envelope-o"></i><span>Messages</span></a>
+                <a href="#"><i class="fa fa-fw fa-comment-o"></i><span>Comments</span></a>
+                <a href="#"><i class="fa fa-fw fa-bar-chart-o"></i><span>Analytics</span></a>
+                <a href="#"><i class="fa fa-fw fa-newspaper-o"></i><span>Reading List</span></a>
+            </div>
+        </nav>
+        <button class="close-button" id="close-button">Close Menu</button>
     </div>
+    <button class="menu-button" id="open-button">Open Menu</button>
+    <div class="content-wrap">
+        <div class="content">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default"></nav>
+            <header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="intro-text">
+                                <span class="name">Just better</span>
+                                <hr class="star-light">
+                                <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="highlight-btn" class="row" role="navigation">
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/computer-vision" class="btn btn-info btn-lg btn-block">Computer Vision</a>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/webSphere" class="btn btn-info btn-lg btn-block">WebSphere</a>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/hardware" class="btn btn-info btn-lg btn-block">Hardware</a>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/research" class="btn btn-info btn-lg btn-block">Research</a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div id="body" class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <h2><span class="fa fa-rss" aria-hidden="true"></span> News</h2>
+                    <ul class="news-list">
+                        <li class="media">
+                            <div class="pull-left">
+                                <img src="http://www.mcmaster.ca/wordpress/wp-content/uploads/2015/07/harvey.jpg"
+                                     class="attachment-thumbnail_110x110" alt="harvey">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading"><a
+                                            href="http://dailynews.mcmaster.ca/article/beloved-isci-prof-named-one-of-ontarios-top-teachers/"
+                                            target="_blank">‘Beloved’ iSci prof named one of Ontario’s top
+                                        teachers</a>
+                                </h3>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="pull-left">
+                                <img src="http://www.mcmaster.ca/wordpress/wp-content/uploads/2015/07/neighbours.jpg"
+                                     class="attachment-thumbnail_110x110" alt="harvey">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading"><a
+                                            href="http://dailynews.mcmaster.ca/article/beloved-isci-prof-named-one-of-ontarios-top-teachers/"
+                                            target="_blank">Students recognized as good neighbours</a>
+                                </h3>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="pull-left">
+                                <img src="http://www.mcmaster.ca/wordpress/wp-content/uploads/2015/07/influence-1.jpg"
+                                     class="attachment-thumbnail_110x110" alt="harvey">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading"><a
+                                            href="http://dailynews.mcmaster.ca/article/beloved-isci-prof-named-one-of-ontarios-top-teachers/"
+                                            target="_blank">Nine McMaster researchers among most influential in the
+                                        world</a>
+                                </h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h2><span class="fa fa-rss" aria-hidden="true"></span> Project</h2>
+                    <ul class="social-list list-unstyled">
+                        <li class="social-tweet">
+                            <h3 class="social-heading">Check out some of McMaster's most interesting spaces at Doors Open:<a href="http://bit.ly/23drPV3">http://bit.ly/23drPV3</a>.</h3>
+                            <small class="social-detail"><span class="fa fa-twitter" aria-hidden="true"></span> <a href="http://www.twitter.com/mcmasteru" target="_blank">@McMasterU</a> • April 7</small>
+                        </li>
+                        <li class="social-youtube">
+                            <div class="video-container player-condensed">
+                                <iframe src="http://www.youtube.com/embed/5OnC0Ce__AM?modestbranding=1&amp;controls=0&amp;showinfo=0&amp;wmode=transparent" frameborder="0" width="560" height="315"></iframe>
+                            </div>
+                            <small class="social-detail"><span class="fa fa-youtube-play" aria-hidden="true"></span> <a href="http://www.youtube.com/mcmasterutv" target="_blank">@McMasterUTV</a> • April 7</small>
+                            <h3 class="social-heading"><a href="https://youtu.be/5OnC0Ce__AM" target="_blank">Meet VIRGIL: The robotic arm built by students</a></h3>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h2><span class="fa fa-rss" aria-hidden="true"></span> Events</h2>
+                    <ul class="media-list event-list">
+                        {% for i in range(0,3) %}
+                            <li class="media col-md-12 col-sm-6">
+                                <div class="pull-left event-calendar">
+                                    <span class="month">April</span>
+                                    <span class="date">18</span>
+                                </div>
+                                <div class="media-body" style="display: initial !important;">
+                                    <small class="time">12 p.m.</small>
+                                    <h3 class="media-heading" style="font-size: 14px">
+                                        <a href="http://dailynews.mcmaster.ca/event/spring-water-forum/">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, porro?</a>
+                                    </h3>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div id="view-more" class="row hidden-sm hidden-xs">
+                <div class="col-md-4">
+                    <a href="http://dailynews.mcmaster.ca" class="btn btn-info">
+                        <span class="fa fa-plus" aria-hidden="true"></span> More News</a>
+                </div>
+                <div class="col-md-4"><a href="http://dailynews.mcmaster.ca/calendar" class="btn btn-info"><span
+                                class="fa fa-plus" aria-hidden="true"></span> Share</a></div>
+                <div class="col-md-4"><a href="http://dailynews.mcmaster.ca/calendar" class="btn btn-info"><span
+                                class="fa fa-plus" aria-hidden="true"></span> More Events</a></div>
+            </div>
+        </div>
+
+        <div id="footer" class="container-fluid" style="background-color: #7a003c; margin-top: 50px;">
+            <div class="container" style="height: 150px">
+                <div style="padding-top: 50px; text-align: center">
+                    <strong>#THE 100DAYPROJECT</strong>
+                    <p style="font-size: 17px;">
+                        <span class="icoHolder"><i class="ico icoAddr"></i></span>
+                        <span class="text"><b>Vietnam:</b> 147 Ton Dat Tien Street, Tan Phong Ward, District 7, Ho Chi Minh City</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div><!-- /content-wrap -->
 {% endblock %}
 
 {% block jsExtends %}
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/menu/classie.js"></script>
+    <script src="/js/menu/main.js"></script>
+
 {% endblock %}
