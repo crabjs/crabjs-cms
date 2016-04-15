@@ -35,7 +35,7 @@
         }
 
         h1, h2, h3, h4, h5, h6 {
-            text-transform: uppercase;
+            /*text-transform: uppercase;*/
             font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-weight: 700;
         }
@@ -217,6 +217,11 @@
             /*font-family: 'Roboto', sans-serif;*/
         }
 
+        .news-list .media .media-heading, .media-list .media .media-heading, .social-list .social-heading {
+            font-weight: 500 !important;
+
+        }
+
         .media-heading {
             margin: 0 0 0;
         }
@@ -301,6 +306,22 @@
             display: block;
         }
 
+        .video-container iframe, .video-container object, .video-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 49%;
+            padding-top: 30px;
+            height: 0;
+            overflow: hidden;
+        }
+
         #footer {
             color: #fff;
         }
@@ -366,7 +387,7 @@
                             </div>
                             <div class="media-body">
                                 <h3 class="media-heading"><a
-                                            href="http://dailynews.mcmaster.ca/article/beloved-isci-prof-named-one-of-ontarios-top-teachers/"
+                                            href="#"
                                             target="_blank">‘Beloved’ iSci prof named one of Ontario’s top
                                         teachers</a>
                                 </h3>
@@ -380,7 +401,7 @@
                             </div>
                             <div class="media-body">
                                 <h3 class="media-heading"><a
-                                            href="http://dailynews.mcmaster.ca/article/beloved-isci-prof-named-one-of-ontarios-top-teachers/"
+                                            href="#"
                                             target="_blank">Students recognized as good neighbours</a>
                                 </h3>
                             </div>
@@ -393,7 +414,7 @@
                             </div>
                             <div class="media-body">
                                 <h3 class="media-heading"><a
-                                            href="http://dailynews.mcmaster.ca/article/beloved-isci-prof-named-one-of-ontarios-top-teachers/"
+                                            href="#"
                                             target="_blank">Nine McMaster researchers among most influential in the
                                         world</a>
                                 </h3>
@@ -405,15 +426,26 @@
                     <h2><span class="fa fa-rss" aria-hidden="true"></span> Project</h2>
                     <ul class="social-list list-unstyled">
                         <li class="social-tweet">
-                            <h3 class="social-heading">Check out some of McMaster's most interesting spaces at Doors Open:<a href="http://bit.ly/23drPV3">http://bit.ly/23drPV3</a>.</h3>
-                            <small class="social-detail"><span class="fa fa-twitter" aria-hidden="true"></span> <a href="http://www.twitter.com/mcmasteru" target="_blank">@McMasterU</a> • April 7</small>
+                            <h3 style="font-size: 14px" class="social-heading">Check out some of McMaster's most
+                                interesting spaces at Doors Open:<a
+                                        href="#">http://bit.ly/23drPV3</a>.</h3>
+                            <small class="social-detail"><span class="fa fa-twitter" aria-hidden="true"></span> <a
+                                        href="#" target="_blank">@McMasterU</a> • April 7
+                            </small>
                         </li>
                         <li class="social-youtube">
                             <div class="video-container player-condensed">
-                                <iframe src="http://www.youtube.com/embed/5OnC0Ce__AM?modestbranding=1&amp;controls=0&amp;showinfo=0&amp;wmode=transparent" frameborder="0" width="560" height="315"></iframe>
+                                <iframe src="http://www.youtube.com/embed/5OnC0Ce__AM?modestbranding=1&amp;controls=0&amp;showinfo=0&amp;wmode=transparent"
+                                        frameborder="0" width="560" height="315"></iframe>
                             </div>
-                            <small class="social-detail"><span class="fa fa-youtube-play" aria-hidden="true"></span> <a href="http://www.youtube.com/mcmasterutv" target="_blank">@McMasterUTV</a> • April 7</small>
-                            <h3 class="social-heading"><a href="https://youtu.be/5OnC0Ce__AM" target="_blank">Meet VIRGIL: The robotic arm built by students</a></h3>
+                            <small class="social-detail"><span class="fa fa-youtube-play" aria-hidden="true"></span> <a
+                                        href="#" target="_blank">@McMasterUTV</a> •
+                                April 7
+                            </small>
+                            <h3 style="font-size: 17px" class="social-heading">
+                                <a href="#" target="_blank">Meet VIRGIL: The robotic arm
+                                    built by students</a>
+                            </h3>
                         </li>
                     </ul>
                 </div>
@@ -429,7 +461,8 @@
                                 <div class="media-body" style="display: initial !important;">
                                     <small class="time">12 p.m.</small>
                                     <h3 class="media-heading" style="font-size: 14px">
-                                        <a href="http://dailynews.mcmaster.ca/event/spring-water-forum/">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, porro?</a>
+                                        <a href="#">Lorem ipsum
+                                            dolor sit amet, consectetur adipisicing elit. Accusantium, porro?</a>
                                     </h3>
                                 </div>
                             </li>
@@ -439,12 +472,12 @@
             </div>
             <div id="view-more" class="row hidden-sm hidden-xs">
                 <div class="col-md-4">
-                    <a href="http://dailynews.mcmaster.ca" class="btn btn-info">
+                    <a href="#" class="btn btn-info">
                         <span class="fa fa-plus" aria-hidden="true"></span> More News</a>
                 </div>
-                <div class="col-md-4"><a href="http://dailynews.mcmaster.ca/calendar" class="btn btn-info"><span
+                <div class="col-md-4"><a href="#" class="btn btn-info"><span
                                 class="fa fa-plus" aria-hidden="true"></span> Share</a></div>
-                <div class="col-md-4"><a href="http://dailynews.mcmaster.ca/calendar" class="btn btn-info"><span
+                <div class="col-md-4"><a href="#" class="btn btn-info"><span
                                 class="fa fa-plus" aria-hidden="true"></span> More Events</a></div>
             </div>
         </div>
