@@ -33,8 +33,7 @@
     <meta name="twitter:description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days." />
     <meta name="twitter:image" content="http://100dayproject.org/images/whynotbar.png"/>
 
-    <meta itemprop="name" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
-    <meta itemprop="description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days.">
+    <meta property="fb:app_id" content="1040856459306625">
     <meta property="og:site_name" content="100dayproject">
     <meta property="og:title" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
     <meta property="og:description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days.">
@@ -44,6 +43,10 @@
     <meta property="og:url" content="http://100dayproject.org">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US"/>
+
+    <meta itemprop="description" content="How to quickly save your ideas? Once I've typed out my idea, it will be performed in the days.">
+    <meta itemprop="name" content="Hainho - The 100dayproject of archives &amp; research collections and quickly save my ideas">
+
     <!-- End meta data -->
     <link rel="stylesheet" href="/bower_components/hint.css/hint.min.css">
     {% block cssExtends %}{% endblock %}
