@@ -16,5 +16,6 @@ let settings = require('./controllers/settings');
 
 router.route('/settings').get(settings.web_settings);
 router.route('/modules/install').get(settings.module_install);
+router.route('/SEO/settings').get(settings.seo_settings);
 
 module.exports = router;

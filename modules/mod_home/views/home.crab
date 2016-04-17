@@ -1,26 +1,22 @@
 {% extends 'layout.crab' %}
 
 {% block cssExtends %}
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
-          type="text/css">
     <link rel="stylesheet" href="/css/menu_sideslide.css">
     <style>
         body {
             overflow-x: hidden;
-            /*font: 20px VNFQuicksandRegular, sans-serif;*/
-            /*-webkit-font-smoothing: antialiased;*/
+            font-family: 'Open Sans', Verdana, 'ヒラギノ角ゴ Pro W3', Hiragino Kaku Gothic Pro, Meiryo, "游ゴシック", YuGothic, sans-serif;
+            font-size: 17px;
+        }
+
+        .media-heading, .social-heading {
+            line-height: 1.4 !important;
         }
 
         p {
             font-size: 20px;
-        }
-
-        p.small {
-            font-size: 16px;
         }
 
         a, a:hover, a:focus, a:active {
@@ -34,29 +30,18 @@
             border-color: #465260;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            /*text-transform: uppercase;*/
+        h1, h2, h4, h5, h6 {
             font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-weight: 700;
         }
 
-        hr.star-light,
-        hr.star-primary {
+        hr.star-light {
             margin: 25px auto 30px;
             padding: 0;
             max-width: 250px;
             border: 0;
             border-top: solid 5px;
             text-align: center;
-        }
-
-        hr.star-light {
-            border-color: #fff;
-        }
-
-        hr.star-light:after {
-            color: #fff;
-            background-color: #18bc9c;
         }
 
         header {
@@ -80,15 +65,17 @@
 
         header .intro-text .name {
             display: block;
-            text-transform: uppercase;
-            font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 2em;
-            font-weight: 700;
+            font:normal normal 60px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+        }
+
+        header .intro-text .skills {
+            display: block;
+            font:normal normal 25px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
         }
 
         @media (min-width: 768px) {
             header .intro-text .name {
-                font-size: 4.75em;
+                font-size: 2.75em;
             }
 
             .navbar-default {
@@ -106,7 +93,6 @@
 
         .navbar {
             text-transform: uppercase;
-            font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-weight: 700;
         }
 
@@ -148,7 +134,6 @@
             transition: all 0.2s ease-out;
             -webkit-transition: all 0.2s ease-out;
             -moz-transition: all 0.2s ease-out;
-            font-family: 'LightCon', sans-serif;
             font-style: normal;
             font-weight: normal;
             border: 1px solid #7a003c;
@@ -214,7 +199,6 @@
         .news-list .media .media-heading {
             padding-bottom: 29px;
             font-size: 17px;
-            /*font-family: 'Roboto', sans-serif;*/
         }
 
         .news-list .media .media-heading, .media-list .media .media-heading, .social-list .social-heading {
@@ -265,7 +249,6 @@
             /* background-color: #6a7882; */
             background-color: #c6cbce;
             text-align: center;
-            font-family: 'BoldCon';
             padding: 1px 5px 5px 5px;
             width: 60px;
             height: 60px;
@@ -282,21 +265,26 @@
             padding: 0;
             text-transform: uppercase;
             font-size: 16px;
+            font-family: fantasy;
             line-height: 1;
             letter-spacing: 1px;
         }
 
         .event-list .event-calendar .date {
-            /* color: #323e48; */
             color: #6a7882;
             background-color: #ffffff;
             display: inline-block;
-            width: 100%;
-            font-size: 33px;
+            width: 94%;
+            font-size: 29px;
             line-height: 1;
-            margin: 1px 0 0 0;
+            margin: 0 1px 0 0;
             -webkit-transition: color 0.3s ease-out;
             transition: color 0.3s ease-out;
+        }
+
+        .event-list .event-calendar .date:hover {
+            color: #ac1455;
+            cursor: pointer;
         }
 
         .event-list small.time {
@@ -322,6 +310,14 @@
             overflow: hidden;
         }
 
+        .event-list a {
+            position: absolute;
+        }
+
+        ul {
+            list-style: none;
+        }
+
         #footer {
             color: #fff;
         }
@@ -332,12 +328,11 @@
     <div class="menu-wrap">
         <nav class="menu">
             <div class="icon-list">
-                <a href="#"><i class="fa fa-fw fa-star-o"></i><span>Favorites</span></a>
-                <a href="#"><i class="fa fa-fw fa-bell-o"></i><span>Alerts</span></a>
-                <a href="#"><i class="fa fa-fw fa-envelope-o"></i><span>Messages</span></a>
-                <a href="#"><i class="fa fa-fw fa-comment-o"></i><span>Comments</span></a>
-                <a href="#"><i class="fa fa-fw fa-bar-chart-o"></i><span>Analytics</span></a>
-                <a href="#"><i class="fa fa-fw fa-newspaper-o"></i><span>Reading List</span></a>
+                <a href="/"><span>Home</span></a>
+                <a href="#"><span>Archives</span></a>
+                <a href="#"><span>Reading list</span></a>
+                <a href="#"><span>Messages</span></a>
+                <a href="#"><span>Contact</span></a>
             </div>
         </nav>
         <button class="close-button" id="close-button">Close Menu</button>
@@ -352,9 +347,9 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="intro-text">
-                                <span class="name">Just better</span>
+                                <span class="name">Research Management</span>
                                 <hr class="star-light">
-                                <span class="skills">Web Developer - Graphic Artist - User Experience Designer</span>
+                                <span class="skills">Developer, Researcher & Writer</span>
                             </div>
                         </div>
                     </div>
@@ -378,79 +373,76 @@
         <div id="body" class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-6">
-                    <h2><span class="fa fa-rss" aria-hidden="true"></span> News</h2>
+                    <h2> News</h2>
                     <ul class="news-list">
                         <li class="media">
                             <div class="pull-left">
-                                <img src="http://www.mcmaster.ca/wordpress/wp-content/uploads/2015/07/harvey.jpg"
-                                     class="attachment-thumbnail_110x110" alt="harvey">
+                                <img src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2016/03/coding_man-01-web-700x462.png"
+                                     alt="harvey">
                             </div>
                             <div class="media-body">
-                                <h3 class="media-heading"><a
-                                            href="#"
-                                            target="_blank">‘Beloved’ iSci prof named one of Ontario’s top
-                                        teachers</a>
-                                </h3>
+                                <h3 class="media-heading"><a href="#" target="_blank">Kiểm thử tự động ứng dụng iOS với
+                                        Calabash</a></h3>
                             </div>
                         </li>
 
                         <li class="media">
                             <div class="pull-left">
-                                <img src="http://www.mcmaster.ca/wordpress/wp-content/uploads/2015/07/neighbours.jpg"
-                                     class="attachment-thumbnail_110x110" alt="harvey">
+                                <img src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2016/02/Internal-Tap-trung-quyet-liet-01-280x280.png"
+                                     alt="harvey">
                             </div>
                             <div class="media-body">
-                                <h3 class="media-heading"><a
-                                            href="#"
-                                            target="_blank">Students recognized as good neighbours</a>
-                                </h3>
+                                <h3 class="media-heading"><a href="#" target="_blank">Lập trình ứng dụng nhúng với thư
+                                        viện EMBD của Go</a></h3>
                             </div>
                         </li>
 
                         <li class="media">
                             <div class="pull-left">
-                                <img src="http://www.mcmaster.ca/wordpress/wp-content/uploads/2015/07/influence-1.jpg"
-                                     class="attachment-thumbnail_110x110" alt="harvey">
+                                <img src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2016/02/Internal-Cong-viec-cua-CEO-02-700x461.png"
+                                     alt="harvey">
                             </div>
                             <div class="media-body">
-                                <h3 class="media-heading"><a
-                                            href="#"
-                                            target="_blank">Nine McMaster researchers among most influential in the
-                                        world</a>
-                                </h3>
+                                <h3 class="media-heading"><a href="#" target="_blank">Hệ thống POS: Giúp khách hàng nhớ
+                                        đến bạn nhờ… hóa đơn</a></h3>
                             </div>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-4 col-sm-6">
-                    <h2><span class="fa fa-rss" aria-hidden="true"></span> Project</h2>
+                    <h2> Project</h2>
                     <ul class="social-list list-unstyled">
                         <li class="social-tweet">
-                            <h3 style="font-size: 14px" class="social-heading">Check out some of McMaster's most
-                                interesting spaces at Doors Open:<a
-                                        href="#">http://bit.ly/23drPV3</a>.</h3>
-                            <small class="social-detail"><span class="fa fa-twitter" aria-hidden="true"></span> <a
-                                        href="#" target="_blank">@McMasterU</a> • April 7
-                            </small>
+                            <h3 style="font-size: 14px" class="social-heading">Nếu bạn cảm thấy thú vị với dự án này,
+                                hãy tham gia cùng tôi tại đây:
+                                <a href="https://github.com/Vietworm/CrabJS">@Vietworm:CrabJS</a>.
+                            </h3>
+                            <small class="social-detail"><a href="https://github.com/100dayproject" target="_blank">@100dayproject</a> •April 7</small>
                         </li>
                         <li class="social-youtube">
                             <div class="video-container player-condensed">
-                                <iframe src="http://www.youtube.com/embed/5OnC0Ce__AM?modestbranding=1&amp;controls=0&amp;showinfo=0&amp;wmode=transparent"
-                                        frameborder="0" width="560" height="315"></iframe>
+                                <iframe src="http://www.youtube.com/embed/AEIn3T6nDAo?modestbranding=1&amp;controls=0&amp;showinfo=0&amp;wmode=transparent"
+                                        frameborder="0"
+                                        width="560"
+                                        height="315">
+                                </iframe>
                             </div>
-                            <small class="social-detail"><span class="fa fa-youtube-play" aria-hidden="true"></span> <a
-                                        href="#" target="_blank">@McMasterUTV</a> •
-                                April 7
-                            </small>
-                            <h3 style="font-size: 17px" class="social-heading">
-                                <a href="#" target="_blank">Meet VIRGIL: The robotic arm
-                                    built by students</a>
+                            <h3 style="font-size: 14px" class="social-heading">
+                                <a href="#" target="_blank">WebSphere: Xây dựng mã nguồn mở CMS trên NodeJS</a>
+                            </h3>
+                            <h3 style="font-size: 14px" class="social-heading">
+                                <a href="#" target="_blank">Hardware: Xây dựng hệ thống nhà ở thông minh - kiến trúc
+                                    nhỏ.</a>
+                            </h3>
+                            <h3 style="font-size: 14px" class="social-heading">
+                                <a href="#" target="_blank">Computer vision: Nhận dạng khuôn mặt sử dụng OpenCV
+                                    Library</a>
                             </h3>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-4 col-sm-12">
-                    <h2><span class="fa fa-rss" aria-hidden="true"></span> Events</h2>
+                    <h2> Events</h2>
                     <ul class="media-list event-list">
                         {% for i in range(0,3) %}
                             <li class="media col-md-12 col-sm-6">
@@ -461,8 +453,7 @@
                                 <div class="media-body" style="display: initial !important;">
                                     <small class="time">12 p.m.</small>
                                     <h3 class="media-heading" style="font-size: 14px">
-                                        <a href="#">Lorem ipsum
-                                            dolor sit amet, consectetur adipisicing elit. Accusantium, porro?</a>
+                                        <a href="#">Phong cách tối giản (Minimalism) trong thiết kế Website</a>
                                     </h3>
                                 </div>
                             </li>
@@ -471,25 +462,22 @@
                 </div>
             </div>
             <div id="view-more" class="row hidden-sm hidden-xs">
-                <div class="col-md-4">
-                    <a href="#" class="btn btn-info">
-                        <span class="fa fa-plus" aria-hidden="true"></span> More News</a>
-                </div>
-                <div class="col-md-4"><a href="#" class="btn btn-info"><span
-                                class="fa fa-plus" aria-hidden="true"></span> Share</a></div>
-                <div class="col-md-4"><a href="#" class="btn btn-info"><span
-                                class="fa fa-plus" aria-hidden="true"></span> More Events</a></div>
+                <div class="col-md-4"><a href="#" class="btn btn-info"> Xem thêm</a></div>
+                <div class="col-md-4"><a href="#" class="btn btn-info"> Dự án</a></div>
+                <div class="col-md-4"><a href="#" class="btn btn-info"> Sự kiện</a></div>
             </div>
         </div>
 
         <div id="footer" class="container-fluid" style="background-color: #7a003c; margin-top: 50px;">
-            <div class="container" style="height: 150px">
-                <div style="padding-top: 50px; text-align: center">
-                    <strong>#THE 100DAYPROJECT</strong>
-                    <p style="font-size: 17px;">
-                        <span class="icoHolder"><i class="ico icoAddr"></i></span>
-                        <span class="text"><b>Vietnam:</b> 147 Ton Dat Tien Street, Tan Phong Ward, District 7, Ho Chi Minh City</span>
-                    </p>
+            <div class="container" style="height: 150px; padding-top: 50px;">
+                <div class="col-md-4 col-sm-6">
+                    <strong>#The 100dayproject</strong>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <strong>MADE IN VIETNAM</strong>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <strong>© 2016 <a style="color: #fff;" href="#">Vietworm</a> Authors</strong>
                 </div>
             </div>
         </div>

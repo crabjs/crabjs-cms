@@ -45,4 +45,17 @@ _module.module_install = function (req, res) {
     })
 };
 
+_module.seo_settings = function (req, res) {
+    let toolbar = new __.Toolbar();
+    toolbar.custom({
+        refreshButton: {link: `/${__config.admin_prefix}/seo/settings`},
+        createButton: {access: true, link: `#`, text: ' Thêm module'}
+    });
+
+    _module.render(req, res, 'module_install', {
+        title: 'Cấu hình Search Engine Optimization',
+        toolbar: toolbar.render()
+    })
+};
+
 module.exports = _module;
