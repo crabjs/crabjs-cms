@@ -36,6 +36,7 @@
     "font-awesome": "fontawesome#^4.6.0",
     "Ionicons": "ionicons#^2.0.1",
     "hint.css": "^2.2.1",
-    "magnific-popup": "^1.1.0"
+    "magnific-popup": "^1.1.0",
+    "highlightjs": "^9.2.0"
   }
 }

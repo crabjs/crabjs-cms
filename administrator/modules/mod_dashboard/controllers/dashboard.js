@@ -14,9 +14,25 @@ let services = require('../services'),
     _module = new __viewRender('backend', module_name);
 
 _module.view = function (req, res) {
-    _module.render(req, res, 'index', {
-        title: 'Dashboard'
-    })
+    Promise.all([
+        __models.Posts.count(function (err, re) {
+            if (err) {
+                __.logger.error(err);
+            }
+            return re; // Số lượng bài viết
+        }),
+        __models.Users.count(function (err, re) {
+            if (err) {
+                __.logger.error(err);
+            }
+            return re; // Số lượng người dùng
+        })
+    ]).then(function (statistic) {
+        _module.render(req, res, 'index', {
+            title: 'Dashboard',
+            re: statistic
+        })
+    });
 };
 
 module.exports = _module;

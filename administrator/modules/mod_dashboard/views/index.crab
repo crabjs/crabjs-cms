@@ -39,14 +39,14 @@
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>100</h3>
+                    <h3>{{ re[0] }}</h3>
 
-                    <p>Câu hỏi</p>
+                    <p>Bài viết</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
                 </div>
-                <a href="/{{ admin_prefix }}/question" class="small-box-footer">Xem chi tiết <i
+                <a href="/{{ admin_prefix }}/posts" class="small-box-footer">Xem chi tiết <i
                             class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -56,13 +56,12 @@
             <div class="small-box bg-green">
                 <div class="inner">
                     <h3>4324</h3>
-
-                    <p>Câu trả lời</p>
+                    <p>Tin nhắn</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-commenting-o"></i>
                 </div>
-                <a href="/{{ admin_prefix }}/answers" class="small-box-footer">Xem chi tiết <i
+                <a href="/{{ admin_prefix }}/messages" class="small-box-footer">Xem chi tiết <i
                             class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -71,9 +70,8 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>345</h3>
-
-                    <p>Người sử dụng</p>
+                    <h3>{{ re[1] }}</h3>
+                    <p>Thành viên</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
@@ -88,8 +86,7 @@
             <div class="small-box bg-red">
                 <div class="inner">
                     <h3>432</h3>
-
-                    <p>Bác sỹ</p>
+                    <p>Lỗi hệ thống</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-user-md"></i>

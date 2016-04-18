@@ -1,0 +1,80 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    <link rel="stylesheet" href="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">
+{% endblock %}
+
+{% block content_body %}
+    {% for post in posts %}
+        <tr>
+            <td><input type="checkbox" class="check-element" name="ids[]" value="{{ post._id }}"></td>
+            <td>
+                <a href="/{{ admin_prefix }}/posts/view/{{ post._id }}">
+                    <span>{{ post.title }}</span>
+                </a>
+            </td>
+            <td>{{ post.alias }}</td>
+            <td>
+                <a href="/{{ admin_prefix }}/profile/view/{{ post.authors._id }}">
+                    <span class="label label-primary">{{ post.authors.display_name or post.authors.displayName }}</span>
+                </a>
+            </td>
+            <td><span>{{ post.created_at|dateFormat }}</span></td>
+            <td>
+                {% if post.status == 0 %}
+                    <span class="label label-success">Publish</span>
+                {% else %}
+                    <span class="label label-warning">Draft</span>
+                {% endif %}
+
+                {% if post.password|trim %}
+                    <span class="label label-warning">Password</span>
+                {% endif %}
+
+            </td>
+        </tr>
+    {% endfor %}
+
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/bower_components/AdminLTE/plugins/daterangepicker/moment.min.js"></script>
+    <script src="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+    <script>
+        $('input[type="date-range"]').daterangepicker({
+            "showISOWeekNumbers": true,
+            "locale": {
+                "format": "MM/DD/YYYY",
+                "separator": " - ",
+                "applyLabel": "Xác nhận",
+                "cancelLabel": "Hủy bỏ",
+                "fromLabel": "Từ ngày",
+                "toLabel": "Đến ngày",
+                "customRangeLabel": "Tùy chỉnh",
+                "daysOfWeek": [
+                    "CN",
+                    "T2",
+                    "T3",
+                    "T4",
+                    "T5",
+                    "T6",
+                    "T7"
+                ],
+                "firstDay": 1
+            },
+            "linkedCalendars": false,
+            "opens": "left"
+        }, function (start, end, label) {
+            console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+        });
+
+        function checkAll(selectAll) {
+            var input = document.getElementsByTagName('input');
+            for (var i = 0; i < input.length; i++) {
+                if (input[i].type == 'checkbox') {
+                    input[i].checked = selectAll.checked;
+                }
+            }
+        }
+    </script>
+{% endblock %}

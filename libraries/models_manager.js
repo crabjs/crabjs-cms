@@ -39,7 +39,7 @@ if (__config.db.options.auth) {
 mongoose.connect(mongoUri, options);
 mongoose.connection.on('error', function (err) {
     if (err.message.indexOf('EHOSTUNREACH')) {
-        __.logger.warning('There is no Internet connection');
+        __.logger.warn('There is no Internet connection');
         process.exit(1);
     }
     if (err) throw err;

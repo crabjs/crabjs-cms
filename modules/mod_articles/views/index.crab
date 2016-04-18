@@ -1,1 +1,157 @@
 {% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content_body %}
+    <div class="content-wrap">
+        <div class="content">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default"></nav>
+            <header>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="intro-text">
+                                <span class="name">Research Management</span>
+                                <hr class="star-light">
+                                <span class="skills">Developer, Researcher & Writer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="highlight-btn" class="row" role="navigation">
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/computer-vision" class="btn btn-info btn-lg btn-block">Computer Vision</a>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/webSphere" class="btn btn-info btn-lg btn-block">WebSphere</a>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/hardware" class="btn btn-info btn-lg btn-block">Hardware</a>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <a href="/research" class="btn btn-info btn-lg btn-block">Research</a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div id="body" class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <h2> News</h2>
+                    <ul class="news-list">
+                        <li class="media">
+                            <div class="pull-left">
+                                <img src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2016/03/coding_man-01-web-700x462.png"
+                                     alt="harvey">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading"><a href="#" target="_blank">Kiểm thử tự động ứng dụng iOS với
+                                        Calabash</a></h3>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="pull-left">
+                                <img src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2016/02/Internal-Tap-trung-quyet-liet-01-280x280.png"
+                                     alt="harvey">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading"><a href="#" target="_blank">Lập trình ứng dụng nhúng với thư
+                                        viện EMBD của Go</a></h3>
+                            </div>
+                        </li>
+
+                        <li class="media">
+                            <div class="pull-left">
+                                <img src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2016/02/Internal-Cong-viec-cua-CEO-02-700x461.png"
+                                     alt="harvey">
+                            </div>
+                            <div class="media-body">
+                                <h3 class="media-heading"><a href="#" target="_blank">Hệ thống POS: Giúp khách hàng nhớ
+                                        đến bạn nhờ… hóa đơn</a></h3>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <h2> Project</h2>
+                    <ul class="social-list list-unstyled">
+                        <li class="social-tweet">
+                            <h3 style="font-size: 14px" class="social-heading">Nếu bạn cảm thấy thú vị với dự án này,
+                                hãy tham gia cùng tôi tại đây:
+                                <a href="https://github.com/Vietworm/CrabJS">@Vietworm:CrabJS</a>.
+                            </h3>
+                            <small class="social-detail"><a href="https://github.com/100dayproject" target="_blank">@100dayproject</a> •April 7</small>
+                        </li>
+                        <li class="social-youtube">
+                            <div class="video-container player-condensed">
+                                <iframe src="http://www.youtube.com/embed/AEIn3T6nDAo?modestbranding=1&amp;controls=0&amp;showinfo=0&amp;wmode=transparent"
+                                        frameborder="0"
+                                        width="560"
+                                        height="315">
+                                </iframe>
+                            </div>
+                            <h3 style="font-size: 14px" class="social-heading">
+                                <a href="#" target="_blank">WebSphere: Xây dựng mã nguồn mở CMS trên NodeJS</a>
+                            </h3>
+                            <h3 style="font-size: 14px" class="social-heading">
+                                <a href="#" target="_blank">Hardware: Xây dựng hệ thống nhà ở thông minh - kiến trúc
+                                    nhỏ.</a>
+                            </h3>
+                            <h3 style="font-size: 14px" class="social-heading">
+                                <a href="#" target="_blank">Computer vision: Nhận dạng khuôn mặt sử dụng OpenCV
+                                    Library</a>
+                            </h3>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <h2> Events</h2>
+                    <ul class="media-list event-list">
+                        {% for i in range(0,3) %}
+                            <li class="media col-md-12 col-sm-6">
+                                <div class="pull-left event-calendar">
+                                    <span class="month">April</span>
+                                    <span class="date">18</span>
+                                </div>
+                                <div class="media-body" style="display: initial !important;">
+                                    <small class="time">12 p.m.</small>
+                                    <h3 class="media-heading" style="font-size: 14px">
+                                        <a href="#">Phong cách tối giản (Minimalism) trong thiết kế Website</a>
+                                    </h3>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div id="view-more" class="row hidden-sm hidden-xs">
+                <div class="col-md-4"><a href="#" class="btn btn-info"> Xem thêm</a></div>
+                <div class="col-md-4"><a href="#" class="btn btn-info"> Dự án</a></div>
+                <div class="col-md-4"><a href="#" class="btn btn-info"> Sự kiện</a></div>
+            </div>
+        </div>
+
+        <div id="footer" class="container-fluid" style="background-color: #7a003c; margin-top: 50px;">
+            <div class="container" style="height: 150px; padding-top: 50px;">
+                <div class="col-md-4 col-sm-6">
+                    <strong>#The 100dayproject</strong>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <strong>MADE IN VIETNAM</strong>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <strong>© 2016 <a style="color: #fff;" href="#">Vietworm</a> Authors</strong>
+                </div>
+            </div>
+        </div>
+    </div><!-- /content-wrap -->
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+{% endblock %}

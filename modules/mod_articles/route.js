@@ -12,5 +12,6 @@
 let articles = require('./controllers/articles');
 
 module.exports = function (app) {
-  app.route('/articles').get(articles.list);
+  app.route('/posts').get(articles.list);
+  app.route('/posts/:alias').get(articles.view_article);
 };

@@ -16,12 +16,31 @@ let services = require('../services'),
 _module.web_settings = function (req, res) {
     let toolbar = new __.Toolbar();
     toolbar.custom({
-        refreshButton: {link: `/${__config.admin_prefix}/site/settings`},
+        refreshButton: {link: `/${__config.admin_prefix}/settings`},
         saveButton: {access: true, link: `#`, text: ' Lưu lại'}
     });
-    _module.render(req, res, 'web_settings', {
-        title: 'Settings',
-        toolbar: toolbar.render()
+
+    __models.Objects.findOne({key: 'seo:settings'}, function (err, re) {
+        if (err) {
+            __.logger.error(err);
+            return _module.render_error(req, res, '500');
+        }
+        _module.render(req, res, 'web_settings', {
+            title: 'Cấu hình Search Engine Optimization',
+            toolbar: toolbar.render(),
+            meta: re
+        })
+    });
+};
+
+_module.web_settings_update = function (req, res) {
+    __models.Objects.update({key: 'seo:settings'}, req.body).exec(function (err, re) {
+        if (err) {
+            __.logger.error(err);
+            return _module.render_error(req, res, '500');
+        }
+        req.flash('success', 'Cập nhật thông tin thành công!');
+        res.redirect(`/${__config.admin_prefix}/settings`);
     })
 };
 

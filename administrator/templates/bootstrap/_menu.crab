@@ -6,6 +6,13 @@
         <ul class="sidebar-menu">
             <li class="header">Hệ thống</li>
             <li class="treeview">
+                <a href="#"><i class="fa fa-newspaper-o"></i> <span>Bài viết</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a class="link-active" href="/admin/posts"><i class="fa fa-arrows-h"></i>Danh sách bài viết</a></li>
+                    <li><a class="link-active" href="/admin/posts/create"><i class="fa fa-circle-o"></i>Viết bài mới</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-cog"></i> <span>Cấu hình hệ thống</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
@@ -17,7 +24,6 @@
                             modules</a></li>
                 </ul>
             </li>
-            <li><a href="/admin/protectSystem"><i class="fa fa-unlock"></i> <span>Khóa hệ thống</span></a></li>
             <li class="treeview">
                 <a href="#"><i class="fa fa-bug"></i> <span>Báo cáo hệ thống</span> <i
                             class="fa fa-angle-left pull-right"></i></a>

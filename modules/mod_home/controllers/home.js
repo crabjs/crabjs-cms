@@ -13,8 +13,16 @@ let module_name = 'mod_home',
     _module = new __viewRender(module_name);
 
 _module.index = function (req, res) {
-    _module.render(req, res, 'index', {
-        title: 'Hainho - The 100dayproject of archives & research collections and quickly save my ideas'
+
+    __models.Objects.findOne({key: 'seo:settings'}, function (err, meta) {
+        if (err) {
+            __.logger.error(err);
+            return _module.render_error(req, res, '500');
+        }
+        _module.render(req, res, 'index', {
+            title: meta.site_title,
+            meta: meta
+        });
     });
 };
 

@@ -4,7 +4,8 @@
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Join us to break out for at least once in your lifetime with our code and technical labs.">
+    <meta name="description"
+          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
     <title>{{ title }}</title>
     <link id="favicon" rel="shortcut icon" type="image/x-icon" href="/favicon-v1.1.ico">
@@ -18,13 +19,15 @@
 
     <meta itemprop="name" content="100dayproject - Technical labs Ignore">
     <meta name="keywords" content="100dayproject, CrabJS, github">
-    <meta itemprop="description" content="Join us to break out for at least once in your lifetime with our code and technical labs.">
+    <meta itemprop="description"
+          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
 
     <meta property="og:title" content="100dayproject - Technical labs Ignore">
     <meta property="og:site_name" content="100dayproject.org">
     <meta property="og:locale" content="en_US"/>
     <meta property="og:type" content="website">
-    <meta property="og:description" content="Join us to break out for at least once in your lifetime with our code and technical labs.">
+    <meta property="og:description"
+          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
     <meta property="og:image" content="/images/whynotbar.png"/>
     <!-- End meta data -->
 
@@ -45,6 +48,12 @@
 
     <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="/bower_components/polymer/polymer.html">
+    <style>
+        .required {
+            color: #c62828 !important;
+        }
+    </style>
+    {% block cssExtends %}{% endblock %}
 </head>
 
 

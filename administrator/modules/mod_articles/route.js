@@ -8,14 +8,14 @@
  */
 
 "use strict";
-
-"use strict";
 let express = require('express'),
     router = express.Router();
-let settings = require('./controllers/settings');
+let articles = require('./controllers/articles');
 
-router.route('/settings').get(settings.web_settings).post(settings.web_settings_update);
-router.route('/modules/install').get(settings.module_install);
-router.route('/SEO/settings').get(settings.seo_settings);
+router.route('/posts').get(articles.list);
+
+router.route('/posts/create').get(articles.create).post(articles.created);
+router.route('/posts/view/:id').get(articles.view).post(articles.update);
+router.route('/upload').post(articles.upload);
 
 module.exports = router;

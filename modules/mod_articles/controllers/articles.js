@@ -16,4 +16,10 @@ _module.list = function (req, res) {
     _module.render(req, res, 'index');
 };
 
+_module.view_article = function (req, res) {
+    _module.render(req, res, 'article_view', {
+        title: 'Tiêu đề'
+    })
+};
+
 module.exports = _module;
