@@ -1,0 +1,102 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    <link rel="stylesheet" href="/bower_components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+{% endblock %}
+
+{% block toolbarExtends %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12" style="margin-bottom: 10px">
+            <form method="post" action="/admin/categories/create">
+                <div class="col-md-6 col-sm-6">
+                    <div class="row">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-plus"></i></span>
+                            <input type="text" class="form-control" name="name" required="required">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary btn-flat" type="submit">Create New</button>
+                                    </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_body %}
+    {% for category in categories %}
+        <tr>
+            <td><input type="checkbox" class="check-element" name="ids[]" value="{{ category._id }}"></td>
+            <td>
+                <a id="name" href="#" data-name="name" class="inline-edit editable editable-click" data-url="/admin/categories/{{ category._id }}"
+                   data-type="text" data-pk="{{ category._id }}">{{ category.name }}</a>
+            </td>
+            <td>
+                <a href="#" data-name="alias" class="inline-edit editable editable-click" data-url="/admin/categories/{{ category._id }}"
+                   data-type="text" data-pk="{{ category._id }}" data-title="Enter alias">{{ category.alias }}</a>
+            </td>
+            <td>150</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block jsExtends %}
+    {{ super() }}
+    <script src="/bower_components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script>
+        $.fn.editable.defaults.mode = 'inline';
+        $(document).ready(function() {
+            $('.inline-edit').editable({
+                type: 'text',
+                success: function (response, newValue) {
+                    if (response != null) {
+                        var type, icon, title;
+                        var wrap = $('.content-wrapper');
+
+                        if (response.type == 'success') {
+                            type = 'success';
+                            icon_class = 'fa-check'
+                        } else {
+                            type = 'danger';
+                            icon_class = 'fa-warning'
+                        }
+
+                        var child = wrap.find('.flashBox');
+                        if (child.length > 0) {
+                            child.remove();
+                        }
+
+                        title = (type == "danger") ? "error" : type;
+                        wrap.prepend('<div class="col-md-12 col-sm-12 col-xs-12 flashBox" style="padding: 15px"><div class="alert alert-' + type + ' alert-dismissable">' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="margin-top: 15px">' +
+                                '<i class="fa-lg fa fa-close"></i></button> ' +
+                                '<h4><i class="fa-lg fa ' + icon_class + '"></i> ' + title.toUpperCase() + '</h4>' +
+                                '<p>' + response.message + '</p></div></div>');
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script>
+        function deleteRecords() {
+            var ids = [];
+            $("input:checkbox[name='ids[]']:checked").each(function () {
+                ids.push($(this).val());
+            });
+            if (ids.length > 0) {
+                $.ajax({
+                    url: `/{{ admin_prefix }}/categories`,
+                    type: 'DELETE',
+                    data: {
+                        ids: ids
+                    },
+                    success: function (result) {
+                        window.location.href = `/{{ admin_prefix }}/categories`;
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

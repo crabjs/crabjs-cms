@@ -8,3 +8,12 @@
  */
 
 "use strict";
+let express = require('express'),
+    router = express.Router();
+let categories = require('./controllers/categories');
+
+router.route('/categories/create').post(categories.create);
+router.route('/categories').get(categories.list).delete(categories.delete);
+router.route('/categories/:id').post(categories.update);
+
+module.exports = router;

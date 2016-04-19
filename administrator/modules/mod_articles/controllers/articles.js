@@ -27,7 +27,10 @@ _module.create = function (req, res) {
 
 _module.created = function (req, res) {
     req.body.key = 'article';
-    req.body.authors = req.user;
+    req.body.authors = {
+        _id: req.user._id,
+        display_name: req.user.display_name
+    };
     var newPost = new __models.Posts(req.body);
     newPost.save(function (err) {
         if (err) {
@@ -116,7 +119,7 @@ _module.list = function (req, res) {
             width: '25%',
             header: 'Alias'
         }, {
-            column: 'authors.displayName',
+            column: 'authors.display_name',
             width: '20%',
             header: 'Họ tên'
         }, {
@@ -178,7 +181,7 @@ _module.list = function (req, res) {
     }
 
 
-    __models.Posts.find(req.query, function (err, posts) {
+    __models.Posts.find(req.query).sort({created_at: -1}).exec(function (err, posts) {
         if (err) {
             __.logger.error(err);
             req.flash('danger', 'Có lỗi xảy ra khi truy cập bài viết!');
@@ -189,7 +192,21 @@ _module.list = function (req, res) {
             toolbar: toolbar.render(),
             posts: posts
         })
-    });
+    })
+};
+
+_module.delete = function (req, res) {
+    __models.Posts.remove({key: 'article', _id: {$in: req.body.ids}})
+        .exec(function (err) {
+            if (err) {
+                __.logger.error(err);
+                req.flash('danger', 'Có lỗi kiểm tra!');
+                res.sendStatus(200);
+            } else {
+                req.flash('success', 'Xóa bài viết thành công!');
+                res.sendStatus(200);
+            }
+        })
 };
 
 _module.view = function (req, res) {

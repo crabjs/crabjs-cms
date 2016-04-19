@@ -15,7 +15,7 @@ let services = require('../services'),
 
 _module.view = function (req, res) {
     Promise.all([
-        __models.Posts.count(function (err, re) {
+        __models.Posts.count({key: 'article'}, function (err, re) {
             if (err) {
                 __.logger.error(err);
             }

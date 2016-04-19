@@ -22,7 +22,6 @@
                 <th>Name</th>
                 <th>Version</th>
                 <th>Description</th>
-                <th>Position</th>
                 <th width="10%">Status</th>
             </tr>
             </thead>

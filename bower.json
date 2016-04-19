@@ -37,6 +37,8 @@
     "Ionicons": "ionicons#^2.0.1",
     "hint.css": "^2.2.1",
     "magnific-popup": "^1.1.0",
-    "highlightjs": "^9.2.0"
+    "highlightjs": "^9.2.0",
+    "x-editable": "^1.5.1",
+    "jquery-ui": "^1.11.4"
   }
 }

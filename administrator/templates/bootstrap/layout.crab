@@ -4,32 +4,9 @@
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description"
-          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
     <title>{{ title }}</title>
     <link id="favicon" rel="shortcut icon" type="image/x-icon" href="/favicon-v1.1.ico">
-
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="100dayproject - Technical labs Ignore">
-
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="white">
-    <meta name="apple-mobile-web-app-title" content="100dayproject - Technical labs Ignore">
-
-    <meta itemprop="name" content="100dayproject - Technical labs Ignore">
-    <meta name="keywords" content="100dayproject, CrabJS, github">
-    <meta itemprop="description"
-          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
-
-    <meta property="og:title" content="100dayproject - Technical labs Ignore">
-    <meta property="og:site_name" content="100dayproject.org">
-    <meta property="og:locale" content="en_US"/>
-    <meta property="og:type" content="website">
-    <meta property="og:description"
-          content="Join us to break out for at least once in your lifetime with our code and technical labs.">
-    <meta property="og:image" content="/images/whynotbar.png"/>
-    <!-- End meta data -->
 
     <!-- Tell the browser to be responsive to screen width -->
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -53,7 +30,9 @@
             color: #c62828 !important;
         }
     </style>
-    {% block cssExtends %}{% endblock %}
+    {% block cssExtends %}
+        <link rel="stylesheet" href="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">
+    {% endblock %}
 </head>
 
 
@@ -80,6 +59,7 @@
                 <div class="col-md-12">
                     {% block content %}
                         {{ toolbar|safe }}
+                        {% block toolbarExtends %}{% endblock %}
                         <div class="box box-solid box-primary">
                             <div class="box-body table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="datatable_orders">
@@ -112,7 +92,7 @@
 <!-- ./wrapper -->
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -126,9 +106,33 @@
     <script src="/bower_components/AdminLTE/plugins/daterangepicker/moment.min.js"></script>
     <script src="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
     <script>
-        $('input[type="date-range"]').daterangepicker({format: 'YYYY-MM-DD'});
-    </script>
-    <script>
+        $('input[type="date-range"]').daterangepicker({
+            "showISOWeekNumbers": true,
+            "locale": {
+                "format": "MM/DD/YYYY",
+                "separator": " - ",
+                "applyLabel": "Xác nhận",
+                "cancelLabel": "Hủy bỏ",
+                "fromLabel": "Từ ngày",
+                "toLabel": "Đến ngày",
+                "customRangeLabel": "Tùy chỉnh",
+                "daysOfWeek": [
+                    "CN",
+                    "T2",
+                    "T3",
+                    "T4",
+                    "T5",
+                    "T6",
+                    "T7"
+                ],
+                "firstDay": 1
+            },
+            "linkedCalendars": false,
+            "opens": "left"
+        }, function (start, end, label) {
+            console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+        });
+
         function checkAll(selectAll) {
             var input = document.getElementsByTagName('input');
             for (var i = 0; i < input.length; i++) {

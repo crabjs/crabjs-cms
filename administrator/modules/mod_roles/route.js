@@ -6,3 +6,15 @@
  * The complete set of contributors may be found at http://100dayproject.github.io/CONTRIBUTORS.txt
  * Code distributed by 100dayproject as part of the life.
  */
+
+"use strict";
+
+let express = require('express'),
+    router = express.Router();
+let roles = require('./controllers/roles');
+
+router.route('/roles').get(roles.list);
+router.route('/roles/create').get(roles.create);
+router.route('/roles/view/:id').get(roles.view);
+
+module.exports = router;

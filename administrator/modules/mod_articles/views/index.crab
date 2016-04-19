@@ -1,7 +1,7 @@
 {% extends 'layout.crab' %}
 
 {% block cssExtends %}
-    <link rel="stylesheet" href="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">
+    {{ super() }}
 {% endblock %}
 
 {% block content_body %}
@@ -38,42 +38,24 @@
 {% endblock %}
 
 {% block jsExtends %}
-    <script src="/bower_components/AdminLTE/plugins/daterangepicker/moment.min.js"></script>
-    <script src="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+    {{ super() }}
     <script>
-        $('input[type="date-range"]').daterangepicker({
-            "showISOWeekNumbers": true,
-            "locale": {
-                "format": "MM/DD/YYYY",
-                "separator": " - ",
-                "applyLabel": "Xác nhận",
-                "cancelLabel": "Hủy bỏ",
-                "fromLabel": "Từ ngày",
-                "toLabel": "Đến ngày",
-                "customRangeLabel": "Tùy chỉnh",
-                "daysOfWeek": [
-                    "CN",
-                    "T2",
-                    "T3",
-                    "T4",
-                    "T5",
-                    "T6",
-                    "T7"
-                ],
-                "firstDay": 1
-            },
-            "linkedCalendars": false,
-            "opens": "left"
-        }, function (start, end, label) {
-            console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-        });
-
-        function checkAll(selectAll) {
-            var input = document.getElementsByTagName('input');
-            for (var i = 0; i < input.length; i++) {
-                if (input[i].type == 'checkbox') {
-                    input[i].checked = selectAll.checked;
-                }
+        function deleteRecords() {
+            var ids = [];
+            $("input:checkbox[name='ids[]']:checked").each(function () {
+                ids.push($(this).val());
+            });
+            if (ids.length > 0) {
+                $.ajax({
+                    url: `/{{ admin_prefix }}/posts`,
+                    type: 'DELETE',
+                    data: {
+                        ids: ids
+                    },
+                    success: function (result) {
+                        window.location.href = `/{{ admin_prefix }}/posts`;
+                    }
+                });
             }
         }
     </script>

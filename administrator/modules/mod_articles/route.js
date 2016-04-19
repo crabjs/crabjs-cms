@@ -12,7 +12,7 @@ let express = require('express'),
     router = express.Router();
 let articles = require('./controllers/articles');
 
-router.route('/posts').get(articles.list);
+router.route('/posts').get(articles.list).delete(articles.delete);
 
 router.route('/posts/create').get(articles.create).post(articles.created);
 router.route('/posts/view/:id').get(articles.view).post(articles.update);

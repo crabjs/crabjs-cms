@@ -5,11 +5,15 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">Hệ thống</li>
+            <li class="treeview "><a href="/admin/categories"><i class="fa fa-tags"></i> <span> Categories </span></a></li>
             <li class="treeview">
-                <a href="#"><i class="fa fa-newspaper-o"></i> <span>Bài viết</span> <i class="fa fa-angle-left pull-right"></i></a>
+                <a href="#"><i class="fa fa-newspaper-o"></i> <span>Bài viết</span> <i
+                            class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="link-active" href="/admin/posts"><i class="fa fa-arrows-h"></i>Danh sách bài viết</a></li>
-                    <li><a class="link-active" href="/admin/posts/create"><i class="fa fa-circle-o"></i>Viết bài mới</a></li>
+                    <li><a class="link-active" href="/admin/posts"><i class="fa fa-arrows-h"></i>Danh sách bài viết</a>
+                    </li>
+                    <li><a class="link-active" href="/admin/posts/create"><i class="fa fa-circle-o"></i>Viết bài mới</a>
+                    </li>
                 </ul>
             </li>
             <li class="treeview">
@@ -18,21 +22,18 @@
                 <ul class="treeview-menu">
                     <li><a class="link-active" href="/admin/settings"><i class="fa fa-circle-o"></i>Cấu hình
                             website</a></li>
-                    <li><a class="link-active" href="/admin/SEO/settings"><i class="fa fa-circle-o"></i>Thiết lập
-                            SEO</a></li>
                     <li><a class="link-active" href="/admin/modules/install"><i class="fa fa-circle-o"></i>Cài đặt
                             modules</a></li>
                 </ul>
             </li>
             <li class="treeview">
-                <a href="#"><i class="fa fa-bug"></i> <span>Báo cáo hệ thống</span> <i
+                <a href="#"><i class="fa fa-user"></i> <span>Quản lý người dùng</span> <i
                             class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
-                    <li><a class="link-active" href="/admin/report/bugs"><i class="fa fa-circle-o"></i>Báo lỗi</a></li>
-                    <li><a class="link-active" href="/admin/report/featureRequest"><i class="fa fa-circle-o"></i>Yêu cầu
-                            chức năng</a></li>
-                    <li><a class="link-active" href="/admin/report/logs"><i class="fa fa-circle-o"></i>Kiểm soát lỗi</a>
+                    <li><a class="link-active" href="/admin/users"><i class="fa fa-circle-o"></i>Danh sách tài khoản</a>
                     </li>
+                    <li><a class="link-active" href="/admin/users/create"><i class="fa fa-circle-o"></i>Tạo tài
+                            khoản</a></li>
                 </ul>
             </li>
             <li class="treeview">

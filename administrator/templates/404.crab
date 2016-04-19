@@ -1,20 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="UTF-8">
-    <title>An Error Occurred: Not Found</title>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1">
-    <link id="favicon" rel="shortcut icon" type="image/x-icon" href="./images/favicon-v1.1.ico">
-</head>
-<body>
-<h1>Oops! An Error Occurred</h1>
+{% extends 'layout.crab' %}
+{% set title='An Error Occurred: Not Found' %}
+{% block content %}
+    <div class="error-page">
+        <h2 class="headline text-yellow"> 404</h2>
+        <div class="error-content">
+            <h3><i class="fa fa-warning text-yellow"></i> Oops! Page not found.</h3>
 
-<h2>The server returned a "404 Not Found".</h2>
+            <p>
+                We could not find the page you were looking for.
+                Meanwhile, you may <a href="/{{ admin_prefix }}/dashboard">return to dashboard</a> or try using the
+                search form.
+            </p>
 
-<div>
-    Something is broken. Please let us know what you were doing when this error occurred.
-    We will fix it as soon as possible. Sorry for any inconvenience caused.
-</div>
-</body>
-</html>
+            <form class="search-form">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search">
+
+                    <div class="input-group-btn">
+                        <button type="submit" name="submit" class="btn btn-warning btn-flat"><i
+                                    class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.input-group -->
+            </form>
+        </div>
+        <!-- /.error-content -->
+    </div>
+{% endblock %}

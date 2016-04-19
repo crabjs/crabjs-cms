@@ -53,7 +53,7 @@ _module.module_install = function (req, res) {
 
     let moduleIgnore = '' || '*';
     let listModuleExtends = {};
-    __.getGlobbedFiles(__base + `app/modules/${moduleIgnore}/module.js`).forEach(function (path) {
+    __.getGlobbedFiles(__base + `/administrator/modules/${moduleIgnore}/module.js`).forEach(function (path) {
         require(path)(listModuleExtends);
     });
 
