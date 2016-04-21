@@ -5,7 +5,7 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">Hệ thống</li>
-            <li class="treeview "><a href="/admin/categories"><i class="fa fa-tags"></i> <span> Categories </span></a></li>
+            <li class="treeview "><a href="/admin/categories"><i class="fa fa-tags"></i> <span> Danh mục bài viết </span></a></li>
             <li class="treeview">
                 <a href="#"><i class="fa fa-newspaper-o"></i> <span>Bài viết</span> <i
                             class="fa fa-angle-left pull-right"></i></a>

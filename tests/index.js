@@ -8,3 +8,4 @@
  */
 
 require('./env');
+require('./global_function');

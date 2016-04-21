@@ -45,6 +45,44 @@ exports.isAllow = function (action) {
     };
 };
 
+exports.verifyCondition = function (queryString, condition) {
+    let cond = {};
+
+    if (queryString.key)
+        delete queryString.key;
+    if (condition.key || condition.pk)
+        cond.key = condition.key || condition.pk;
+
+    for (let i in queryString) {
+        if (queryString.hasOwnProperty(i) && queryString[i]) {
+
+            for (let j in condition) {
+                if (condition.hasOwnProperty(j) && i == j) {
+                    if (condition[j].toLocaleLowerCase() == 'date' || condition[j].toLocaleLowerCase() == 'date-range') {
+                        let date = queryString[i].split(' - ');
+                        cond[j] = {
+                            $gte: date[0],
+                            $lte: date[1]
+                        };
+                    } else if (condition[j].toLocaleLowerCase() == 'string') {
+                        cond[j] = {
+                            $regex: queryString[i],
+                            $options: "iu"
+                        }
+                    } else if (condition[j].toLocaleLowerCase() == 'boolean') {
+                        if (queryString[i] !== 'all')
+                            cond[j] = queryString[i];
+                    }
+                }
+            }
+
+        }
+    }
+
+    return cond;
+
+};
+
 exports.t = function () {
     let currentLang = __config.app.language;
     var args = Array.prototype.slice.call(arguments);
@@ -83,9 +121,9 @@ exports.logger = new winston.Logger({
             colorize: true,
             prettyPrint: true,
             silent: false,
-            timestamp: function() {
+            timestamp: function () {
                 var date = new Date();
-                return date.getDate() + '/' + (date.getMonth() + 1) + ' ' + date.toTimeString().substr(0,5);
+                return date.getDate() + '/' + (date.getMonth() + 1) + ' ' + date.toTimeString().substr(0, 5);
             }
         }),
         new winston.transports.File({
@@ -110,9 +148,9 @@ exports.logger = new winston.Logger({
             prettyPrint: true,
             colorize: true,
             silent: false,
-            timestamp: function() {
+            timestamp: function () {
                 var date = new Date();
-                return date.getDate() + '/' + (date.getMonth() + 1) + ' ' + date.toTimeString().substr(0,5);
+                return date.getDate() + '/' + (date.getMonth() + 1) + ' ' + date.toTimeString().substr(0, 5);
             }
         })
     ],

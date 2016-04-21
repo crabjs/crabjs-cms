@@ -27,6 +27,8 @@ _module.create = function (req, res) {
 
 _module.created = function (req, res) {
     req.body.key = 'article';
+    if (!req.body.alias) req.body.alias = require('slug')(req.body.title).toLocaleLowerCase();
+
     req.body.authors = {
         _id: req.user._id,
         display_name: req.user.display_name
@@ -58,49 +60,6 @@ _module.upload = function (req, res) {
         console.log(fields);
 
     });
-
-
-    // var form = new formidable.IncomingForm();
-    // form.uploadDir = __base + '/public/upload';
-    // form.encoding = 'binary';
-    //
-    // form.addListener('file', function(name, file) {
-    //     // do something with uploaded file
-    // });
-    //
-    // form.addListener('end', function() {
-    //     res.end();
-    // });
-    //
-    // form.parse(req, function(err, fields, files) {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-    // });
-
-    // let form = new formidable.IncomingForm();
-    // form.parse(req, function(err, fields, files) {
-    //     // res.writeHead(200, {'content-type': 'text/plain'});
-    //     // res.write('received upload:\n\n');
-    //     // res.end(util.inspect({fields: fields, files: files}));
-    //     console.log(err);
-    //     console.log(fields);
-    //     console.log(files);
-    // });
-
-    // console.log('fsdaf',form);
-    //
-    // let fs = require('fs');
-    // req.files.attachments.forEach(function (element, index, array) {
-    //     fs.readFile(element.path, function (err, data) {
-    //         let newPath = __base + '/public/uploads/' + element.name;
-    //         fs.writeFile(newPath, data, function (err) {
-    //             if (err) {
-    //                 console.log(err);
-    //             }
-    //         })
-    //     })
-    // });
 };
 
 _module.list = function (req, res) {
@@ -155,33 +114,16 @@ _module.list = function (req, res) {
 
     res.locals.tableColumns = structure;
 
-    for (let key in req.query) {
-        if (req.query.hasOwnProperty(key) && !req.query[key]) {
-            delete req.query[key]
-        } else {
-            if (key !== 'status' && key !== 'created_at')
-                req.query[key] = {
-                    $regex: req.query[key],
-                    $options: "iu"
-                }
-        }
-    }
+    let cond = __.verifyCondition(req.query, {
+        key: 'article',
+        title: 'string',
+        alias: 'string',
+        created_at: 'date',
+        status: 'boolean',
+        "authors.display_name": 'string'
+    });
 
-    req.query.key = 'article';
-    if (req.query.status == 'all') {
-        delete req.query.status;
-    }
-
-    if (req.query.created_at) {
-        let date = req.query.created_at.split(' - ');
-        req.query.created_at = {
-            $gte: date[0],
-            $lte: date[1]
-        };
-    }
-
-
-    __models.Posts.find(req.query).sort({created_at: -1}).exec(function (err, posts) {
+    __models.Posts.find(cond).sort({created_at: -1}).exec(function (err, posts) {
         if (err) {
             __.logger.error(err);
             req.flash('danger', 'Có lỗi xảy ra khi truy cập bài viết!');
@@ -231,6 +173,8 @@ _module.view = function (req, res) {
 };
 
 _module.update = function (req, res) {
+    if (!req.body.alias) req.body.alias = require('slug')(req.body.title).toLocaleLowerCase();
+    
     __models.Posts.update({key: 'article', _id: req.params.id}, req.body).exec(function (err, re) {
         if (err) {
             __.logger.error(err);

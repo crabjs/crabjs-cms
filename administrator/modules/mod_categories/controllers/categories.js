@@ -40,21 +40,13 @@ _module.list = function (req, res) {
         }
     ];
 
-    for (let key in req.query) {
-        if (req.query.hasOwnProperty(key) && !req.query[key]) {
-            delete req.query[key]
-        } else {
-            if (key === 'name' || key === 'alias')
-                req.query[key] = {
-                    $regex: req.query[key],
-                    $options: "iu"
-                }
-        }
-    }
+    let cond = __.verifyCondition(req.query, {
+        pk: 'categories',
+        name: 'string',
+        alias: 'string'
+    });
 
-    req.query.key = 'categories';
-
-    __models.Posts.find(req.query).sort({created_at: -1}).exec(function (err, categories) {
+    __models.Posts.find(cond).sort({created_at: -1}).exec(function (err, categories) {
         if (err) {
             __.logger.error(err);
             return _module.render_error(req, res, '500');

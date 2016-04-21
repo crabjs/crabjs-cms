@@ -8,24 +8,10 @@
  */
 
 "use strict";
+let express = require('express'),
+    router = express.Router();
+let users = require('./controllers/users');
 
-let module_name = 'mod_articles',
-    _module = new __viewRender(module_name);
+router.route('/users').get(users.list).delete(users.delete);
 
-_module.list = function (req, res) {
-    _module.render(req, res, 'index');
-};
-
-_module.view_article = function (req, res) {
-
-    __models.Posts.findOne({key: 'article', alias: req.params.alias}, function (err, post) {
-        _module.render(req, res, 'article_view', {
-            title: post.title,
-            post: post
-        })
-    });
-
-
-};
-
-module.exports = _module;
+module.exports = router;

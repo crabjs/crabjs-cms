@@ -127,98 +127,33 @@
         <div class="col-md-3 col-sm-6">
             <header id="header">
                 <div id="author">
-                    <img style="width: 60px; height: 60px; border-radius: 50%" src="/images/whynotbar.png" alt="hainho"><span style="margin-left: 15px;">by hainho</span>
+                    <img style="width: 60px; height: 60px; border-radius: 50%" src="/images/whynotbar.png" alt="hainho"><span
+                            style="margin-left: 15px;">by hainho</span>
                 </div>
             </header>
         </div>
 
         <div class="col-md-8 col-sm-6">
             <section id="main">
-                <h1 id="title" style="font-size: 40px;">Lập trình ứng dụng nhúng với thư viện EMBD của Go</h1>
+                <h1 id="title" style="font-size: 40px;">{{ post.title }}</h1>
                 <div style="padding-top: 15px;">
                     <article itemprop="articleBody" id="content">
                         <div class="blogContent">
                             <div class="image_desc">
                                 <img style="max-width: 100%"
-                                     src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2015/12/Internal-ung-dung-nhung-Go-700x461.jpg"
+                                     src="{{ post.image }}"
                                      class="attachment-large wp-post-image"
-                                     alt="Ứng dụng nhúng với thư viện EMBD của Golang">
+                                     alt="{{ post.title }}">
                             </div>
-                            <div class="blogStory">
-                                <p class="graf--h3 graf--first">Khi phát triển các ứng dụng nhúng (embedded
-                                    application), tôi thường sử dụng C,&nbsp;C++ hoặc Python là chủ yếu. C và C++ có
-                                    hiệu suất xử lý cao nhưng tốn nhiều thời gian để viết các chương trình mẫu và phát
-                                    triển những ứng dụng có logic phức tạp. Đó là chưa nói đến việc phải xây dựng lại
-                                    hoặc thay đổi mã nguồn khi&nbsp;muốn sử dụng ứng dụng trên một hệ thống phần cứng
-                                    khác.</p>
-                                <p class="graf--h3 graf--first">Mặt khác, Python tiện lợi để phát triển ứng dụng hơn&nbsp;vì
-                                    nó là ngôn ngữ đa nền tảng. Nhưng Python có một khuyết điểm là hiệu suất xử lý không
-                                    được tốt cho lắm. Vì vậy, tôi đã đi tìm một ngôn ngữ có thể đáp ứng được lợi thế của
-                                    chúng về tốc độ và thời gian phát triển.</p>
-                                <p id="d6eb" class="graf--h3 graf--first">Gần đây, tôi phát hiện ra Go, một ngôn ngữ lập
-                                    trình được phát triển tại Google vào năm 2007 bởi Robert Griesemer, Rob Pike, và Ken
-                                    Thompson. Nó là ngôn ngữ kiểu tĩnh (statically typed language) với cú pháp lấy cảm
-                                    hứng từ C, thêm garbage collection, type safety, những kiểu dữ liệu được định nghĩa
-                                    sẵn và một thư viện chuẩn khổng lồ.</p>
-                                <p class="graf--h3 graf--first">Go cung cấp cú pháp và một môi trường để xây dựng một
-                                    ứng dụng nhanh và thú vị như ngôn ngữ kịch bản (scripting language). Ngoài ra, do Go
-                                    là một ngôn ngữ biên dịch nên hiệu suất xử lý của nó cũng rất tốt. Nghe có vẻ thích
-                                    đúng không? Nó có mọi thứ tôi cần nên tôi quyết định dùng nó để xây dựng thử một ứng
-                                    dụng nhúng.</p>
-                                <p class="graf--h3 graf--first">Bỏ chút thời gian tìm kiếm, tôi phát hiện thư viện
-                                    <strong><a href="http://embd.kidoman.io"
-                                               onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://embd.kidoman.io', 'EMBD']);"
-                                               title="EMBD" target="_blank">EMBD</a></strong>. EMBD là thư viện cung cấp
-                                    các lớp phần cứng trừu tượng (hardware abstraction layer) để phát triển các ứng dụng
-                                    nhúng cho Go. EMBD hỗ trợ nền tảng của <a href="https://www.raspberrypi.org"
-                                                                              onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://www.raspberrypi.org', 'Raspberry Pi']);"
-                                                                              title="Raspberry Pi" target="_blank">Raspberry
-                                        Pi</a> và <a href="http://beagleboard.org/BLACK"
-                                                     onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://beagleboard.org/BLACK', 'BeagleBone Black']);"
-                                                     title="BeagleBone Black" target="_blank">BeagleBone Black</a>. Hơn
-                                    thế nữa, ứng dụng có thể chạy trên các nền tảng được hỗ trợ mà không cần phải thay
-                                    đổi mã nguồn.</p>
-                                <p class="graf--h3 graf--first">Trong bài này, bạn sẽ học được cách sử dụng EMBD với Go
-                                    thông qua hai ví dụ đơn giản.</p>
-                                <h2 class="graf--h3 graf--first">Chuẩn bị</h2>
-                                <h3 class="graf--h3 graf--first">Cài đặt Go</h3>
-                                <p>Bạn vào <a href="https://golang.org/dl/"
-                                              onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://golang.org/dl/', 'trang download của Go']);"
-                                              target="_blank">trang download của Go</a> để tải bản cài đặt phù hợp với
-                                    hệ điều hành của mình về. Nếu bạn sử dụng Windows hay Mac OS X thì phiên bản cài đặt
-                                    của 2 hệ điều hành này đã cấu hình sẵn mọi thứ cho bạn. Nếu bạn sử dụng Linux thì có
-                                    thể đọc <a href="https://golang.org/doc/install"
-                                               onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://golang.org/doc/install', 'hướng dẫn cài đặt Go']);"
-                                               target="_blank">hướng dẫn cài đặt Go</a>.</p>
-                                <p>Tiếp theo là thiết lập GOPATH:</p>
-                                <ul>
-                                    <li><strong>Windows</strong>: thêm <code>GOPATH=[đường dẫn đến&nbsp;workspace của
-                                            bạn]</code> vào&nbsp;Environment Variables.
-                                    </li>
-                                    <li><strong>Mac OS X, Linux</strong>: thêm dòng <code>export GOPATH=[đường dẫn đến&nbsp;workspace
-                                            của bạn]</code> vào <code>~/.profile</code> hoặc <code>/etc/profile</code>
-                                    </li>
-                                </ul>
-                                <p>Bạn có thể tham khảo&nbsp;thêm <a href="https://golang.org/doc/code.html"
-                                                                     onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://golang.org/doc/code.html', 'cách Go cấu trúc thư mục']);"
-                                                                     target="_blank">cách Go cấu trúc thư mục</a> khi
-                                    phát triển ứng dụng Go.</p>
-
-
-                            </div>
+                            <div class="blogStory">{{ post.content|safe }}</div>
                         </div>
                     </article>
                     <blockquote>
                         <img style="display: inline-block;"
                              src="http://4qr7k2a2xza2vctux33bisalkw.wpengine.netdna-cdn.com/wp-content/uploads/2014/12/next-one-150x150.jpg"
                              alt="SSS Full-stack Engineer" width="150" height="150">
-                        <p style="display: inline-block; text-align: justify;">Love <strong>Silicon
-                                Straits</strong>&nbsp;and
-                            want to know more about our company culture, working environment or job
-                            vacancies?<br>
-                            Find out more at <strong>
-                                <a href="http://www.siliconstraits.vn/careers.php?utm_source=blog&amp;utm_medium=banner&amp;utm_campaign=hiring_ad"
-                                   target="_blank">careers.siliconstraits.vn</a></strong>.
+                        <p style="display: inline-block; text-align: justify;">
+                            {{ post.description|safe }}
                         </p>
                     </blockquote>
                 </div>
@@ -242,7 +177,9 @@
                             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
                         })();
                     </script>
-                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript"
+                                                                      rel="nofollow">comments powered by Disqus.</a>
+                    </noscript>
                 </aside>
                 <footer>
                     <div>
