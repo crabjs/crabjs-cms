@@ -13,5 +13,6 @@
     "mod_google_analytics",
     "mod_seo"
   ],
-  "theme": "bootstrap"
+  "theme": "bootstrap",
+  "page_size": 1
 }

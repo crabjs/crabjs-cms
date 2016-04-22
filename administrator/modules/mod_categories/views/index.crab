@@ -68,11 +68,10 @@
                         }
 
                         title = (type == "danger") ? "error" : type;
-                        wrap.prepend('<div class="col-md-12 col-sm-12 col-xs-12 flashBox" style="padding: 15px"><div class="alert alert-' + type + ' alert-dismissable">' +
-                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true" style="margin-top: 15px">' +
-                                '<i class="fa-lg fa fa-close"></i></button> ' +
-                                '<h4><i class="fa-lg fa ' + icon_class + '"></i> ' + title.toUpperCase() + '</h4>' +
-                                '<p>' + response.message + '</p></div></div>');
+                        var content = `<div class="col-md-12 col-sm-12 col-xs-12 flashBox" style="padding-top: 15px"><div class="alert alert-${type} alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                        <i class="icon fa ${icon_class}"></i>${response.message}</div></div>`;
+                        wrap.prepend(content);
                     }
                 }
             });

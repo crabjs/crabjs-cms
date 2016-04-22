@@ -71,6 +71,9 @@
                                     {% block content_body %}{% endblock %}
                                     </tbody>
                                 </table>
+                                {% if totalPage %}
+                                    {{ totalPage|pagination(currentPage,'/admin/'+module_name+'?page={page}&order_by='+order_by+'&order_type='+order_type)|safe }}
+                                {% endif %}
                             </div>
                         </div>
                     {% endblock %}

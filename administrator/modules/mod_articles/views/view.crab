@@ -33,11 +33,9 @@
                         <div class="form-group">
                             <label for="status">Trạng thái</label>
                             <select name="status" id="status" class="form-control">
-                                {% if post.status == -1 %}
-                                    <option value="-1" selected="selected">Bản nháp</option>
-                                {% else %}
-                                    <option value="0" selected="selected">Phát hành</option>
-                                {% endif %}
+                                <option {% if post.status == 0 %} selected="selected" {% endif %} value="0">Phát hành</option>
+
+                                <option {% if post.status == -1 %} selected="selected" {% endif %} value="-1">Bản nháp</option>
                             </select>
                         </div>
 

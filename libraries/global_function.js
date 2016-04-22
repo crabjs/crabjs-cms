@@ -30,12 +30,12 @@ String.prototype.toObjectId = function () {
 
 exports.isAllow = function (action) {
     return function (req, res, next) {
-        __models.objects.findById(req.user.roles, function (err, re) {
+        __models.Objects.findById(req.user.roles, function (err, re) {
             if (err) {
                 __.logger.error(err);
                 return _module.render_error(req, res, '500');
             }
-            if (re.permissions.indexOf(action) >= 0) {
+            if (re.values.indexOf(action) >= 0) {
                 next();
             } else {
                 req.flash('danger', 'Bạn chưa có quyền truy cập vào khu vực này.');

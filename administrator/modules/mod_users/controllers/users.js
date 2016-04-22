@@ -95,6 +95,72 @@ _module.list = function (req, res) {
     });
 };
 
+_module.view = function (req, res) {
+    __models.Objects.find({key: 'objects:roles', status: 0}, {name: 1}).sort({created_at: -1}).exec(function (error, roles) {
+        if (error) {
+            __.logger.error(error);
+            _module.render_error(req, res, '500');
+        }
+        __models.Users.findOne({_id: req.params.id}, function (err, profile) {
+            if (err) {
+                __.logger.error(err);
+                _module.render_error(req, res, '500');
+            } else if (!profile || !profile._id) {
+                __.logger.warn(`${layer} > Wrong parameter url: ${res.locals.route}`);
+                _module.render_error(req, res, '404');
+            } else {
+                _module.render(req, res, 'profile', {
+                    title: `Thông tin tài khoản: ${profile.display_name}`,
+                    profile: profile,
+                    roles: roles
+                })
+            }
+        })
+    });
+};
+
+_module.create = function (req, res) {
+    _module.render(req, res, 'profile', {
+        title: 'Tạo tài khoản mới',
+        create: true
+    })
+};
+
+_module.created = function (req, res) {
+    delete req.body.old_pass;
+    delete req.body.user_pass;
+
+    req.body.token = 'nothing';
+    req.body.password = __models.Users.generateHash(req.body.password);
+
+    var newUser = __models.Users(req.body);
+    newUser.save(function (err) {
+        if (err) {
+            __.logger.error(err);
+            req.flash('danger', 'Có lỗi xảy ra!');
+        } else {
+            req.flash('success', 'Tạo mới tài khoản thành công!');
+            res.redirect(`/${__config.admin_prefix}/users`);
+        }
+    });
+};
+
+_module.update = function (req, res) {
+    req.body.password = __models.Users.generateHash(req.body.password);
+    __models.Users.update({_id: req.params.id}, req.body).exec(function (err, re) {
+        if (err) {
+            __.logger.error(err);
+            return _module.render_error(req, res, '500');
+        }
+        req.flash('success', 'Cập nhật thông tin tài khoản thành công!');
+        res.redirect(`/${__config.admin_prefix}/users/view/${req.params.id}`);
+    });
+};
+
+_module.change_pass = function (req, res) {
+    console.log(req.body);
+};
+
 _module.delete = function (req, res) {
     __models.Users.remove({_id: {$in: req.body.ids}})
         .exec(function (err) {

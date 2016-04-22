@@ -41,6 +41,33 @@ _module.create = function (req, res) {
     });
 };
 
+_module.created = function (req, res) {
+    let acl = [];
+    Object.keys(req.body).forEach(function (i) {
+        if (i !== 'name' && i !== 'status' && i !== 'created_by') {
+            acl.push(i);
+        }
+    });
+
+    req.body.key = 'objects:roles';
+    req.body.values = JSON.stringify(acl);
+    req.body.created_by = {
+        _id: req.user._id,
+        display_name: req.user.display_name
+    };
+
+    var newRole = new __models.Objects(req.body);
+    newRole.save(function (err) {
+        if (err) {
+            __.logger.error(err);
+            req.flash('danger', 'Có lỗi xảy ra!');
+        } else {
+            req.flash('success', 'Tạo mới nhóm quyền thành công!');
+            res.redirect(`/${__config.admin_prefix}/roles`);
+        }
+    });
+};
+
 _module.list = function (req, res) {
 
     let structure = [
@@ -49,15 +76,15 @@ _module.list = function (req, res) {
             width: '1%',
             header: ''
         }, {
-            column: 'role_name',
+            column: 'name',
             width: '25%',
             header: 'Tên nhóm quyền'
         }, {
-            column: 'created_by',
+            column: 'created_by.display_name',
             width: '15%',
             header: 'Người tạo'
         }, {
-            column: 'created_date',
+            column: 'created_at',
             width: '15%',
             header: 'Ngày tạo',
             type: 'date-range',
@@ -65,7 +92,14 @@ _module.list = function (req, res) {
         }, {
             column: 'status',
             width: '15%',
-            header: 'Trạng thái'
+            header: 'Trạng thái',
+            type: {
+                name: 'select',
+                values: {
+                    '0': 'Kích hoạt',
+                    '-1': 'Bản nháp'
+                }
+            }
         }
     ];
     /**
@@ -81,10 +115,51 @@ _module.list = function (req, res) {
     });
     res.locals.tableColumns = structure;
 
-    _module.render(req, res, 'index', {
-        title: 'Danh sách quyền',
-        toolbar: toolbar.render()
-    })
+    let cond = __.verifyCondition(req.query, {
+        key: 'objects:roles',
+        name: 'string',
+        'created_by.display_name': 'string',
+        created_at: 'date',
+        status: 'boolean'
+    });
+
+    __models.Objects.find(cond).sort({created_at: -1}).exec(function (err, roles) {
+        if (err) {
+            __.logger.error(err);
+            return _module.render(req, res, '500');
+        }
+        _module.render(req, res, 'index', {
+            title: 'Danh sách quyền',
+            toolbar: toolbar.render(),
+            roles: roles
+        })
+    });
+};
+
+_module.update = function (req, res) {
+    let acl = [];
+    Object.keys(req.body).forEach(function (i) {
+        if (i !== 'name' && i !== 'status' && i !== 'created_by') {
+            acl.push(i);
+        }
+    });
+
+    req.body.values = JSON.stringify(acl);
+
+    for (let i in req.body) {
+        if (req.body.hasOwnProperty(i) && i !== 'status' && i !== 'name' && i !== 'values') {
+            delete req.body[i]
+        }
+    }
+
+    __models.Objects.update({key: 'objects:roles', _id: req.params.id}, req.body).exec(function (err, re) {
+        if (err) {
+            __.logger.error(err);
+            return _module.render_error(req, res, '500');
+        }
+        req.flash('success', 'Cập nhật thông tin quyền thành công!');
+        res.redirect(`/${__config.admin_prefix}/roles/view/${req.params.id}`);
+    });
 };
 
 _module.view = function (req, res) {
@@ -94,10 +169,53 @@ _module.view = function (req, res) {
         saveButton: {access: true}
     });
 
-    _module.render(req, res, 'view', {
-        title: 'Danh sách quyền',
-        toolbar: toolbar.render()
+
+    var listModuleExtends = {};
+    __.getGlobbedFiles(__base + `/administrator/modules/*/module.js`).forEach(function (path) {
+        require(path)(listModuleExtends);
     });
+
+    let modules = [];
+
+    for (let md in listModuleExtends) {
+        if (listModuleExtends.hasOwnProperty(md)) {
+            if (listModuleExtends[md].roles) {
+                modules.push(listModuleExtends[md]);
+            }
+        }
+    }
+
+    __models.Objects.findOne({key: 'objects:roles', _id: req.params.id}, {
+        values: 1,
+        name: 1,
+        status: 1
+    }).exec(function (err, acl) {
+        if (err) {
+            __.logger.error(err);
+            return _module.render_error(req, res, '500');
+        }
+
+        _module.render(req, res, 'view', {
+            title: 'Danh sách quyền',
+            toolbar: toolbar.render(),
+            modules: modules,
+            acl: acl
+        });
+    });
+};
+
+_module.delete = function (req, res) {
+    __models.Objects.remove({key: 'objects:roles', _id: {$in: req.body.ids}})
+        .exec(function (err) {
+            if (err) {
+                __.logger.error(err);
+                req.flash('danger', 'Có lỗi xảy ra khi thực hiện xóa nhóm quyền hạn này!');
+                res.sendStatus(200);
+            } else {
+                req.flash('success', 'Xóa nhóm quyền thành công!');
+                res.sendStatus(200);
+            }
+        })
 };
 
 module.exports = _module;

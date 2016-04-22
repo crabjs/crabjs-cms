@@ -10,7 +10,8 @@
 "use strict";
 
 let module_name = 'mod_articles',
-    _module = new __viewRender('backend', module_name);
+    _module = new __viewRender('backend', module_name),
+    Promise = require('bluebird');
 
 _module.create = function (req, res) {
     let toolbar = new __.Toolbar();
@@ -80,7 +81,7 @@ _module.list = function (req, res) {
         }, {
             column: 'authors.display_name',
             width: '20%',
-            header: 'Họ tên'
+            header: 'Người đăng tin'
         }, {
             column: 'created_at',
             width: '15%',
@@ -97,8 +98,8 @@ _module.list = function (req, res) {
             type: {
                 name: 'select',
                 values: {
-                    '0': 'Publish',
-                    '-1': 'Draft'
+                    '0': 'Phát hành',
+                    '-1': 'Bản nháp'
                 }
             }
         }
@@ -112,7 +113,13 @@ _module.list = function (req, res) {
         deleteButton: {access: true} // isAllow
     });
 
+    res.locals.module_name = 'posts';
     res.locals.tableColumns = structure;
+
+    let page = req.query.page || 1;
+    let order_by = req.query.order_by || 'created_at' || '_id';
+    let order_type = req.query.order_type || 'desc';
+    // order_type = order_type == 'desc' ? 'asc' : 'desc';
 
     let cond = __.verifyCondition(req.query, {
         key: 'article',
@@ -123,18 +130,29 @@ _module.list = function (req, res) {
         "authors.display_name": 'string'
     });
 
-    __models.Posts.find(cond).sort({created_at: -1}).exec(function (err, posts) {
-        if (err) {
-            __.logger.error(err);
-            req.flash('danger', 'Có lỗi xảy ra khi truy cập bài viết!');
-            return res.redirect(`/${__config.admin_prefix}/dashboard`);
-        }
+    Promise.all([
+        __models.Posts.count(cond, function (err, count) {
+            return count;
+        }),
+        __models.Posts.find(cond).sort({created_at: -1}).limit(__config.page_size).skip((page - 1) * __config.page_size)
+            .exec(function (err, posts) {
+                return posts;
+            })
+    ]).then(function (results) {
         _module.render(req, res, 'index', {
             title: 'Danh sách bài viết',
             toolbar: toolbar.render(),
-            posts: posts
+            posts: results[1],
+            totalPage: Math.ceil(results[0] / __config.page_size),
+            currentPage: page,
+            order_by: order_by,
+            order_type: order_type
         })
-    })
+    }).catch(function (error) {
+        __.logger.error(err);
+        req.flash('danger', 'Có lỗi xảy ra khi truy cập bài viết!');
+        return res.redirect(`/${__config.admin_prefix}/dashboard`);
+    });
 };
 
 _module.delete = function (req, res) {
@@ -174,7 +192,7 @@ _module.view = function (req, res) {
 
 _module.update = function (req, res) {
     if (!req.body.alias) req.body.alias = require('slug')(req.body.title).toLocaleLowerCase();
-    
+
     __models.Posts.update({key: 'article', _id: req.params.id}, req.body).exec(function (err, re) {
         if (err) {
             __.logger.error(err);

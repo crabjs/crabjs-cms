@@ -15,26 +15,25 @@
             </td>
             <td>{{ post.alias }}</td>
             <td>
-                <a href="/{{ admin_prefix }}/profile/view/{{ post.authors._id }}">
+                <a href="/{{ admin_prefix }}/users/view/{{ post.authors._id }}">
                     <span class="label label-primary">{{ post.authors.display_name or post.authors.displayName }}</span>
                 </a>
             </td>
             <td><span>{{ post.created_at|dateFormat }}</span></td>
             <td>
                 {% if post.status == 0 %}
-                    <span class="label label-success">Publish</span>
+                    <span class="label label-success">Phát hành</span>
                 {% else %}
-                    <span class="label label-warning">Draft</span>
+                    <span class="label label-warning">Bản nháp</span>
                 {% endif %}
 
                 {% if post.password|trim %}
-                    <span class="label label-warning">Password</span>
+                    <span class="label label-warning">Mật khẩu</span>
                 {% endif %}
 
             </td>
         </tr>
     {% endfor %}
-
 {% endblock %}
 
 {% block jsExtends %}

@@ -8,21 +8,15 @@
                 <div class="box box-primary">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="title">Tên nhóm quyền<span class="required">*</span></label>
-                            <input type="text" class="form-control" name="title"
-                                   value="{{ acl.name }}" required="required"/>
+                            <label for="name">Tên nhóm quyền<span class="required">*</span></label>
+                            <input title="Tên nhóm quyền" type="text" class="form-control" name="name" value="{{ acl.name }}" required/>
                         </div>
 
                         <div class="form-group">
-                            <label for="status">Trạng thái<span class="required">*</span></label>
-                            <select class="table-group-action-input form-control"
-                                    name="status" required="required">
-                                <option {% if role.status|lower == 'publish' %}selected="selected" {% endif %}
-                                        value="Publish">Publish
-                                </option>
-                                <option {% if role.status|lower == 'draft' %}selected="selected" {% endif %}
-                                        value="Draft">Draft
-                                </option>
+                            <label for="status">Trạng thái</label>
+                            <select class="table-group-action-input form-control" name="status" required title="status">
+                                <option {% if acl.status == 0 %}selected="selected" {% endif %} value="0">Kích hoạt</option>
+                                <option {% if acl.status == -1 %}selected="selected" {% endif %} value="-1">Bản nháp</option>
                             </select>
                         </div>
                     </div>
@@ -51,7 +45,7 @@
                                                         <div class="checkbox">
                                                             <label>
                                                                 <input type="checkbox"
-                                                                       {% if role.name|check_permission(acl.permissions) %}checked
+                                                                       {% if role.name|check_permission(acl.values) %}checked
                                                                        {% endif %}name="{{ role.name }}"
                                                                        class="check-rule-children"
                                                                        value="{{ role.name }}"/>

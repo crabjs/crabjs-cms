@@ -16,7 +16,7 @@
             <td>{{ user.email }}</td>
             <td>
                 {% if user.type == 0 %}
-                    <span class="label label-primary">Quản trị</span>
+                    <span class="label label-danger">Quản trị</span>
                 {% elif user.type == -1 %}
                     <span class="label label-primary">Người dùng</span>
                 {% endif %}

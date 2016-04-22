@@ -12,6 +12,9 @@ let express = require('express'),
     router = express.Router();
 let users = require('./controllers/users');
 
+router.route('/users/create').get(users.create).post(users.created);
 router.route('/users').get(users.list).delete(users.delete);
+router.route('/users/view/:id').get(users.view).post(users.update);
+router.route('/users/change_pass').post(users.change_pass);
 
 module.exports = router;

@@ -13,8 +13,8 @@ let express = require('express'),
     router = express.Router();
 let roles = require('./controllers/roles');
 
-router.route('/roles').get(roles.list);
-router.route('/roles/create').get(roles.create);
-router.route('/roles/view/:id').get(roles.view);
+router.route('/roles').get(roles.list).delete(roles.delete);
+router.route('/roles/create').get(roles.create).post(roles.created);
+router.route('/roles/view/:id').get(roles.view).post(roles.update);
 
 module.exports = router;
