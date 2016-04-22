@@ -1,4 +1,4 @@
-{% macro thElement(name, width='10%', type='text',buttonClass='fa fa-search', placeholder='',titleInput='', value='',buttonType='button') %}
+{% macro thElement(name, width='10%', type='text',buttonClass='fa fa-search', placeholder='',titleInput='', value='',buttonType='submit') %}
     <th width="{{ width }}">
         {% if name != '_id' %}
             {% if type == 'date' %}

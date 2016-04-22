@@ -60,10 +60,12 @@ exports.verifyCondition = function (queryString, condition) {
                 if (condition.hasOwnProperty(j) && i == j) {
                     if (condition[j].toLocaleLowerCase() == 'date' || condition[j].toLocaleLowerCase() == 'date-range') {
                         let date = queryString[i].split(' - ');
-                        cond[j] = {
-                            $gte: date[0],
-                            $lte: date[1]
-                        };
+                        if (new Date(date[0]).toString() !== 'Invalid Date' && new Date(date[1]).toString() !== 'Invalid Date') {
+                            cond[j] = {
+                                $gte: date[0],
+                                $lte: date[1]
+                            };
+                        }
                     } else if (condition[j].toLocaleLowerCase() == 'string') {
                         cond[j] = {
                             $regex: queryString[i],

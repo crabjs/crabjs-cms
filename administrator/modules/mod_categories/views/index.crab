@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plus"></i></span>
-                            <input type="text" class="form-control" name="name" required="required">
+                            <input type="text" class="form-control" name="name" required>
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary btn-flat" type="submit">Create New</button>
                                     </span>
@@ -66,8 +66,9 @@
                         if (child.length > 0) {
                             child.remove();
                         }
+                        let hasMsg = $('.content').find('div.alert');
+                        if (hasMsg.length != 0) hasMsg.remove();
 
-                        title = (type == "danger") ? "error" : type;
                         var content = `<div class="col-md-12 col-sm-12 col-xs-12 flashBox" style="padding-top: 15px"><div class="alert alert-${type} alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                         <i class="icon fa ${icon_class}"></i>${response.message}</div></div>`;

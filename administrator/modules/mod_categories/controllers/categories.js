@@ -10,7 +10,8 @@
 "use strict";
 
 let module_name = 'mod_categories',
-    _module = new __viewRender('backend', module_name);
+    _module = new __viewRender('backend', module_name),
+    Promise = require('bluebird');
 
 _module.list = function (req, res) {
 
@@ -29,7 +30,7 @@ _module.list = function (req, res) {
         }, {
             column: 'name',
             width: '25%',
-            header: 'Tên chuyên mục'
+            header: 'Tên danh mục'
         }, {
             column: 'alias',
             width: '25%',
@@ -85,22 +86,38 @@ _module.update = function (req, res) {
 };
 
 _module.create = function (req, res) {
-    var slug = require('slug');
-
-    let newCategory = new __models.Posts({
-        key: 'categories',
-        name: req.body.name,
-        alias: slug(req.body.name.toLowerCase())
-    });
-
-    newCategory.save(function (err) {
-        if (err) {
-            __.logger.error(err);
-            req.flash('danger', 'Có lỗi xảy ra!');
-        } else {
-            req.flash('success', 'Thêm danh mục thành công!');
+    new Promise(function (fullfill, reject) {
+        __models.Posts.findOne({key: 'categories', name: req.body.name.trim()}, {_id: 1}, function (err, re) {
+            if (err) {
+                reject(err);
+            } else {
+                fullfill(re);
+            }
+        });
+    }).then(function (hasCategory) {
+        if (hasCategory) {
+            req.flash('warning', 'Danh mục này đã tồn tại!');
             res.redirect(`/${__config.admin_prefix}/categories`);
+        } else {
+            let newCategory = new __models.Posts({
+                key: 'categories',
+                name: req.body.name.trim(),
+                alias: require('slug')(req.body.name.toLowerCase())
+            });
+
+            newCategory.save(function (err) {
+                if (err) {
+                    __.logger.error(err);
+                    req.flash('danger', 'Có lỗi xảy ra!');
+                } else {
+                    req.flash('success', 'Thêm danh mục thành công!');
+                    res.redirect(`/${__config.admin_prefix}/categories`);
+                }
+            });
         }
+    }).catch(function (error) {
+        __.logger.error(error);
+        req.flash('danger', 'Có lỗi xảy ra!');
     });
 };
 

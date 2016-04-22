@@ -119,7 +119,6 @@ _module.list = function (req, res) {
     let page = req.query.page || 1;
     let order_by = req.query.order_by || 'created_at' || '_id';
     let order_type = req.query.order_type || 'desc';
-    // order_type = order_type == 'desc' ? 'asc' : 'desc';
 
     let cond = __.verifyCondition(req.query, {
         key: 'article',
@@ -130,11 +129,18 @@ _module.list = function (req, res) {
         "authors.display_name": 'string'
     });
 
+    let sort = {};
+    sort[req.query.order_by] = req.query.order_type == 'desc' ? -1 : 1;
+
+    if (!req.query.order_by) sort = {created_at: -1};
+
+    console.log(cond);
+
     Promise.all([
         __models.Posts.count(cond, function (err, count) {
             return count;
         }),
-        __models.Posts.find(cond).sort({created_at: -1}).limit(__config.page_size).skip((page - 1) * __config.page_size)
+        __models.Posts.find(cond).sort(sort).limit(__config.page_size).skip((page - 1) * __config.page_size)
             .exec(function (err, posts) {
                 return posts;
             })
@@ -149,7 +155,7 @@ _module.list = function (req, res) {
             order_type: order_type
         })
     }).catch(function (error) {
-        __.logger.error(err);
+        __.logger.error(error);
         req.flash('danger', 'Có lỗi xảy ra khi truy cập bài viết!');
         return res.redirect(`/${__config.admin_prefix}/dashboard`);
     });
