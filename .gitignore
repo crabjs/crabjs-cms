@@ -1,6 +1,5 @@
 /public/bower_components
 /public/libs
-/models
 /config/env-production.js
 /config/env-development.js
 /webInstall.log
