@@ -20,16 +20,22 @@ _module.create = function (req, res) {
         saveButton: {access: true}
     });
 
-    _module.render(req, res, 'view', {
-        title: 'Viết bài mới',
-        toolbar: toolbar.render()
-    })
+    __models.Posts.find({key: 'categories'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
+        if (err) {
+            __.logger.error(error);
+            return _module.render_error(req, res, '500');
+        }
+        _module.render(req, res, 'view', {
+            title: 'Viết bài mới',
+            toolbar: toolbar.render(),
+            categories: categories
+        })
+    });
 };
 
 _module.created = function (req, res) {
     req.body.key = 'article';
     if (!req.body.alias) req.body.alias = require('slug')(req.body.title).toLocaleLowerCase();
-
     req.body.authors = {
         _id: req.user._id,
         display_name: req.user.display_name
@@ -113,12 +119,7 @@ _module.list = function (req, res) {
         deleteButton: {access: true} // isAllow
     });
 
-    res.locals.module_name = 'posts';
     res.locals.tableColumns = structure;
-
-    let page = req.query.page || 1;
-    let order_by = req.query.order_by || 'created_at' || '_id';
-    let order_type = req.query.order_type || 'desc';
 
     let cond = __.verifyCondition(req.query, {
         key: 'article',
@@ -129,18 +130,13 @@ _module.list = function (req, res) {
         "authors.display_name": 'string'
     });
 
-    let sort = {};
-    sort[req.query.order_by] = req.query.order_type == 'desc' ? -1 : 1;
-
-    if (!req.query.order_by) sort = {created_at: -1};
-
-    console.log(cond);
+    let filter = __.createFilter(req, res, 'posts', {order_by: 'created_at', order_type: 'desc'});
 
     Promise.all([
         __models.Posts.count(cond, function (err, count) {
             return count;
         }),
-        __models.Posts.find(cond).sort(sort).limit(__config.page_size).skip((page - 1) * __config.page_size)
+        __models.Posts.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
             .exec(function (err, posts) {
                 return posts;
             })
@@ -150,9 +146,9 @@ _module.list = function (req, res) {
             toolbar: toolbar.render(),
             posts: results[1],
             totalPage: Math.ceil(results[0] / __config.page_size),
-            currentPage: page,
-            order_by: order_by,
-            order_type: order_type
+            currentPage: filter.page,
+            order_by: filter.order_by,
+            order_type: filter.order_type
         })
     }).catch(function (error) {
         __.logger.error(error);
@@ -182,17 +178,27 @@ _module.view = function (req, res) {
         backButton: {link: `/${__config.admin_prefix}/posts`},
         saveButton: {access: true}
     });
-    __models.Posts.findOne({key: 'article', _id: req.params.id}, function (err, post) {
-        if (err) {
-            console.log(err);
-            __.logger.error(err);
-            return _module.render_error(req, res, '500');
-        }
-        _module.render(req, res, 'view', {
-            title: post.title,
-            toolbar: toolbar.render(),
-            post: post
+
+    Promise.all([
+        __models.Posts.find({key: 'categories'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
+            return categories;
+        }),
+        __models.Posts.findOne({
+            key: 'article',
+            _id: req.params.id
+        }).exec(function (err, post) {
+            return post;
         })
+    ]).then(function (results) {
+        _module.render(req, res, 'view', {
+            title: results[1].title,
+            toolbar: toolbar.render(),
+            categories: results[0],
+            post: results[1]
+        })
+    }).catch(function (error) {
+        __.logger.error(error);
+        return _module.render_error(req, res, '500');
     });
 };
 

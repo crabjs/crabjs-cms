@@ -7,3 +7,12 @@
  * Code distributed by 100dayproject as part of the life.
  */
 
+"use strict";
+
+module.exports = function (env) {
+    env.addFilter('toString', function (val) {
+        if (val) {
+            return val.toString().trim()
+        }
+    })
+};

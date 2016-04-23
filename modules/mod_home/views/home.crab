@@ -65,12 +65,12 @@
 
         header .intro-text .name {
             display: block;
-            font:normal normal 60px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+            font: normal normal 60px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
         }
 
         header .intro-text .skills {
             display: block;
-            font:normal normal 25px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
+            font: normal normal 25px Georgia, Utopia, 'Palatino Linotype', Palatino, serif;
         }
 
         @media (min-width: 768px) {
@@ -417,7 +417,9 @@
                                 hãy tham gia cùng tôi tại đây:
                                 <a href="https://github.com/Vietworm/CrabJS">@Vietworm:CrabJS</a>.
                             </h3>
-                            <small class="social-detail"><a href="https://github.com/100dayproject" target="_blank">@100dayproject</a> •April 7</small>
+                            <small class="social-detail"><a href="https://github.com/100dayproject" target="_blank">@100dayproject</a>
+                                •April 7
+                            </small>
                         </li>
                         <li class="social-youtube">
                             <div class="video-container player-condensed">

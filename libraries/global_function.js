@@ -45,6 +45,28 @@ exports.isAllow = function (action) {
     };
 };
 
+exports.createFilter = function(req, res, module_name, opts){
+    res.locals.module_name = module_name;
+    let page = req.query.page || 1;
+    let order_by = req.query.order_by || opts.order_by || '_id';
+    let order_type = req.query.order_type || opts.order_type || 'desc';
+    let sort = {};
+    sort[req.query.order_by] = req.query.order_type == 'desc' ? -1 : 1;
+    if (!req.query.order_by) sort = {created_at: -1};
+
+    let cache_search = '';
+    for (let key in req.query) {
+        if (req.query.hasOwnProperty(key) && req.query[key].trim() && key !== 'order_by' && key !== 'order_type' && key && key !== 'page') {
+            cache_search += `${key}=${req.query[key]}&`;
+        }
+    }
+
+    res.locals.cache_search = cache_search.slice(0, -1);
+    res.locals.requestQuery = req.query;
+
+    return {page, order_by, order_type, sort}
+};
+
 exports.verifyCondition = function (queryString, condition) {
     let cond = {};
 

@@ -33,19 +33,32 @@
                         <div class="form-group">
                             <label for="status">Trạng thái</label>
                             <select name="status" id="status" class="form-control">
-                                <option {% if post.status == 0 %} selected="selected" {% endif %} value="0">Phát hành</option>
+                                <option {% if post.status == 0 %} selected="selected" {% endif %} value="0">Phát hành
+                                </option>
 
-                                <option {% if post.status == -1 %} selected="selected" {% endif %} value="-1">Bản nháp</option>
+                                <option {% if post.status == -1 %} selected="selected" {% endif %} value="-1">Bản nháp
+                                </option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="tags">Danh mục</label>
-
+                            <label for="tags">Tags</label>
                             <select multiple="multiple" name="tags" id="tags"
                                     class="form-control">
                                 {% for tag in post.tags %}
                                     <option selected value="{{ tag }}">{{ tag }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="categories">Danh mục</label>
+                            <select multiple="multiple" name="categories" id="categories"
+                                    class="form-control">
+                                {% for cat in post.categories %}
+                                    <option selected value="{{ cat._id }}">{{ cat.name }}</option>
+                                {% endfor %}
+                                {% for category in categories %}
+                                    <option value="{{ category._id }}">{{ category.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -103,16 +116,28 @@
             CKEDITOR.replace('description', {
                 height: 100,
                 toolbar: [
-                    {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline']}
+                    {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline']},
+                    { name: 'colors', items: [ 'TextColor', 'BGColor' ] }
                 ]
             });
 
 
+            var tags = $('#tags');
+            var categories = $('#categories');
+
             /* BEGIN init select2 */
-            var select2 = $('#tags');
-            select2.select2({
-                placeholder: "Nhập danh mục",
+            tags.select2({
+                placeholder: "Nhập tags",
                 tags: true,
+                templateSelection: function (option) {
+                    var text = $(option.element).text().trim();
+                    text = text.replace(/^[—]+/, '');
+                    return text;
+                }
+            });
+
+            categories.select2({
+                placeholder: "Nhập danh mục",
                 templateSelection: function (option) {
                     var text = $(option.element).text().trim();
                     text = text.replace(/^[—]+/, '');

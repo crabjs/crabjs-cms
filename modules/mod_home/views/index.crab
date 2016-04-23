@@ -7,16 +7,14 @@
     <div class="profile">
         <section id="wrapper">
             <header id="header"><a id="feel" onmouseover="javascript:feel()" class="hint--top" data-hint="WHY NOT BAR?">
-                    <img id="avatar" src="/images/whynotbar.png"></a>
-                <h1>Hai Phu Le</h1>
-                <h2>Engineer at 100dayproject working on <span class="highlight">web development</span></h2>
+                    <img id="avatar" src="{{ info.image }}"></a>
+                <h1>{{ info.title }}</h1>
+                <h2>{{ info.description|safe }}</h2>
             </header>
         </section>
     </div>
     <section id="wrapper" class="home"><h2>Publications</h2>
-        <ul>
-            <li><a href="http://vietworm.github.io/CrabJS">Crab.JS</a> - Easily build web application on Node.js
-        </ul>
+        {{ info.content|safe }}
     </section>
     <div class="thanks">
         <p>Many thanks to: hailt, haipt, cuong@techmaster.vn, thanhnv, trquoccuong, chungvh, robinhuy, zaichi.</p>

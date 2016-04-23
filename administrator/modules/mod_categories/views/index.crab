@@ -1,6 +1,7 @@
 {% extends 'layout.crab' %}
 
 {% block cssExtends %}
+    {{ super() }}
     <link rel="stylesheet" href="/bower_components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 {% endblock %}
 
@@ -36,6 +37,7 @@
                 <a href="#" data-name="alias" class="inline-edit editable editable-click" data-url="/admin/categories/{{ category._id }}"
                    data-type="text" data-pk="{{ category._id }}" data-title="Enter alias">{{ category.alias }}</a>
             </td>
+            <td>{{ category.created_at|moment }}</td>
             <td>150</td>
         </tr>
     {% endfor %}

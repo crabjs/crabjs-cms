@@ -1,4 +1,4 @@
-{% macro thElement(name, width='10%', type='text',buttonClass='fa fa-search', placeholder='',titleInput='', value='',buttonType='submit') %}
+{% macro thElement(name, width='10%', type='text',buttonClass='fa fa-search',value='', placeholder='',titleInput='',buttonType='submit') %}
     <th width="{{ width }}">
         {% if name != '_id' %}
             {% if type == 'date' %}
@@ -33,17 +33,11 @@
         {% endif %}
     </th>
 {% endmacro %}
-<style>
-    .daterangepicker.dropdown-menu.show-calendar.opensright {
-        left: 620px !important;
-        margin-right: 166px;
-    }
-</style>
 <tr class="heading">
     <form method="GET" id="search-form">
         {% for col in tableColumns %}
             {% if not col.options and col.type != 'hidden' %}
-                {{ thElement(col.column, col.width, col.type, col.buttonClass) }}
+                {{ thElement(col.column, col.width, col.type, col.buttonClass, requestQuery[col.column]) }}
             {% endif %}
         {% endfor %}
     </form>

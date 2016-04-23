@@ -71,8 +71,12 @@
                                     {% block content_body %}{% endblock %}
                                     </tbody>
                                 </table>
+                                {% set cond = '' %}
+                                {% if cache_search %}
+                                    {% set cond = '&'+cache_search %}
+                                {% endif %}
                                 {% if totalPage %}
-                                    {{ totalPage|pagination(currentPage,'/admin/'+module_name+'?page={page}&order_by='+order_by+'&order_type='+order_type)|safe }}
+                                    {{ totalPage|pagination(currentPage,'/admin/'+module_name+'?page={page}&order_by='+order_by+'&order_type='+order_type +cond)|safe }}
                                 {% endif %}
                             </div>
                         </div>

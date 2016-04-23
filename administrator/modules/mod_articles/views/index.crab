@@ -16,7 +16,7 @@
             <td>{{ post.alias }}</td>
             <td>
                 <a href="/{{ admin_prefix }}/users/view/{{ post.authors._id }}">
-                    <span class="label label-primary">{{ post.authors.display_name or post.authors.displayName }}</span>
+                    <span class="label label-{% if post.authors._id|toString() == user._id|toString() %}warning{% else %}primary{% endif %}">{{ post.authors.display_name or post.authors.displayName }}</span>
                 </a>
             </td>
             <td><span>{{ post.created_at|dateFormat }}</span></td>

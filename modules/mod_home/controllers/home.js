@@ -10,19 +10,27 @@
 "use strict";
 
 let module_name = 'mod_home',
-    _module = new __viewRender(module_name);
+    _module = new __viewRender(module_name),
+    Promise = require('bluebird');
 
 _module.index = function (req, res) {
 
-    __models.Objects.findOne({key: 'seo:settings'}, function (err, meta) {
-        if (err) {
-            __.logger.error(err);
-            return _module.render_error(req, res, '500');
-        }
+    Promise.all([
+        __models.Objects.findOne({key: 'seo:settings'}, function (err, meta) {
+            return meta;
+        }),
+        __models.Posts.findOne({tags: 'page_index', status: 0},{title: 1, description: 1, content: 1, image: 1}, function (err, data) {
+            return data;
+        })
+    ]).then(function (results) {
         _module.render(req, res, 'index', {
-            title: meta.site_title,
-            meta: meta
+            title: results[0].site_title,
+            meta: results[0],
+            info: results[1]
         });
+    }).catch(function(error){
+        __.logger.error(error);
+        return _module.render_error(req, res, '500');
     });
 };
 

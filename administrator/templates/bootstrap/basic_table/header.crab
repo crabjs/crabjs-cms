@@ -12,8 +12,13 @@
                 {% set sort = 'desc' %}
             {% endif %}
 
+            {% set cond = '' %}
+            {% if cache_search %}
+                {% set cond = '&'+cache_search %}
+            {% endif %}
+
             <a class="sort-link"
-               href="{{ '/'+ admin_prefix+'/'+module_name+'?page='+currentPage+'&order_by='+type+'&order_type='+sort }}">{{ title }}
+               href="{{ '/'+ admin_prefix+'/'+module_name+'?page='+currentPage+'&order_by='+type+'&order_type='+sort+cond }}">{{ title }}
                 {% if order_by == type %}
                     <i style="margin-top: 3px;" class="fa fa-sort-{{ order_type }} pull-right"></i>
                 {% else %}

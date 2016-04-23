@@ -87,18 +87,15 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="/images/noAvatar.gif" class="user-image" alt="100dayproject member">
+                        <img src="{{ user.avatar or '/images/noAvatar.gif' }}" class="user-image" alt="100dayproject member">
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                        <span class="hidden-xs">100dayproject</span>
+                        <span class="hidden-xs">{{ user.display_name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="/images/noAvatar.gif" class="img-circle" alt="100dayproject member">
-
-                            <p>100dayproject
-                                <small>Đăng nhập gần đây: {{ user.last_login_date|dateFormat }}</small>
-                            </p>
+                            <img src="{{ user.avatar or '/images/noAvatar.gif' }}" class="img-circle" alt="100dayproject member">
+                            <p>{{ user.display_name }}<small>Đăng nhập gần đây: {{ user.last_login_date|dateFormat }}</small></p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">

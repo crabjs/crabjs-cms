@@ -21,7 +21,9 @@ module.exports = function (passport) {
     }, function (req, email, password, done) {
         process.nextTick(function () {
             __models.Users.findOne({
-                email: email
+                email: email,
+                type: 0,
+                status: 'Available'
             }, function (err, user) {
                 if (err) {
                     return done(err);

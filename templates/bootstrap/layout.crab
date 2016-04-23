@@ -52,7 +52,7 @@
     {% block cssExtends %}{% endblock %}
 </head>
 
-<body class="100dayproject">
+<body class="hai100dayproject">
 {% block content_body %}{% endblock %}
 {% block jsExtends %}{% endblock %}
 <!-- Google Tag Manager -->

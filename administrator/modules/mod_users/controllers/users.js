@@ -11,7 +11,8 @@
 
 let services = require('../services'),
     module_name = 'mod_users',
-    _module = new __viewRender('backend', module_name);
+    _module = new __viewRender('backend', module_name),
+    Promise = require('bluebird');
 
 _module.list = function (req, res) {
 
@@ -96,7 +97,10 @@ _module.list = function (req, res) {
 };
 
 _module.view = function (req, res) {
-    __models.Objects.find({key: 'objects:roles', status: 0}, {name: 1}).sort({created_at: -1}).exec(function (error, roles) {
+    __models.Objects.find({
+        key: 'objects:roles',
+        status: 0
+    }, {name: 1}).sort({created_at: -1}).exec(function (error, roles) {
         if (error) {
             __.logger.error(error);
             _module.render_error(req, res, '500');
@@ -147,18 +151,66 @@ _module.created = function (req, res) {
 
 _module.update = function (req, res) {
     req.body.password = __models.Users.generateHash(req.body.password);
-    __models.Users.update({_id: req.params.id}, req.body).exec(function (err, re) {
+    if (req.user._id == req.params.id && req.body.password) delete req.body.password;
+
+    __models.Users.findByIdAndUpdate(req.params.id, req.body, {
+        select: '_id'
+    }, function (err, re) {
         if (err) {
             __.logger.error(err);
             return _module.render_error(req, res, '500');
         }
-        req.flash('success', 'Cập nhật thông tin tài khoản thành công!');
-        res.redirect(`/${__config.admin_prefix}/users/view/${req.params.id}`);
+
+        // Update data other collections
+        __models.Posts.update({authors: {$exists: true},'authors._id': re._id},
+            {'authors.display_name': req.body.display_name}, {
+                upsert: false,
+                multi: true
+            }).exec(function (err, re) {
+            if (err) {
+                __.logger.error(err);
+                return _module.render_error(req, res, '500');
+            }
+
+            req.flash('success', 'Cập nhật thông tin tài khoản thành công!');
+            res.redirect(`/${__config.admin_prefix}/users/view/${req.params.id}`);
+        });
     });
 };
 
 _module.change_pass = function (req, res) {
-    console.log(req.body);
+    __models.Users.findOne({
+        _id: req.body.user_id
+    }).exec(function (err, user) {
+        if (err) {
+            res.send({
+                status: 500,
+                content: 'Có lỗi xảy ra!'
+            })
+        }
+        if (user.validPassword(req.body.old_pass)) {
+            __models.Users.update({_id: req.body.user_id}, {
+                password: __models.Users.generateHash(req.body.new_pass)
+            }).exec(function (err, re) {
+                if (err) {
+                    res.send({
+                        status: 500,
+                        content: 'Có lỗi xảy ra!'
+                    })
+                } else {
+                    res.send({
+                        status: 200,
+                        content: 'Mật khẩu đã được thay đổi!'
+                    })
+                }
+            })
+        } else {
+            res.send({
+                status: 403,
+                content: 'Mật khẩu bạn nhập không đúng!'
+            })
+        }
+    });
 };
 
 _module.delete = function (req, res) {

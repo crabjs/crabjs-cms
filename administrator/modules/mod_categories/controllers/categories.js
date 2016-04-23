@@ -36,6 +36,15 @@ _module.list = function (req, res) {
             width: '25%',
             header: 'Alias'
         }, {
+            column: 'created_at',
+            width: '25%',
+            header: 'Ngày tạo',
+            type: 'date-range',
+            buttonClass: 'fa fa-calendar',
+            condition: {
+                type: 'none'
+            }
+        }, {
             width: '20%',
             header: 'Số bài viết'
         }
@@ -44,20 +53,33 @@ _module.list = function (req, res) {
     let cond = __.verifyCondition(req.query, {
         pk: 'categories',
         name: 'string',
+        created_at: 'date',
         alias: 'string'
     });
 
-    __models.Posts.find(cond).sort({created_at: -1}).exec(function (err, categories) {
-        if (err) {
-            __.logger.error(err);
-            return _module.render_error(req, res, '500');
-        }
+    let filter = __.createFilter(req, res, 'categories', {order_by: 'created_at', order_type: 'desc'});
+
+    Promise.all([
+        __models.Posts.count(cond, function (err, count) {
+            return count;
+        }),
+        __models.Posts.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
+            .exec(function (err, categories) {
+            return categories;
+        })
+    ]).then(function (results) {
         _module.render(req, res, 'index', {
             title: 'Quản lý chuyên mục',
             toolbar: toolbar.render(),
-            categories: categories
+            categories: results[1],
+            totalPage: Math.ceil(results[0] / __config.page_size),
+            currentPage: filter.page,
+            order_by: filter.order_by,
+            order_type: filter.order_type
         })
-
+    }).catch(function (error) {
+        __.logger.error(error);
+        return _module.render_error(req, res, '500');
     });
 };
 
