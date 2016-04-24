@@ -29,6 +29,14 @@ let userSchema = new Schema({
     type: {type: Schema.Types.Number, enum: [0, -1]}
 });
 
+// userSchema.pre('save', function (next) {
+//     let user = this;
+//     if (!user.isModified('password')) return next();
+//
+//     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8), null);
+//     next();
+// });
+
 userSchema.static('generateHash', function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 });

@@ -13,7 +13,6 @@ let LocalStrategy = require('passport-local').Strategy,
     randToken = require('rand-token');
 
 module.exports = function (passport) {
-
     passport.use('AdminLogin', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
@@ -43,26 +42,6 @@ module.exports = function (passport) {
                     }
                 } else {
                     return done(null, false, {message: 'The specified email does not exist.'})
-                }
-            })
-        })
-    }));
-
-    passport.use('ForgotPassword', new LocalStrategy({
-        usernameField: 'email',
-        passReqToCallback: true
-    }, function (req, email, done) {
-        process.nextTick(function () {
-            __models.Users.findOne({
-                email: 'email'
-            }, function (err, user) {
-                if (err) {
-                    return done(err);
-                }
-                if (user) {
-                    // Send email
-                } else {
-                    return done(null, false, req.flash('forgotMessage', 'That email does not exists!'));
                 }
             })
         })

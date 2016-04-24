@@ -17,6 +17,8 @@ let path = require('path'),
     userAgent = require('express-useragent'),
     flash = require('connect-flash'),
     helmet = require('helmet'),
+    errorhandler = require('errorhandler'),
+    notifier = require('node-notifier'),
     viewEngine = require('./nunjucks'),
     requestParser = require('./requestParser'),
     appLoader = require('./appLoaders'),
@@ -73,6 +75,21 @@ module.exports = function () {
     app.set("trust proxy", true);
     app.use(helmet.hidePoweredBy({setTo: "PHP 4.2.0"}));
     //app.disable("x-powered-by");
+
+
+    function errorNotification(err, str, req) {
+        var title = 'Error in ' + req.method + ' ' + req.url;
+
+        notifier.notify({
+            title: title,
+            message: str,
+            icon: __base + '/public/images/whynotbar.png',
+            wait: true,
+            sound: true
+        })
+    }
+
+    app.use(errorhandler({log: errorNotification}));
 
     /**
      * Request parser call bodyParser, cookie-parser, cookie-parser, express-session for storage

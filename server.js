@@ -18,15 +18,7 @@ if (require('fs').existsSync('./config/config.json')) {
     app.start(1339, {
         debug: true
     });
-
-    // __models.Posts.find({authors: {$exists: true}, 'authors._id': '570b28d0483cfacc21f82152'.toObjectId()})
-    //     .select('_id authors').exec(function (err, re) {
-    //     console.log(re);
-    // });
-
     
-
-
     module.exports = app;
 } else {
     require('./bin/generator')

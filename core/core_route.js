@@ -30,13 +30,27 @@ module.exports = function (app) {
      * Passport strategies ForgotPassword
      * Forgot password account
      */
+
     app.route(`/${__config.admin_prefix}/forgot_password.crab`).get(function (req, res) {
         loginModule.render(req, res, 'forgot_password');
-    }).post(passport.authenticate('ForgotPassword', {
-        failureFlash: 'No email/password account exists with the provided email.',
-        successFlash: `An e-mail has been sent to you with further instructions.`,
-        successRedirect: `/${__config.admin_prefix}/login.crab`
-    }));
+    }).post(function (req, res) {
+        __models.Users.findOne({
+            email: req.body.email,
+            status: {$ne: 'Block'}
+        }, {email: 1}, function (err, user) {
+            if (err){
+                req.flash('error', 'Có lỗi xảy ra khi thực hiện thay đổi mật khẩu!');
+                return res.redirect(`/${__config.admin_prefix}/forgot_password.crab`);
+            }
+            if (user){
+                req.flash('success', "OK. We've sent you an email describing how to reset your password.");
+                return res.redirect(`/${__config.admin_prefix}/forgot_password.crab`);
+            } else {
+                req.flash('error', "No email / password account exists with the provided email.");
+                return res.redirect(`/${__config.admin_prefix}/forgot_password.crab`);
+            }
+        })
+    });
 
     /**
      * Sign out account and destroy session
