@@ -123,16 +123,29 @@ _module.list = function (req, res) {
         status: 'boolean'
     });
 
-    __models.Objects.find(cond).sort({created_at: -1}).exec(function (err, roles) {
-        if (err) {
-            __.logger.error(err);
-            return _module.render(req, res, '500');
-        }
+    let filter = __.createFilter(req, res, 'roles', {order_by: 'created_at', order_type: 'desc'});
+
+    Promise.all([
+        __models.Objects.count(cond, function (err, count) {
+            return count;
+        }),
+        __models.Objects.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
+            .exec(function (err, roles) {
+                return roles;
+            })
+    ]).then(function (results) {
         _module.render(req, res, 'index', {
             title: 'Danh sách quyền',
             toolbar: toolbar.render(),
-            roles: roles
+            roles: results[1],
+            totalPage: Math.ceil(results[0] / __config.page_size),
+            currentPage: filter.page,
+            order_by: filter.order_by,
+            order_type: filter.order_type
         })
+    }).catch(function (error) {
+        __.logger.error(err);
+        return _module.render(req, res, '500');
     });
 };
 
