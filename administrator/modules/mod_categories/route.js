@@ -12,8 +12,8 @@ let express = require('express'),
     router = express.Router();
 let categories = require('./controllers/categories');
 
-router.route('/categories/create').post(categories.create);
-router.route('/categories').get(categories.list).delete(categories.delete);
-router.route('/categories/:id').post(categories.update);
+router.route('/categories/create').post(__.isAllow('create_category', categories.create));
+router.route('/categories').get(__.isAllow('list_category'), categories.list).delete(__.isAllow('delete_category', categories.delete));
+router.route('/categories/:id').post(__.isAllow('update_category'), categories.update);
 
 module.exports = router;

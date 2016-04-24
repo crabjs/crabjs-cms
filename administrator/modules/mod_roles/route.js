@@ -13,8 +13,8 @@ let express = require('express'),
     router = express.Router();
 let roles = require('./controllers/roles');
 
-router.route('/roles').get(roles.list).delete(roles.delete);
-router.route('/roles/create').get(roles.create).post(roles.created);
-router.route('/roles/view/:id').get(roles.view).post(roles.update);
+router.route('/roles').get(__.isAllow('list_roles'),roles.list).delete(__.isAllow('delete_roles', roles.delete));
+router.route('/roles/create').get(__.isAllow('create_roles'), roles.create).post(__.isAllow('create_roles'), roles.created);
+router.route('/roles/view/:id').get(__.isAllow('update_roles'), roles.view).post(__.isAllow('update_roles'), roles.update);
 
 module.exports = router;

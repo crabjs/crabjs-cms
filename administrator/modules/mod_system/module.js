@@ -24,10 +24,6 @@ module.exports = function (module) {
                     link: `/${__config.admin_prefix}/site/settings`,
                     ref: 'site_settings'
                 }, {
-                    title: 'Thiết lập SEO',
-                    link: `/${__config.admin_prefix}/SEO/settings`,
-                    ref: 'seo_plugin_setting'
-                }, {
                     title: 'Cài đặt modules',
                     link: `/${__config.admin_prefix}/modules/settings`,
                     ref: 'install_module'

@@ -19,7 +19,7 @@ module.exports = function (module) {
             title: 'Danh mục bài viết',
             icon: 'fa fa-tags',
             link: `/${__config.admin_prefix}/categories`,
-            ref: 'view_category'
+            ref: 'list_category'
         }, roles: [
             {
                 name: 'list_category',

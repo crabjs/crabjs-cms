@@ -27,7 +27,7 @@ module.exports = function (module) {
                 }, {
                     title: 'Viết bài mới',
                     link: `/${__config.admin_prefix}/posts/create`,
-                    ref: 'create_post'
+                    ref: 'create_posts'
                 }
             ]
         }, roles: [
@@ -35,13 +35,13 @@ module.exports = function (module) {
                 name: 'list_posts',
                 title: 'Xem tất cả bài viết'
             }, {
-                name: 'delete_post',
+                name: 'delete_posts',
                 title: 'Xóa bài viết'
             }, {
-                name: 'create_post',
+                name: 'create_posts',
                 title: 'Tạo mới bài viết'
             }, {
-                name: 'update_post',
+                name: 'update_posts',
                 title: 'Cập nhật bài viết'
             }
         ]

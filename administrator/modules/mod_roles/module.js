@@ -28,7 +28,7 @@ module.exports = function (module) {
                 }, {
                     title: 'Tạo quyền mới',
                     link: `/${__config.admin_prefix}/roles/create`,
-                    ref: 'create_role'
+                    ref: 'create_roles'
                 }
             ]
         }, roles: [
@@ -36,10 +36,10 @@ module.exports = function (module) {
                 name: 'list_roles',
                 title: 'Xem danh sách'
             }, {
-                name: 'update_role',
+                name: 'update_roles',
                 title: 'Cập nhật quyền hạn'
             }, {
-                name: 'create_role',
+                name: 'create_roles',
                 title: 'Tạo mới nhóm quyền'
             }
         ]

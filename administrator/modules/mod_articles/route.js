@@ -12,10 +12,9 @@ let express = require('express'),
     router = express.Router();
 let articles = require('./controllers/articles');
 
-router.route('/posts').get(articles.list).delete(articles.delete);
+router.route('/posts').get(__.isAllow('list_posts'), articles.list).delete(__.isAllow('delete_posts', articles.delete));
 
-router.route('/posts/create').get(articles.create).post(articles.created);
-router.route('/posts/view/:id').get(articles.view).post(articles.update);
-router.route('/upload').post(articles.upload);
+router.route('/posts/create').get(__.isAllow('create_posts'), articles.create).post(__.isAllow('create_posts', articles.created));
+router.route('/posts/view/:id').get(__.isAllow('update_posts'), articles.view).post(__.isAllow('update_posts'), articles.update);
 
 module.exports = router;
