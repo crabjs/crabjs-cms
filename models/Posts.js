@@ -22,7 +22,7 @@ let Posts = new Schema({
     content: {type: String},
     description: {type: String},
     tags: [{type: String}],
-    categories: {type: Schema.Types.Mixed},
+    categories: [{type: Schema.Types.ObjectId, ref: 'Objects'}],
     attachments: [{type: String}],
     password: {type: String},
     authors: {type: Schema.Types.Mixed},

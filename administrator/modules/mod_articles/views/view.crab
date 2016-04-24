@@ -54,12 +54,7 @@
                             <label for="categories">Danh mục</label>
                             <select multiple="multiple" name="categories" id="categories"
                                     class="form-control">
-                                {% for cat in post.categories %}
-                                    <option selected value="{{ cat._id }}">{{ cat.name }}</option>
-                                {% endfor %}
-                                {% for category in categories %}
-                                    <option value="{{ category._id }}">{{ category.name }}</option>
-                                {% endfor %}
+                                {{ categories|filter_select2(post.categories, '_id', 'name') }}
                             </select>
                         </div>
 
@@ -117,16 +112,16 @@
                 height: 100,
                 toolbar: [
                     {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline']},
-                    { name: 'colors', items: [ 'TextColor', 'BGColor' ] }
+                    {name: 'colors', items: ['TextColor', 'BGColor']}
                 ]
             });
 
 
-            var tags = $('#tags');
-            var categories = $('#categories');
+            var $tags = $('#tags');
+            var $categories = $('#categories');
 
             /* BEGIN init select2 */
-            tags.select2({
+            $tags.select2({
                 placeholder: "Nhập tags",
                 tags: true,
                 templateSelection: function (option) {
@@ -136,8 +131,8 @@
                 }
             });
 
-            categories.select2({
-                placeholder: "Nhập danh mục",
+            $categories.select2({
+                placeholder: "Chọn danh mục",
                 templateSelection: function (option) {
                     var text = $(option.element).text().trim();
                     text = text.replace(/^[—]+/, '');

@@ -13,7 +13,7 @@ module.exports = function (env) {
     env.addFilter('filter_select2', function (source, selected, key, value) {
         let results = '';
         for (let i in source) {
-            if (source.hasOwnProperty(i) && selected.length) {
+            if (source.hasOwnProperty(i) && selected && selected.length) {
                 for (let j in selected) {
                     if (selected.hasOwnProperty(j) && source[i][key].toString().trim() == selected[j][key].toString().trim()) {
                         results +=` <option selected value="${selected[j][key]}">${selected[j][value]}</option>`;

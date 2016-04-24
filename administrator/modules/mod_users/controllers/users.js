@@ -71,6 +71,8 @@ _module.list = function (req, res) {
 
     res.locals.tableColumns = structure;
 
+    let filter = __.createFilter(req, res, 'users', {order_by: 'created_at', order_type: 'desc'});
+
     let cond = __.verifyCondition(req.query, {
         display_name: 'string',
         email: 'string',
@@ -79,20 +81,28 @@ _module.list = function (req, res) {
         status: 'boolean'
     });
 
-    __models.Users.find(cond).sort({
-        created_at: -1
-    }).exec(function (err, users) {
-
-        if (err) {
-            __.logger.error(err);
-            req.flash('danger', 'Có lỗi xảy ra khi truy cập danh sách người dùng!');
-            return res.redirect(`/${__config.admin_prefix}/dashboard`);
-        }
+    Promise.all([
+        __models.Users.count(cond, function (err, count) {
+            return count;
+        }),
+        __models.Users.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
+            .exec(function (err, users) {
+                return users;
+            })
+    ]).then(function (results) {
         _module.render(req, res, 'index', {
             title: 'Quản lý người dùng',
             toolbar: toolbar.render(),
-            users: users
+            users: results[1],
+            totalPage: Math.ceil(results[0] / __config.page_size),
+            currentPage: filter.page,
+            order_by: filter.order_by,
+            order_type: filter.order_type
         })
+    }).catch(function(error){
+        __.logger.error(error);
+        req.flash('danger', 'Có lỗi xảy ra khi truy cập danh sách người dùng!');
+        return res.redirect(`/${__config.admin_prefix}/dashboard`);
     });
 };
 
@@ -162,7 +172,7 @@ _module.update = function (req, res) {
         }
 
         // Update data other collections
-        __models.Posts.update({authors: {$exists: true},'authors._id': re._id},
+        __models.Posts.update({authors: {$exists: true}, 'authors._id': re._id},
             {'authors.display_name': req.body.display_name}, {
                 upsert: false,
                 multi: true

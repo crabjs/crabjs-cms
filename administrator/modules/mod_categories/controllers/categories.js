@@ -51,7 +51,7 @@ _module.list = function (req, res) {
     ];
 
     let cond = __.verifyCondition(req.query, {
-        pk: 'categories',
+        pk: 'objects:category',
         name: 'string',
         created_at: 'date',
         alias: 'string'
@@ -60,10 +60,10 @@ _module.list = function (req, res) {
     let filter = __.createFilter(req, res, 'categories', {order_by: 'created_at', order_type: 'desc'});
 
     Promise.all([
-        __models.Posts.count(cond, function (err, count) {
+        __models.Objects.count(cond, function (err, count) {
             return count;
         }),
-        __models.Posts.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
+        __models.Objects.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
             .exec(function (err, categories) {
             return categories;
         })
@@ -91,7 +91,7 @@ _module.update = function (req, res) {
         data.alias = req.body.value;
     }
 
-    __models.Posts.update({key: 'categories', _id: req.body.pk}, data).exec(function (err, re) {
+    __models.Objects.update({key: 'objects:category', _id: req.body.pk}, data).exec(function (err, re) {
         if (err) {
             __.logger.error(err);
             res.send({
@@ -109,7 +109,7 @@ _module.update = function (req, res) {
 
 _module.create = function (req, res) {
     new Promise(function (fullfill, reject) {
-        __models.Posts.findOne({key: 'categories', name: req.body.name.trim()}, {_id: 1}, function (err, re) {
+        __models.Objects.findOne({key: 'objects:category', name: req.body.name.trim()}, {_id: 1}, function (err, re) {
             if (err) {
                 reject(err);
             } else {
@@ -121,8 +121,8 @@ _module.create = function (req, res) {
             req.flash('warning', 'Danh mục này đã tồn tại!');
             res.redirect(`/${__config.admin_prefix}/categories`);
         } else {
-            let newCategory = new __models.Posts({
-                key: 'categories',
+            let newCategory = new __models.Objects({
+                key: 'objects:category',
                 name: req.body.name.trim(),
                 alias: require('slug')(req.body.name.toLowerCase())
             });
@@ -144,7 +144,7 @@ _module.create = function (req, res) {
 };
 
 _module.delete = function (req, res) {
-    __models.Posts.remove({key: 'categories', _id: {$in: req.body.ids}})
+    __models.Objects.remove({key: 'objects:category', _id: {$in: req.body.ids}})
         .exec(function (err) {
             if (err) {
                 __.logger.error(err);

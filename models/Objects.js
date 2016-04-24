@@ -38,6 +38,7 @@ let Objects = new Schema({
     view_number: {type: Number},
     share_number: {type: Number},
     name: {type: String},
+    alias: {type: String},
     created_by: {type: Schema.Types.Mixed},
     status: {type: Number}
 }, {

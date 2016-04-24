@@ -20,7 +20,7 @@ _module.create = function (req, res) {
         saveButton: {access: true}
     });
 
-    __models.Posts.find({key: 'categories'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
+    __models.Objects.find({key: 'objects:category'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
         if (err) {
             __.logger.error(error);
             return _module.render_error(req, res, '500');
@@ -180,13 +180,13 @@ _module.view = function (req, res) {
     });
 
     Promise.all([
-        __models.Posts.find({key: 'categories'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
+        __models.Objects.find({key: 'objects:category'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
             return categories;
         }),
         __models.Posts.findOne({
             key: 'article',
             _id: req.params.id
-        }).exec(function (err, post) {
+        }).populate('categories', 'name').exec(function (err, post) {
             return post;
         })
     ]).then(function (results) {
