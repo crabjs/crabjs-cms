@@ -45,7 +45,7 @@ exports.isAllow = function (action) {
     };
 };
 
-exports.createFilter = function(req, res, module_name, opts){
+exports.createFilter = function (req, res, module_name, opts) {
     res.locals.module_name = module_name;
     let page = req.query.page || 1;
     let order_by = req.query.order_by || opts.order_by || '_id';
@@ -253,5 +253,28 @@ exports.getDirectories = function (srcPath, ignore) {
     return _.uniq(dist);
 };
 
+exports.send_email = function (toEmail, subject, content, cb) {
+    let nodemailer = require('nodemailer');
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: __config.email.auth
+    }, {
+        from: __config.email.auth.user,
+        headers: __config.email.headers
+    });
+    transporter.sendMail({
+        from: __config.email.from,
+        to: toEmail,
+        subject: subject,
+        html: content
+    }, function (error, info) {
+        if (error) {
+            return cb(error, null);
+        } else {
+            return cb(null, info)
+        }
+    });
+};
+
 exports.Toolbar = require('./helpers/Toolbars');
-exports.mailer = require('./helpers/mailers');

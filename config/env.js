@@ -90,7 +90,7 @@ class env {
         } else if(e == 'test') {
             global.__env = require('./env-test');
         } else {
-            global.__env = require('../../env-production');
+            global.__env = require('./env-production');
         }
     }
 }

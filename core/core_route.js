@@ -8,7 +8,7 @@
  */
 
 "use strict";
-
+let rand = require('csprng');
 let passport = require('passport'),
     loginModule = new __viewRender('backend', 'mod_auth');
 
@@ -34,15 +34,39 @@ module.exports = function (app) {
     app.route(`/${__config.admin_prefix}/forgot_password.crab`).get(function (req, res) {
         loginModule.render(req, res, 'forgot_password');
     }).post(function (req, res) {
+        let title = '100dayproject - Khôi phục mật khẩu';
+        let token = rand(160, 36);
+        let expires = Date.now() + 3600000;
+        let email = req.body.email.toLocaleLowerCase().trim();
+
         __models.Users.findOne({
-            email: req.body.email,
+            email: email,
             status: {$ne: 'Block'}
-        }, {email: 1}, function (err, user) {
-            if (err){
+        }, {email: 1, display_name: 1}, function (err, user) {
+            if (err) {
                 req.flash('error', 'Có lỗi xảy ra khi thực hiện thay đổi mật khẩu!');
                 return res.redirect(`/${__config.admin_prefix}/forgot_password.crab`);
             }
-            if (user){
+            if (user) {
+                user.reset_password_token = token;
+                user.reset_password_expires = expires; // 1 hour
+                user.save();
+
+                require('fs').readFile(__base + '/resource/email_template/user_forgot_password.crab', 'utf-8', function (err, messages) {
+                    messages = messages.replace('{placeholder:user_name}', `${user.display_name}`);
+                    if (err) {
+                        console.log('Error read message data: ', err);
+                    } else {
+                        __.send_email(email, title, messages, function (err, re) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            else {
+                                console.log(re);
+                            }
+                        });
+                    }
+                });
                 req.flash('success', "OK. We've sent you an email describing how to reset your password.");
                 return res.redirect(`/${__config.admin_prefix}/forgot_password.crab`);
             } else {

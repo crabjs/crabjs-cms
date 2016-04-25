@@ -89,8 +89,6 @@ module.exports = function () {
         })
     }
 
-    app.use(errorhandler({log: errorNotification}));
-
     /**
      * Request parser call bodyParser, cookie-parser, cookie-parser, express-session for storage
      * and extends `delete` method using methodOverride module
@@ -131,6 +129,10 @@ module.exports = function () {
      * Logging exception error any status
      */
     throwError.configure(app);
+
+    if (require('os').hostname() == 'Razor') {
+        app.use(errorhandler({log: errorNotification}));
+    }
 
     return app;
 };

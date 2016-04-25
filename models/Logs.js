@@ -9,15 +9,19 @@
 
 "use strict";
 
-let nodemailer = require('nodemailer'),
-    sendmailTransport = require('nodemailer-sendmail-transport'),
-    smtpTransport = require('nodemailer-smtp-transport');
+let mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
-var transports = {
-    sendmail: nodemailer.createTransport(sendmailTransport()),
-    gmail: undefined
-};
+let Logs = new Schema({
+    key: {type: String, required: true},
+    name: {type: String},
+    value: {type: String},
+    user_id: {type: Schema.Types.Mixed}
+}, {
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
+});
 
-(function (Emailer) {
-
-})(module.exports);
+module.exports = mongoose.model('Logs', Logs);

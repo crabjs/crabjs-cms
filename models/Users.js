@@ -26,7 +26,10 @@ let userSchema = new Schema({
     status: {type: Schema.Types.String, enum: ['Available', 'Block', 'Pending']},
     created_date: {type: Schema.Types.Date, default: Date.now},
     roles: {type: Schema.Types.ObjectId, ref: 'objects'},
-    type: {type: Schema.Types.Number, enum: [0, -1]}
+    type: {type: Schema.Types.Number, enum: [0, -1]},
+    activation_code: {type: Schema.Types.String},
+    reset_password_token: {type: Schema.Types.String},
+    reset_password_expires: {type: Schema.Types.Date}
 });
 
 // userSchema.pre('save', function (next) {
