@@ -8,12 +8,19 @@
  */
 
 "use strict";
-let express = require('express'),
-    router = express.Router();
-let dashboard = require('./controllers/dashboard');
 
-router.route('/dashboard').get(dashboard.view);
+let mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
-router.route('/upload').post(dashboard.upload);
+let Media = new Schema({
+    path: {type: String},
+    user_id: {type: Schema.Types.Mixed},
+    meta_data: {type: Schema.Types.Mixed}
+}, {
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
+});
 
-module.exports = router;
+module.exports = mongoose.model('Media', Media);

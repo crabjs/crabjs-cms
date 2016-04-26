@@ -44,6 +44,12 @@ _module.web_settings_update = function (req, res) {
     })
 };
 
+_module.report = function (req, res) {
+    _module.render(req, res, 'report', {
+        title: 'Gửi báo cáo tới hệ thống'
+    });
+};
+
 _module.module_install = function (req, res) {
     let toolbar = new __.Toolbar();
     toolbar.custom({

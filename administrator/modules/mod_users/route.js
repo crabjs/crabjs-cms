@@ -12,9 +12,19 @@ let express = require('express'),
     router = express.Router();
 let users = require('./controllers/users');
 
-router.route('/users/create').get(__.isAllow('create_users'), users.create).post(__.isAllow('create_users'), users.created);
-router.route('/users').get(__.isAllow('list_users'), users.list).delete(__.isAllow('delete_users'), users.delete);
-router.route('/users/view/:id').get(__.isAllow('update_users'), users.view).post(__.isAllow('update_users'), users.update);
-router.route('/users/change_pass').post(users.change_pass);
+router.route('/users/create')
+    .get(__.isAllow('create_users'), users.create)
+    .post(__.isAllow('create_users'), users.created);
+
+router.route('/users')
+    .get(__.isAllow('list_users'), users.list)
+    .delete(__.isAllow('delete_users'), users.delete);
+
+router.route('/users/view/:id')
+    .get(__.isAllow('update_users'), users.view)
+    .post(__.isAllow('update_users'), users.update);
+
+router.route('/users/change_pass')
+    .post(users.change_pass);
 
 module.exports = router;

@@ -20,11 +20,8 @@
     page. However, you can choose any other skin. Make sure you
     apply the skin class to the body tag so the changes take effect.-->
     <link rel="stylesheet" href="/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css">
-
+    <link rel="stylesheet" href="/bower_components/hint.css/hint.min.css">
     <link rel="stylesheet" href="/css/custom_backend.css">
-
-    <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="/bower_components/polymer/polymer.html">
     <style>
         .required {
             color: #c62828 !important;
@@ -93,7 +90,7 @@
         <!-- To the right -->
         <div class="pull-right hidden-xs"></div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">{{ siteConfig.name }}</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2016 <a href="#">{{ app_name }}</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

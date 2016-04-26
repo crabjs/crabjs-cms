@@ -52,23 +52,6 @@ _module.created = function (req, res) {
     });
 };
 
-_module.upload = function (req, res) {
-
-    let formidable = require('formidable');
-
-    let form = new formidable.IncomingForm();
-
-    form.uploadDir = __base + '/public/uploads';
-
-    form.parse(req, function (err, fields, files) {
-        if (err) {
-            console.log(err);
-        }
-        console.log(fields);
-
-    });
-};
-
 _module.list = function (req, res) {
 
     let structure = [

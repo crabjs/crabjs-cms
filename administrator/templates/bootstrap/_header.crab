@@ -111,7 +111,7 @@
                 </li>
                 <!-- Control Sidebar Toggle Button -->
                 <li>
-                    <a href="/{{ admin_prefix }}/writeReport" title="Báo lỗi"><i class="fa fa-bug"></i></a>
+                    <a href="/{{ admin_prefix }}/system/report" class="hint--left" data-hint="Gửi tin nhắn tới hệ thống"><i class="fa fa-bug"></i></a>
                 </li>
             </ul>
         </div>

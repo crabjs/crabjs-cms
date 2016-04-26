@@ -14,7 +14,13 @@ let express = require('express'),
     router = express.Router();
 let settings = require('./controllers/settings');
 
-router.route('/settings').get(__.isAllow('site_settings'), settings.web_settings).post(__.isAllow('site_settings'), settings.web_settings_update);
-router.route('/modules/install').get(__.isAllow('install_module'), settings.module_install);
+router.route('/settings')
+    .get(__.isAllow('site_settings'), settings.web_settings)
+    .post(__.isAllow('site_settings'), settings.web_settings_update);
+
+router.route('/modules/install')
+    .get(__.isAllow('install_module'), settings.module_install);
+
+router.route('/system/report').get(settings.report);
 
 module.exports = router;
