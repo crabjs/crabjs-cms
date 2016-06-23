@@ -204,7 +204,7 @@
 {% endblock %}
 
 {% block jsExtends %}
-    <script src="/bower_components/AdminLTE/plugins/ckeditor/ckeditor.js"></script>
+    <script src="/plugins/ckeditor/ckeditor.js"></script>
     <script src="/bower_components/AdminLTE/plugins/select2/select2.min.js"></script>
     <script src="/js/hai100dayproject.js"></script>
     <script>
