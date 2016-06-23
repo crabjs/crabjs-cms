@@ -40,12 +40,20 @@ let Objects = new Schema({
     name: {type: String},
     alias: {type: String},
     created_by: {type: Schema.Types.Mixed},
-    status: {type: Number}
+    status: {type: Number},
+    version: {type: String},
+    author: {type: String},
+    website: {type: String},
+    description: {type: String},
+    image: {type: String},
+    contact: {type: String},
+    logs: [{type: Schema.Types.Mixed}]
 }, {
     timestamps: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
-    }
+    },
+    collection: 'crabJS_objects'
 });
 
 module.exports = mongoose.model('Objects', Objects);

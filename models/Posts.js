@@ -22,7 +22,7 @@ let Posts = new Schema({
     content: {type: String},
     description: {type: String},
     tags: [{type: String}],
-    categories: [{type: Schema.Types.ObjectId, ref: 'Objects'}],
+    category_id: [{type: Schema.Types.ObjectId, ref: 'Objects', default: []}],
     attachments: [{type: String}],
     password: {type: String},
     authors: {type: Schema.Types.Mixed},
@@ -32,7 +32,8 @@ let Posts = new Schema({
     timestamps: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
-    }
+    },
+    collection: 'crabJS_posts'
 });
 
 module.exports = mongoose.model('Posts', Posts);

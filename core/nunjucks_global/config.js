@@ -11,4 +11,5 @@ module.exports = function (env) {
     env.addGlobal('app_name', 'Crab.JS');
     env.addGlobal('admin_prefix', __config.admin_prefix);
     env.addGlobal('themeName', __config.theme);
+    env.addGlobal('domain_prefix', __config.domain_prefix);
 };

@@ -29,5 +29,6 @@ exports.configure = function (app) {
     });
 
     require('./strategies/local')(passport);
-    // require('./strategies/facebook')(passport);
+    require('./strategies/google')(passport);
+    require('./strategies/facebook')(passport);
 };

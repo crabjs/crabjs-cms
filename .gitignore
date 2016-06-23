@@ -1,14 +1,7 @@
 /public/bower_components
-/public/libs
-/config/env-production.js
 /config/env-development.js
-/webInstall.log
 .idea
 node_modules/
-/500.html
-/index.html
-/404.html
-/public/components
-/npm-debug.log
 /logs/exceptions.log
 /logs/webInstall.log
+/public/media

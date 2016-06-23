@@ -1,6 +1,18 @@
 "use strict";
 
 module.exports = function (env) {
+
+    env.addFilter('content_type', function (source) {
+        if (source) {
+            var size = source.split('.');
+            if ('jpg,bmp,jpeg,gif,png'.indexOf(size[size.length - 1]) !== -1) {
+                return 'image';
+            } else if (source.indexOf('youtube.com') !== -1) {
+                return 'youtube';
+            }
+        }
+    });
+
     env.addFilter('number_format', function (num) {
         return require('numeral')(num).format('0,0');
     });

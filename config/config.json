@@ -14,5 +14,7 @@
     "mod_seo"
   ],
   "theme": "bootstrap",
-  "page_size": 10
+  "page_size": 10,
+  "admin_email": "lephuhai0511@gmail.com",
+  "version": "v1.1"
 }

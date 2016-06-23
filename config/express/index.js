@@ -17,6 +17,7 @@ let path = require('path'),
     userAgent = require('express-useragent'),
     flash = require('connect-flash'),
     helmet = require('helmet'),
+    csrf = require('csurf'),
     errorhandler = require('errorhandler'),
     notifier = require('node-notifier'),
     viewEngine = require('./nunjucks'),
@@ -49,6 +50,7 @@ module.exports = function () {
     app.set("showStackError", true);
 
     app.use(express.static(path.resolve('./public'), {maxAge: 3600}));
+    app.use('/themes',express.static(path.resolve('./themes'), {maxAge: 3600}));
 
     app.use(userAgent.express());
 
@@ -56,7 +58,8 @@ module.exports = function () {
      * Passing the request url to environment locals
      */
     app.use(function (req, res, next) {
-        res.locals.url = req.protocol + "://" + req.headers.host + req.url;
+        res.locals.uri = req.protocol + "://" + req.headers.host + req.url;
+        res.locals.url = req.url;
         res.locals.route = req.url;
         res.locals.path = req.protocol + "://" + req.headers.host;
         //res.setHeader('Cache-Control', 'public, max-age=600');  // Enable for caching session-flash
@@ -119,6 +122,13 @@ module.exports = function () {
      * Passport strategies
      */
     passport.configure(app);
+
+    app.use(csrf());
+    app.use(function (req, res, next) {
+        req.csrfToken();
+        res.locals._csrf = req.csrfToken();
+        next();
+    });
 
     /**
      * Application router loader modules

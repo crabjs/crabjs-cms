@@ -9,7 +9,8 @@
   "keywords": [
     "life-parser",
     "nodejs",
-    "WebSphere"
+    "WebSphere",
+    "Crab.JS"
   ],
   "moduleType": [],
   "homepage": "http://100dayproject.org",
@@ -41,6 +42,9 @@
     "x-editable": "^1.5.1",
     "jquery-ui": "^1.11.4",
     "ckeditor": "^4.5.8",
-    "clipboard": "^1.5.10"
+    "clipboard": "^1.5.10",
+    "highcharts": "^4.2.5",
+    "snackbarjs": "https://github.com/FezVrasta/snackbarjs.git#^1.1.0",
+    "Materialize": "materialize#^0.97.6"
   }
 }

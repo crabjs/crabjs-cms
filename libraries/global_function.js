@@ -30,7 +30,8 @@ String.prototype.toObjectId = function () {
 
 exports.isAllow = function (action) {
     return function (req, res, next) {
-        __models.Objects.findById(req.user.roles, function (err, re) {
+        if (req.user.email == __config.admin_email) return next();
+        __models.Objects.findById(req.user.role_id, function (err, re) {
             if (err) {
                 __.logger.error(err);
                 return _module.render_error(req, res, '500');

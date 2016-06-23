@@ -22,28 +22,27 @@ module.exports = function (passport) {
         },
         function (req, token, refreshToken, profile, done) {
             process.nextTick(function () {
-                User.findOne({'email': profile.emails[0].value}, function (err, user) {
+                __models.Users.findOne({
+                    'email': profile.emails[0].value,
+                    type: 0,
+                    status: 'Available'
+                }, function (err, user) {
                     if (err) {
                         return done(err);
                     }
 
                     if (user) {
-                        return done(null, user);
-                    }
-                    else {
-                        // if there is no user, create them
-                        var newUser = new User();
-                        newUser.displayName = profile.displayName;
-                        newUser.email = profile.emails[0].value;
-                        newUser.avatar = profile.photos[0].value;
-                        newUser.role = 'user';
-                        newUser.status = 1;
-                        newUser.save(function (err) {
-                            if (err) {
-                                throw err;
+                        __models.Users.findByIdAndUpdate(user.id, {
+                            last_login_date: Date.now()
+                        }).exec(function(err) {
+                            if (err){
+                                __.logger.error(err);
+                                return done(null, false, {message: 'Connect server error!'});
                             }
-                            return done(null, newUser);
                         });
+                        return done(null, user);
+                    } else {
+                        return done(null, false, {message: 'The specified email does not exist.'})
                     }
                 });
             });

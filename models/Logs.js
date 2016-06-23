@@ -13,15 +13,16 @@ let mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 let Logs = new Schema({
-    key: {type: String, required: true},
-    name: {type: String},
-    value: {type: String},
-    user_id: {type: Schema.Types.Mixed}
+    level: {type: String},
+    user_id: {type: Schema.Types.Mixed},
+    category: {type: String},
+    message: {type: String}
 }, {
     timestamps: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
-    }
+    },
+    collection: 'crabJS_logs'
 });
 
 module.exports = mongoose.model('Logs', Logs);

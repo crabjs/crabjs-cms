@@ -21,6 +21,8 @@
     apply the skin class to the body tag so the changes take effect.-->
     <link rel="stylesheet" href="/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="/bower_components/hint.css/hint.min.css">
+    <link rel="stylesheet" href="/bower_components/snackbarjs/dist/snackbar.min.css">
+    <link rel="stylesheet" href="/bower_components/snackbarjs/themes-css/material.css">
     <link rel="stylesheet" href="/css/custom_backend.css">
     <style>
         .required {
@@ -65,6 +67,7 @@
                                     {% include themeName + '/basic_table/filter.crab' %}
                                     </thead>
                                     <tbody>
+                                    <input type="hidden" name="_csrf" value="{{ _csrf }}">
                                     {% block content_body %}{% endblock %}
                                     </tbody>
                                 </table>
@@ -104,6 +107,13 @@
 <script type="application/javascript" src="/bower_components/AdminLTE/plugins/fastclick/fastclick.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/bower_components/AdminLTE/dist/js/app.min.js"></script>
+<script src="/bower_components/snackbarjs/dist/snackbar.min.js"></script>
+
+<script>
+    $.ajaxSetup({
+        headers: {'X-CSRF-Token': '{{ _csrf }}'}
+    });
+</script>
 
 <!-- REQUIRED JS SCRIPTS -->
 {% block jsExtends %}
@@ -147,5 +157,13 @@
         }
     </script>
 {% endblock %}
+<script>
+    $(function () {
+        var $menu_active = $('.sidebar').find('ul li ul a[href="{{ url }}"]');
+        $menu_active.css("color", "#fff");
+        $menu_active.parent().parent().addClass('menu-open');
+        $menu_active.parent().parent().parent().addClass('active');
+    })
+</script>
 </body>
 </html>

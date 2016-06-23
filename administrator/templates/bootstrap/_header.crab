@@ -21,29 +21,29 @@
                     <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success">15</span>
+                        <span class="label label-success"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">Bạn không có tin nhắn</li>
                         <li>
                             <!-- inner menu: contains the messages -->
                             <ul class="menu">
-                                <li><!-- start message -->
-                                    <a href="#">
-                                    <div class="pull-left">
-                                    <!-- User Image -->
-                                    <img src="/partial/images/noAvatar.gif" class="img-circle"
-                                    alt="User Image">
-                                    </div>
-                                    <!-- Message title and timestamp -->
-                                    <h4>
-                                    Hailp
-                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                    </h4>
-                                    <!-- The message -->
-                                    <p>What wrong with you?</p>
-                                    </a>
-                                </li>
+                                {#<li><!-- start message -->#}
+                                    {#<a href="#">#}
+                                    {#<div class="pull-left">#}
+                                    {#<!-- User Image -->#}
+                                    {#<img src="/partial/images/noAvatar.gif" class="img-circle"#}
+                                    {#alt="User Image">#}
+                                    {#</div>#}
+                                    {#<!-- Message title and timestamp -->#}
+                                    {#<h4>#}
+                                    {#Hailp#}
+                                    {#<small><i class="fa fa-clock-o"></i> 5 mins</small>#}
+                                    {#</h4>#}
+                                    {#<!-- The message -->#}
+                                    {#<p>What wrong with you?</p>#}
+                                    {#</a>#}
+                                {#</li>#}
                                 <!-- end message -->
                             </ul>
                             <!-- /.menu -->
@@ -58,23 +58,19 @@
                     <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
+                        <span class="label label-warning"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        {% if user.questions or user.last_name or user.first_name %}
-                            <li class="header">Bác sĩ có {{ user.questions.length }} câu hỏi chờ trả lời</li>
-                        {% else %}
-                            <li class="header">Bạn không có thông báo mới</li>
-                        {% endif %}
+                        <li class="header">Bạn không có thông báo mới</li>
                         <li>
                             <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
-                                <li><!-- start notification -->
-                                    <a href="#">
-                                        <i class="fa fa-users text-aqua"></i> Câu hỏi của bác
-                                        sĩ {{ user.last_name }} {{ user.first_name }}
-                                    </a>
-                                </li>
+                                {#<li><!-- start notification -->#}
+                                    {#<a href="#">#}
+                                        {#<i class="fa fa-users text-aqua"></i> Câu hỏi của bác#}
+                                        {#sĩ {{ user.last_name }} {{ user.first_name }}#}
+                                    {#</a>#}
+                                {#</li>#}
                                 <!-- end notification -->
                             </ul>
                         </li>
@@ -104,7 +100,7 @@
                                     khoản</a>
                             </div>
                             <div class="pull-right">
-                                <a href="/{{ admin_prefix }}/logout" class="btn btn-default btn-flat">Đăng xuất</a>
+                                <a href="/logout" class="btn btn-default btn-flat">Đăng xuất</a>
                             </div>
                         </li>
                     </ul>

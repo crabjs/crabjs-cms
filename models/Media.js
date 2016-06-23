@@ -15,12 +15,14 @@ let mongoose = require('mongoose'),
 let Media = new Schema({
     path: {type: String},
     user_id: {type: Schema.Types.Mixed},
-    meta_data: {type: Schema.Types.Mixed}
+    meta_data: {type: Schema.Types.Mixed},
+    logs: [{type: Schema.Types.Mixed}]
 }, {
     timestamps: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
-    }
+    },
+    collection: 'crabJS_media'
 });
 
 module.exports = mongoose.model('Media', Media);

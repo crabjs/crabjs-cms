@@ -1,0 +1,177 @@
+{% extends 'layout.crab' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Gửi yêu cầu tới hệ thống</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button id="typeReport" type="button" class="btn btn-warning dropdown-toggle btn-flat"
+                                        data-toggle="dropdown">Chọn loại yêu cầu
+                                    <span class="fa fa-caret-down"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Yêu cầu chức năng</a></li>
+                                    <li><a href="#">Lỗi chức năng</a></li>
+                                    <li><a href="#">Góp ý</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Báo lỗi</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <input type="text" placeholder="Tiêu đề yêu cầu" name="subject" class="form-control">
+                        </div>
+
+                        {#<input class="form-control" placeholder="Tiêu đề">#}
+                    </div>
+                    {#<div class="form-group">#}
+                    {#<input class="form-control" placeholder="Subject:">#}
+                    {#</div>#}
+                    <div class="form-group">
+                        <label for="full_text">Nội dung</label>
+                        {#<div class="btn btn-default btn-file pull-right">#}
+                        {#<i class="fa fa-picture-o" aria-hidden="true"></i> Add media#}
+                        {#<input type="file" name="uploads[]" multiple="multiple" id="upload-input">#}
+                        {#</div>#}
+                    </div>
+
+                    <div class="form-group">
+                        <textarea title="Content" name="content" id="content" required></textarea>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Lưu nháp</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Gửi đi</button>
+                    </div>
+                    {#<button type="reset" class="btn btn-default"><i class="fa fa-paperclip"></i> Đính kèm tệp tin</button>#}
+                    <div class="btn btn-default btn-file">
+                        <i class="fa fa-paperclip" aria-hidden="true"></i> Đính kèm file
+                        <input type="file" name="uploads[]" multiple="multiple" id="upload-input">
+                    </div>
+                    <p class="help-block">Max. 32MB</p>
+                    <div id="progress"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-danger">
+                <div id="activity" class="box box-solid">
+                    <div class="box-header">
+                        <div class="box-title">Yêu cầu hệ thống</div>
+                    </div>
+                    <div class="box-body">
+                        <ul class="todo-list">
+                            {% for i in range(1,10) %}
+                                <li>
+                                    <img style="width: 19px;border-radius: 50%;margin-right: 6px;"
+                                         src="/images/noAvatar.gif" alt=""><a href="#">Lê Phú Hải </a>
+                                    <span class="hint--top-left" data-hint="lỗi giao diện trên trang đăng nhập">lỗi giao diện trên trang..
+                                    <span class="label label-warning pull-right">đang xử lý</span></span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/bower_components/clipboard/dist/clipboard.min.js"></script>
+    <script src="/bower_components/AdminLTE/plugins/ckeditor/ckeditor.js"></script>
+    <script src="/js/hai100dayproject.js"></script>
+    <script>
+        var fileman = "/libs/fileman/dev.html?integration=ckeditor";
+        (function () {
+            CKEDITOR.replace('content', {
+                height: 150,
+                filebrowserBrowseUrl: fileman,
+                filebrowserImageBrowseUrl: fileman + '&type=image',
+                removeDialogTabs: 'link:upload;image:upload;image:advanced;link:advanced'
+            });
+        })();
+
+        $(function () {
+            $(".dropdown-menu li a").click(function () {
+                $("#typeReport").text($(this).text());
+                $("#typeReport").val($(this).text());
+            });
+        });
+    </script>
+
+    <script>
+        function removeElementById(id) {
+            $(`#${id}`).remove();
+        }
+
+        var $btn_upload = $('#upload-input');
+        $btn_upload.on('change', function () {
+            var files = $(this).get(0).files;
+
+            let colors = ['green', 'aqua', 'yellow', 'red'];
+            var rnd = colors[Math.floor(Math.random() * colors.length)];
+            var date_now = `hai_${Date.now()}`;
+
+            $('#progress').append(`<div id="${date_now}">
+<div class="col-md-11">
+                        <div style="cursor: pointer;" class="form-group" id="progress"><div class="progress"><div id="process" class="progress-bar progress-bar-${rnd}" role="progressbar"></div></div>
+                        </div></div>
+                    <div class="col-md-1">
+                        <span class="hint--top" data-hint="Xóa file ${files[0].name}">
+                        <i onclick="removeElementById('${date_now}')" style="cursor: pointer;" class="fa fa-times" aria-hidden="true"></i></span>
+                    </div></div>`);
+            var $process = $('#process');
+
+            if (files.length > 0) {
+
+                var formData = new FormData();
+
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+
+                    formData.append('uploads[]', file, file.name);
+                }
+
+                $.ajax({
+                    url: '/{{ admin_prefix }}/upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        console.log(data);
+                        console.log('upload successful!\n');
+                    },
+                    xhr: function () {
+                        var xhr = new XMLHttpRequest();
+
+                        xhr.upload.addEventListener('progress', function (evt) {
+                            if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+
+                                $process.text(percentComplete + '%');
+                                $process.width(percentComplete + '%');
+
+                                if (percentComplete === 100) {
+                                    $process.html(`Hoàn thành: ${files[0].name} / File size: ${haiRE.FormatFileSize(files[0].size)}`);
+                                    $('#process').attr('id', date_now)
+                                }
+                            }
+                        }, false);
+
+                        return xhr;
+                    }
+                })
+            }
+        })
+    </script>
+{% endblock %}

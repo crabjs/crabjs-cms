@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link id="favicon" rel="shortcut icon" type="image/x-icon" href="/favicon-v1.1.ico">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/github-light.css" media="screen">
+    <style>
+        span {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<section class="page-header">
+    <h1 class="project-name">Crab.JS</h1>
+    <h2 class="project-tagline">Easily build web application on Node.js</h2>
+    <a href="https://github.com/Vietworm/Crab.JS" class="btn">View on GitHub</a>
+    <a href="https://github.com/Vietworm/Crab.JS/zipball/master" class="btn">Download .zip</a>
+    <a href="https://github.com/Vietworm/Crab.JS/tarball/master" class="btn">Download .tar.gz</a>
+</section>
+
+<section class="main-content">
+    <h3>
+        <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span
+                    aria-hidden="true" class="octicon octicon-link"></span></a>Welcome to Crab.JS CMS</h3>
+
+    <h3>
+        <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span
+                    aria-hidden="true" class="octicon octicon-link"></span></a>/*========= Default Features =========*/</h3>
+
+    <p>Articles Category → This module displays a list of articles from one or more categories.</p>
+    <p>Login → This module display a username and password login form. It also display a link to..</p>
+    <p>Forgot Password → User forgot your password using email register.</p>
+    <p>User Permission → User has permission access to the module and administrator or moderator has change role permission.</p>
+    <p>Module Manager → Module management </p>
+    <p>Logs Tracking → Logs management, tracking logs of system and DB error or User action reference into database server.</p>
+
+    <h3>
+        <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true"
+                                                                                                      class="octicon octicon-link"></span></a>Support
+        or Contact</h3>
+
+    <p>Having trouble with CMS? Check out our <a href="http://100dayproject.org/project/crab.js">documentation</a> or <a
+                href="http://100dayproject.org/contact">contact support</a> and we’ll help you sort it out.</p>
+
+    <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Vietworm/Crab.JS">Crab.JS</a> is maintained by <a
+                    href="https://github.com/Vietworm">Vietworm</a>.</span>
+    </footer>
+
+</section>
+
+
+</body>
+</html>

@@ -16,29 +16,32 @@ let mongoose = require('mongoose'),
 // define the schema for our user model
 let userSchema = new Schema({
     email: {type: Schema.Types.String, required: true},
+    username: {type: Schema.Types.String},
     password: {type: Schema.Types.String, required: true},
     avatar: {type: Schema.Types.String},
     token: {type: Schema.Types.String, required: true},
     display_name: {type: Schema.Types.String, required: true},
     last_login_date: {type: Schema.Types.Date, default: Date.now},
     rules: {type: Schema.Types.Mixed, default: {}},
-    settings: {type: Schema.Types.Mixed, default: {}},
+    settings: {
+        updated_at: {type: Schema.Types.Date, default: Date.now},
+        menu: {type: Schema.Types.String}
+    },
     status: {type: Schema.Types.String, enum: ['Available', 'Block', 'Pending']},
     created_date: {type: Schema.Types.Date, default: Date.now},
-    roles: {type: Schema.Types.ObjectId, ref: 'objects'},
+    role_id: {type: Schema.Types.ObjectId, ref: 'Objects'},
     type: {type: Schema.Types.Number, enum: [0, -1]},
     activation_code: {type: Schema.Types.String},
     reset_password_token: {type: Schema.Types.String},
-    reset_password_expires: {type: Schema.Types.Date}
+    reset_password_expires: {type: Schema.Types.Date},
+    logs: [{type: Schema.Types.Mixed}]
+}, {
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    },
+    collection: 'crabJS_users'
 });
-
-// userSchema.pre('save', function (next) {
-//     let user = this;
-//     if (!user.isModified('password')) return next();
-//
-//     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(8), null);
-//     next();
-// });
 
 userSchema.static('generateHash', function (password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
