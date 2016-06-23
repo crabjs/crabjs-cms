@@ -22,5 +22,3 @@ if (require('fs').existsSync('./config/config.json')) {
 } else {
     require('./bin/generator')
 }
-
-console.log("Welcome to my world");

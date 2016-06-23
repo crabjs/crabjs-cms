@@ -15,7 +15,7 @@ module.exports = function (env) {
         for (let i in source) {
             if (source.hasOwnProperty(i) && selected && selected.length) {
                 for (let j in selected) {
-                    if (selected.hasOwnProperty(j) && source[i][key].toString().trim() == selected[j][key].toString().trim()) {
+                    if (selected.hasOwnProperty(j) && source[i][key] && selected[j][key] && source[i][key].toString().trim() == selected[j][key].toString().trim()) {
                         results +=` <option selected value="${selected[j][key]}">${selected[j][value]}</option>`;
                     } else {
                         results +=` <option value="${source[i][key]}">${source[i][value]}</option>`;

@@ -14,17 +14,19 @@ let module_name = 'mod_default',
 
 _module.view = function (req, res) {
     Promise.all([
-        __models.Posts.count({key: 'article'}, function (err, re) {
+        __models.Posts.count({key: 'article'}).then(function(count){
+            return count;
+        }, function(err){
             if (err) {
                 __.logger.error(err);
             }
-            return re; // Số lượng bài viết
         }),
-        __models.Users.count(function (err, re) {
+        __models.Users.count().then(function(count){
+            return count;
+        }, function(err){
             if (err) {
                 __.logger.error(err);
             }
-            return re; // Số lượng người dùng
         })
     ]).then(function (statistic) {
         _module.render(req, res, 'dashboard', {
