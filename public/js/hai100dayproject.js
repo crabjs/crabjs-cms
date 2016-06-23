@@ -34,16 +34,19 @@ haiRE.FixPath = function (path) {
  * @return {number}
  */
 haiRE.GetFileSize = function (path) {
-    var res = 0;
-    $.ajax({
-        url: path,
-        type: 'HEAD',
-        async: false,
-        success: function (d, s, xhr) {
-            res = xhr.getResponseHeader('Content-Length');
-        }
-    });
-    return res;
+    if (haiRE.FileExists(path)) {
+        var res = 0;
+        $.ajax({
+            url: path,
+            type: 'HEAD',
+            async: false,
+            success: function (d, s, xhr) {
+                res = xhr.getResponseHeader('Content-Length');
+            }
+        });
+        return res;
+    }
+    return 0;
 };
 
 /**
@@ -259,4 +262,21 @@ function select_media() {
     $('#previewImage').attr('src', img_val);
     $('#input_previewImage').attr('value', img_val);
     $media.modal('hide');
+}
+
+function remove_media() {
+    $.ajax({
+        url: '/api/remove/media',
+        type: 'POST',
+        data: {
+            name: $('#previewMedia').attr('src')
+        },
+        success: function (result) {
+            if (result.status === 200) {
+                console.log("File deleted");
+            } else {
+                console.log("Delete failed!");
+            }
+        }
+    })
 }

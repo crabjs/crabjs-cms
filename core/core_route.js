@@ -54,6 +54,30 @@ module.exports = function (app) {
         return res;
     }
 
+    app.route('/api/remove/media').post(function (req, res) {
+        let fs = require('fs');
+
+        __models.Media.remove({path: req.body.name}).exec(function(err){
+            if (!err){
+                fs.unlink(__base + '/public' + req.body.name, function (err) {
+                    if (err){
+                        res.send({
+                            status: 500
+                        })
+                    } else {
+                        res.send({
+                            status: 200
+                        })
+                    }
+                });
+            } else {
+                res.send({
+                    status: 200
+                })
+            }
+        });
+    });
+
     app.route('/api/upload').post(function (req, res) {
 
         var file_path, file_name, new_file_name;
@@ -71,7 +95,7 @@ module.exports = function (app) {
 
             if (!stats.isDirectory()) {
                 require('fs').mkdir('/home/' + req.query.path, function (err) {
-                    if (err){
+                    if (err) {
                         __logger.error(err);
                     }
                 })

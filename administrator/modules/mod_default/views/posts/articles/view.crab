@@ -181,6 +181,7 @@
                                 <br>
                                 <dd>
                                     <div onclick="select_media()" class="btn btn-primary">Chọn hình ảnh</div>
+                                    <div onclick="remove_media()" class="btn btn-danger pull-right">Xóa hình ảnh</div>
                                 </dd>
                             </dl>
                         </div>
