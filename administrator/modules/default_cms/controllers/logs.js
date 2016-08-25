@@ -9,7 +9,7 @@
 
 "use strict";
 
-let module_name = 'mod_default',
+let module_name = 'default_cms',
     _module = new __viewRender('backend', module_name);
 
 _module.list = function (req, res) {
@@ -92,7 +92,7 @@ _module.list = function (req, res) {
                 return posts;
             })
     ]).then(function (results) {
-        _module.render(req, res, 'system/logs/index', {
+        _module.render(req, res, 'logs/index', {
             title: 'CrabJS | Logs System Manager',
             toolbar: toolbar.render(),
             logs: results[1],

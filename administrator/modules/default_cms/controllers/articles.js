@@ -9,7 +9,7 @@
 
 "use strict";
 
-let module_name = 'mod_default',
+let module_name = 'default_cms',
     _module = new __viewRender('backend', module_name),
     Promise = require('bluebird');
 
@@ -25,10 +25,11 @@ _module.create = function (req, res) {
             __.logger.error(error);
             return _module.render_error(req, res, '500');
         }
-        _module.render(req, res, 'posts/articles/view', {
+        _module.render(req, res, 'articles/view', {
             title: 'Viết bài mới',
             toolbar: toolbar.render(),
-            categories: categories
+            categories: categories,
+            create: true
         })
     });
 };
@@ -124,7 +125,7 @@ _module.list = function (req, res) {
                 return posts;
             })
     ]).then(function (results) {
-        _module.render(req, res, 'posts/articles/index', {
+        _module.render(req, res, 'articles/index', {
             title: 'Danh sách bài viết',
             toolbar: toolbar.render(),
             posts: results[1],
@@ -156,33 +157,37 @@ _module.delete = function (req, res) {
 
 _module.view = function (req, res) {
 
-    let toolbar = new __.Toolbar();
-    toolbar.custom({
-        backButton: {link: `/${__config.admin_prefix}/posts`},
-        saveButton: {access: true}
-    });
+    if (__.ObjectId.test(req.params.id)) {
+        let toolbar = new __.Toolbar();
+        toolbar.custom({
+            backButton: {link: `/${__config.admin_prefix}/posts`},
+            saveButton: {access: true}
+        });
 
-    Promise.all([
-        __models.Objects.find({key: 'objects:category'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
-            return categories;
-        }),
-        __models.Posts.findOne({
-            key: 'article',
-            _id: req.params.id
-        }).populate('category_id', 'name').exec(function (err, post) {
-            return post;
-        })
-    ]).then(function (results) {
-        _module.render(req, res, 'posts/articles/view', {
-            title: results[1].title,
-            toolbar: toolbar.render(),
-            categories: results[0],
-            post: results[1]
-        })
-    }).catch(function (error) {
-        __.logger.error(error);
-        return _module.render_error(req, res, '500');
-    });
+        Promise.all([
+            __models.Objects.find({key: 'objects:category'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
+                return categories;
+            }),
+            __models.Posts.findOne({
+                key: 'article',
+                _id: req.params.id
+            }).populate('category_id', 'name').exec(function (err, post) {
+                return post;
+            })
+        ]).then(function (results) {
+            _module.render(req, res, 'articles/view', {
+                title: results[1].title,
+                toolbar: toolbar.render(),
+                categories: results[0],
+                post: results[1]
+            })
+        }).catch(function (error) {
+            __.logger.error(error);
+            return _module.render_error(req, res, '500');
+        });
+    } else {
+        return _module.render_error(req, res, '404');
+    }
 };
 
 _module.update = function (req, res) {

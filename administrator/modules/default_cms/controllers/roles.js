@@ -9,7 +9,7 @@
 
 "use strict";
 
-let module_name = 'mod_default',
+let module_name = 'default_cms',
     _module = new __viewRender('backend', module_name);
 
 _module.create = function (req, res) {
@@ -34,7 +34,7 @@ _module.create = function (req, res) {
         }
     }
 
-    _module.render(req, res, 'users/roles/view', {
+    _module.render(req, res, 'roles/view', {
         title: 'Tạo nhóm quyền mới',
         toolbar: toolbar.render(),
         modules: modules
@@ -134,7 +134,7 @@ _module.list = function (req, res) {
                 return roles;
             })
     ]).then(function (results) {
-        _module.render(req, res, 'users/roles/index', {
+        _module.render(req, res, 'roles/index', {
             title: 'Danh sách quyền',
             toolbar: toolbar.render(),
             roles: results[1],
@@ -176,45 +176,50 @@ _module.update = function (req, res) {
 };
 
 _module.view = function (req, res) {
-    let toolbar = new __.Toolbar();
-    toolbar.custom({
-        backButton: {link: `/${__config.admin_prefix}/roles`},
-        saveButton: {access: true}
-    });
+
+    if (__.ObjectId.test(req.params.id)) {
+        let toolbar = new __.Toolbar();
+        toolbar.custom({
+            backButton: {link: `/${__config.admin_prefix}/roles`},
+            saveButton: {access: true}
+        });
 
 
-    var listModuleExtends = {};
-    __.getGlobbedFiles(__base + `/administrator/modules/*/module.js`).forEach(function (path) {
-        require(path)(listModuleExtends);
-    });
+        var listModuleExtends = {};
+        __.getGlobbedFiles(__base + `/administrator/modules/*/module.js`).forEach(function (path) {
+            require(path)(listModuleExtends);
+        });
 
-    let modules = [];
+        let modules = [];
 
-    for (let md in listModuleExtends) {
-        if (listModuleExtends.hasOwnProperty(md)) {
-            if (listModuleExtends[md].roles) {
-                modules.push(listModuleExtends[md]);
+        for (let md in listModuleExtends) {
+            if (listModuleExtends.hasOwnProperty(md)) {
+                if (listModuleExtends[md].roles) {
+                    modules.push(listModuleExtends[md]);
+                }
             }
         }
-    }
 
-    __models.Objects.findOne({key: 'objects:roles', _id: req.params.id}, {
-        values: 1,
-        name: 1,
-        status: 1
-    }).exec(function (err, acl) {
-        if (err) {
-            __.logger.error(err);
-            return _module.render_error(req, res, '500');
-        }
+        __models.Objects.findOne({key: 'objects:roles', _id: req.params.id}, {
+            values: 1,
+            name: 1,
+            status: 1
+        }).exec(function (err, acl) {
+            if (err) {
+                __.logger.error(err);
+                return _module.render_error(req, res, '500');
+            }
 
-        _module.render(req, res, 'users/roles/view', {
-            title: 'Danh sách quyền',
-            toolbar: toolbar.render(),
-            modules: modules,
-            acl: acl
+            _module.render(req, res, 'roles/view', {
+                title: 'Danh sách quyền',
+                toolbar: toolbar.render(),
+                modules: modules,
+                acl: acl
+            });
         });
-    });
+    } else {
+        return _module.render_error(req, res, '404');
+    }
 };
 
 _module.delete = function (req, res) {

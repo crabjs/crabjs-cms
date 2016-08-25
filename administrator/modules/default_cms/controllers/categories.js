@@ -9,7 +9,7 @@
 
 "use strict";
 
-let module_name = 'mod_default',
+let module_name = 'default_cms',
     _module = new __viewRender('backend', module_name),
     Promise = require('bluebird');
 
@@ -77,7 +77,7 @@ _module.list = function (req, res) {
                 return categories;
             })
     ]).then(function (results) {
-        _module.render(req, res, 'posts/categories/index', {
+        _module.render(req, res, 'categories/index', {
             title: 'Quản lý chuyên mục',
             toolbar: toolbar.render(),
             categories: results[1],

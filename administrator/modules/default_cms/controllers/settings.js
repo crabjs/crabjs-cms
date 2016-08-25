@@ -9,7 +9,7 @@
 
 "use strict";
 
-let module_name = 'mod_default',
+let module_name = 'default_cms',
     _module = new __viewRender('backend', module_name);
 
 _module.web_settings = function (req, res) {
@@ -24,7 +24,7 @@ _module.web_settings = function (req, res) {
             __.logger.error(err);
             return _module.render_error(req, res, '500');
         }
-        _module.render(req, res, 'system/settings/web_settings', {
+        _module.render(req, res, 'settings/web_settings', {
             title: 'Cấu hình Search Engine Optimization',
             toolbar: toolbar.render(),
             meta: re
@@ -44,7 +44,7 @@ _module.web_settings_update = function (req, res) {
 };
 
 _module.report = function (req, res) {
-    _module.render(req, res, 'system/settings/report', {
+    _module.render(req, res, 'settings/report', {
         title: 'Gửi báo cáo tới hệ thống'
     });
 };
@@ -52,8 +52,8 @@ _module.report = function (req, res) {
 _module.module_install = function (req, res) {
     let toolbar = new __.Toolbar();
     toolbar.custom({
-        refreshButton: {link: `/${__config.admin_prefix}/modules/install`},
-        createButton: {access: true, link: `#`, text: ' Thêm module'}
+        refreshButton: {link: `/${__config.admin_prefix}/modules/install`}
+        // createButton: {access: true, link: `#`, text: ' Thêm module'}
     });
 
     let moduleIgnore = '' || '*';
@@ -62,7 +62,7 @@ _module.module_install = function (req, res) {
         require(path)(listModuleExtends);
     });
 
-    _module.render(req, res, 'system/settings/module_install', {
+    _module.render(req, res, 'settings/module_install', {
         title: 'Cài đặt modules',
         toolbar: toolbar.render(),
         modules: listModuleExtends
@@ -81,7 +81,7 @@ _module.theme_install = function (req, res) {
             __.logger.error(err);
             return _module.render_error(req, res, '500');
         }
-        _module.render(req, res, 'system/settings/theme_install', {
+        _module.render(req, res, 'settings/theme_install', {
             title: 'Cài đặt giao diện',
             toolbar: toolbar.render(),
             themes: themes
@@ -92,7 +92,7 @@ _module.theme_install = function (req, res) {
 };
 
 _module.widget = function (req, res) {
-    _module.render(req, res, 'system/settings/widget', {
+    _module.render(req, res, 'settings/widget', {
         title: 'Thiết lập widget'
     })
 };

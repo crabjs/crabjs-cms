@@ -2,51 +2,7 @@
 
 {% block cssExtends %}
     <link rel="stylesheet" href="/libs_custom/select2.css">
-    <style>
-        .modal-body {
-            height: 450px;
-        }
-
-        .media-content, .media-info {
-            /*overflow-y: auto;*/
-            overflow-y: auto;
-            max-height: 100%;
-        }
-
-        @media (min-width: 992px) {
-            .modal-lg {
-                width: 1208px;
-            }
-        }
-
-        .img-thumbnail {
-            border-radius: 0;
-        }
-
-        .media-content img:hover {
-            outline: 2px solid #6A1B9A;
-        }
-
-        #mediaModal ::-webkit-scrollbar {
-            width: 5px;
-            height: 10px;
-        }
-
-
-        /* Handle */
-        #mediaModal ::-webkit-scrollbar-thumb {
-            -webkit-border-radius: 10px;
-            border-radius: 10px;
-            background: #90949c;
-        }
-
-        #mediaModal ::-webkit-scrollbar-thumb:window-inactive {
-            background: #90949c;
-            -webkit-border-radius: 10px;
-            border-radius: 10px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/css/modal_image.css">
 {% endblock %}
 
 {% block content %}
@@ -100,7 +56,13 @@
                             <label for="category_id">Danh mục</label>
                             <select multiple="multiple" name="category_id" id="category_id"
                                     class="form-control">
-                                {{ categories|filter_select2(post.category_id, '_id', 'name') }}
+                               {% if create %}
+                                   {% for category in categories %}
+                                       <option value="{{ category._id }}">{{ category.name }}</option>
+                                   {% endfor %}
+                                   {% else %}
+                                       {{ categories|filter_select2(post.category_id, '_id', 'name') }}
+                                {% endif %}
                             </select>
                         </div>
 
@@ -136,15 +98,6 @@
                                    id="password"
                                    autocomplete="off">
                         </div>
-
-                        {#<div class="form-group">#}
-                            {#<div class="btn btn-default btn-file">#}
-                                {#<i class="fa fa-paperclip"></i> Đính kèm tệp tin#}
-                                {#<input type="file" name="attachments" enctype="multipart/form-data" id="attachments"#}
-                                       {#multiple>#}
-                            {#</div>#}
-                            {#<p class="help-block">Max. 32MB</p>#}
-                        {#</div>#}
                     </div>
                 </div>
             </div>
@@ -181,7 +134,7 @@
                                 <br>
                                 <dd>
                                     <div onclick="select_media()" class="btn btn-primary">Chọn hình ảnh</div>
-                                    <div onclick="remove_media()" class="btn btn-danger pull-right">Xóa hình ảnh</div>
+                                    <div onclick="remove_media()" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa hình ảnh</div>
                                 </dd>
                             </dl>
                         </div>

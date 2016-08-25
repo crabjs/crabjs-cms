@@ -2,6 +2,18 @@
 
 {% block cssExtends %}
     <style>
+
+        .overlay {
+            margin: auto;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .alert {
+            -webkit-transition: all 0.35s;
+            transition: all 0.35s;
+        }
+
         @media (min-width: 992px) {
             .modal-lg {
                 width: 1208px;
@@ -30,12 +42,23 @@
             -webkit-border-radius: 10px;
             border-radius: 10px;
         }
+
+        .choose_avatar {
+            margin: 15px 0;
+            max-width: 128px;
+            max-height: 128px;
+            cursor: pointer;
+        }
+        input[name="avatar_doctors"] {
+            display: none;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
-    <form id="edit-form" method="post">
+    <form id="frm_create" method="post">
         <input type="hidden" name="_csrf" value="{{ _csrf }}">
+        <input type="file" hidden name="avatar_doctors">
         <div class="box box-solid box-primary">
             <div class="box-body">
                 <div class="row">
@@ -57,6 +80,8 @@
                                     tin cá nhân</a></li>
                             <li class=""><a href="#tab2" role="tab" data-toggle="tab" aria-expanded="false">Gửi thông
                                     báo</a></li>
+                            <li class=""><a href="#tab3" role="tab" data-toggle="tab" aria-expanded="false">Hoạt động
+                                    tài khoản</a></li>
                         </ul>
                         <!-- TAB CONTENT -->
                         <div class="tab-content" style="padding-top: 15px;">
@@ -141,13 +166,11 @@
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-hidden="true"></button>
-                                                        <h4 class="modal-title">Xác nhận xóa dữ liệu tạm trên tài
-                                                            khoản {{ user.display_name }}</h4>
+                                                        <h4 class="modal-title"></h4>
                                                     </div>
                                                     <div class="modal-body">
                                                         <p>Dữ liệu tạm của bạn sẽ được cập nhật lại khi thực hiện hành
-                                                            động
-                                                            này.</p>
+                                                            động này.</p>
                                                         <strong>Bạn chắc chắn muốn xóa thông tin này ?</strong>
                                                     </div>
                                                     <div class="modal-footer">
@@ -173,8 +196,8 @@
                                                     Người dùng
                                                 </option>
                                                 <option ignore="7" {% if profile.type == 0 %} selected {% endif %}
-                                                        value="0">Quản
-                                                    trị
+                                                        value="0">
+                                                    Quản trị
                                                 </option>
                                             </select>
                                         </div>
@@ -182,8 +205,7 @@
                                         <div class="form-group group_permission"
                                              style="display: {% if profile.type == 0 %} inherit {% else %} none {% endif %};">
                                             <label for="role_id">Chọn nhóm quyền hạn</label>
-                                            <select class="form-control" name="role_id"
-                                                    id="role_id">
+                                            <select class="form-control" name="role_id" id="role_id">
                                                 {% for role in roles %}
                                                     {% if profile.role_id|toString() == role._id|toString() %}
                                                         <option ignore="7" selected
@@ -197,20 +219,15 @@
 
                                         <div class="form-group">
                                             <label>Ảnh đại diện<span class="help-block" style="display: inline;">(128x128px)</span></label>
-                                            <a onclick="openModalMedia()" href="#" id="avt"
-                                               class="btn btn-primary btn-block"
-                                               style="max-width: 200px"><i class="fa fa-upload"></i> Chọn/đăng ảnh đại
-                                                diện</a>
-                                            <img style="margin: 15px 0; max-width: 128px; cursor: pointer"
-                                                 class="img img-thumbnail" id="previewImage"
-                                                 onclick="openModalMedia()" src="{{ profile.avatar }}">
+                                            <br>
+                                            <img class="choose_avatar img img-thumbnail"
+                                                 src="{{ profile.avatar or '/images/no_avatar.gif' }}">
                                             <input value="{{ profile.avatar }}" type="hidden" id="input_previewImage"
                                                    name="avatar">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div class="tab-pane fade" id="tab2">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -218,63 +235,115 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <div class="tab-pane fade" id="tab3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <!-- The timeline -->
+                                        <ul class="timeline timeline-inverse">
+                                            <!-- timeline time label -->
+                                            <li class="time-label">
+                        <span class="bg-red">
+                          10 Feb. 2014
+                        </span>
+                                            </li>
+                                            <!-- /.timeline-label -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-envelope bg-blue"></i>
 
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
 
-        <!-- Modal media -->
-        <div id="mediaModal" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Tải lên/Chọn media</h4>
-                    </div>
-                    <div class="modal-body" style="height: 450px">
-                        <div class="col-md-8 media-content" style="overflow-y: auto; max-height: 100%"></div>
-                        <div class="col-md-4 media-info" style="overflow-y: auto; max-height: 100%">
-                            <dl class="dl-horizontals">
-                                <dt style="padding-bottom: 12px">
-                                    <img id="previewMedia" class="img-thumbnail"
-                                         style="max-width: 30%; border-radius: 0"
-                                         src="/images/no_image_available.jpeg">
-                                </dt>
-                                <dd>File name:
-                                    <div style="display: inline;" id="name_media"></div>
-                                </dd>
-                                <dd>Size:
-                                    <div style="display: inline;" id="size_media"></div>
-                                </dd>
-                                <br>
-                                <dt style="display: inline">Ngày tạo:</dt>
-                                <dd style="display: inline" id="createdAt_media"></dd>
-                                <br>
-                                <br>
-                                <dd>
-                                    <div onclick="select_media()" class="btn btn-primary">Chọn hình ảnh</div>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="btn btn-primary btn-file" style="position: fixed; left: 30px">
-                                    <i class="fa fa-upload" aria-hidden="true"></i> Tải lên tệp tin
-                                    <input type="file" name="uploads[]" multiple="multiple" id="upload-input">
+                                                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an
+                                                        email</h3>
+
+                                                    <div class="timeline-body">
+                                                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                                                        weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                                                        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo
+                                                        kaboodle
+                                                        quora plaxo ideeli hulu weebly balihoo...
+                                                    </div>
+                                                    <div class="timeline-footer">
+                                                        <a class="btn btn-primary btn-xs">Read more</a>
+                                                        <a class="btn btn-danger btn-xs">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-user bg-aqua"></i>
+
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+
+                                                    <h3 class="timeline-header no-border"><a href="#">Sarah Young</a>
+                                                        accepted your friend request
+                                                    </h3>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-comments bg-yellow"></i>
+
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+
+                                                    <h3 class="timeline-header"><a href="#">Jay White</a> commented on
+                                                        your post</h3>
+
+                                                    <div class="timeline-body">
+                                                        Take me to your leader!
+                                                        Switzerland is small and neutral!
+                                                        We are more like Germany, ambitious and misunderstood!
+                                                    </div>
+                                                    <div class="timeline-footer">
+                                                        <a class="btn btn-warning btn-flat btn-xs">View comment</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <!-- timeline time label -->
+                                            <li class="time-label">
+                        <span class="bg-green">
+                          3 Jan. 2014
+                        </span>
+                                            </li>
+                                            <!-- /.timeline-label -->
+                                            <!-- timeline item -->
+                                            <li>
+                                                <i class="fa fa-camera bg-purple"></i>
+
+                                                <div class="timeline-item">
+                                                    <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+
+                                                    <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new
+                                                        photos</h3>
+
+                                                    <div class="timeline-body">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                        <img src="http://placehold.it/150x100" alt="..." class="margin">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- END timeline item -->
+                                            <li>
+                                                <i class="fa fa-clock-o bg-gray"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End modal -->
     </form>
     <div class="modal fade" id="confirm" tabindex="-1" role="basic" aria-hidden="true">
         <div class="modal-dialog" style="max-width: 600px">
@@ -286,12 +355,12 @@
                     <div id="checkPassword-msg"></div>
                     <div class="form-group">
                         <label class="control-label">Mật khẩu cũ</label>
-                        <input required title="old Password" type="password" class="form-control" name="old_pass"
+                        <input title="old Password" type="password" class="form-control" name="old_pass"
                                id="old_pass">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Mật khẩu mới</label>
-                        <input required title="new password" type="password" class="form-control" id="new_pass"
+                        <input title="new password" type="password" class="form-control" id="new_pass"
                                name="new_pass">
                     </div>
                     <div class="form-group">
@@ -314,6 +383,72 @@
     <script src="/js/hai100dayproject.js"></script>
 
     <script>
+
+        $('.choose_avatar').click(function () {
+            $('input[name="avatar_doctors"]').click();
+        });
+
+        $('input[name="avatar_doctors"]').on('change', function () {
+            var input_name = 'avatar_admin';
+            var files = $(this).get(0).files;
+            if (files.length > 0) {
+                var formData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                }
+                formData.append(input_name, file);
+            }
+            $.ajax({
+                url: `/api/avatar_admin/upload?input_name=${input_name}`,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status === 200) {
+                        // Update html resource
+                        // Update database
+                        $.ajax({
+                            url: `/{{ admin_prefix }}/api/users/{{ profile._id }}/update`,
+                            type: 'PUT',
+                            data: {
+                                avatar: `{{ domain_prefix }}/${data.path}`
+                            },
+                            success: function (result) {
+                                if (result.status === 200) {
+                                    $('.choose_avatar').attr('src', data.path);
+                                }
+                            }
+                        })
+                    }
+                },
+                xhr: function () {
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            if (percentComplete === 100) {
+                                console.log("Progress " + percentComplete + '%');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                }
+            })
+        });
+
+        var display_name = $('#display_name').val();
+        $('#confirm-delete-cache-modal').find('h4.modal-title').html(`Xác nhận xóa dữ liệu tạm trên tài khoản <span style="color: #3c8dbc;">${display_name}</span>`);
+
+        $(document).keypress(function (e) {
+            if (e.which === 13) {
+//                $('.box-body').find('button[type=submit]').trigger('click');
+                $('form#frm_create').submit();
+                return false;
+            }
+        });
+
         function change_user_type(sel) {
             if ($("#type").find("option:selected").attr('ignore') == 7) {
                 $('.group_permission').css('display', 'inherit');
@@ -361,17 +496,20 @@
                 $(".overlay").remove();
             }
 
-            var $old_pass = $("#old_pass").val(),
-                    $new_pass = $("#new_pass").val(),
-                    $confirm_pass = $("#confirm_pass").val();
-
             $("#checkPassword").click(function () {
-                var user_id = '{{ profile._id }}';
-                showLoading('#confirm_password');
+                var $old_pass = $("#old_pass").val(),
+                        $new_pass = $("#new_pass").val(),
+                        $confirm_pass = $("#confirm_pass").val();
 
-                if ($old_pass.trim() && $new_pass.trim() && $confirm_pass.trim()) {
+                var user_id = '{{ profile._id }}';
+                showLoading('#checkPassword-msg');
+
+                if ($old_pass && $new_pass && $confirm_pass) {
                     if ($new_pass !== $confirm_pass) {
-                        $('#checkPassword-msg').html('<div class="alert alert-error">Xác nhận mật khẩu chưa đúng!</div>');
+                        $('#checkPassword-msg').html('<div class="alert alert-warning alert-dismissible">' +
+                                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+                                '<i class="icon fa fa-check"></i>Xác nhận mật khẩu chưa đúng!</div>');
+                        $('#confirm_pass').focus();
                     } else {
                         $.ajax({
                             url: '/{{ admin_prefix }}/users/change_pass',
@@ -393,8 +531,18 @@
 //                            else {
 //                                $('#checkPassword-msg').html('<div class="alert alert-error">' + result.content + '</div>')
 //                            }
-                            $('#checkPassword-msg').html('<div class="alert alert-success">' + result.content + '</div>');
-                            hideLoading('#confirm_password');
+                            if (result.status === 200) {
+                                $('#checkPassword-msg').html('<div class="alert alert-success alert-dismissible">' +
+                                        '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+                                        '<i class="icon fa fa-check"></i>' + result.content + '</div>');
+                                hideLoading('#confirm_password');
+                            } else if (result.status === 401) {
+                                $('#checkPassword-msg').html('<div class="alert alert-warning alert-dismissible">' +
+                                        '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+                                        '<i class="icon fa fa-check"></i>' + result.content + '</div>');
+                                hideLoading('#confirm_password');
+                            }
+
 
                         }).fail(function (err) {
                             $('#checkPassword-msg').html('<div class="alert alert-error">' + err.message + '</div>');
@@ -402,7 +550,9 @@
                         });
                     }
                 } else {
-                    $('#checkPassword-msg').html('<div class="alert alert-error">Vui lòng nhập đầy đủ thông tin!</div>');
+                    $('#checkPassword-msg').html('<div class="alert alert-error alert-dismissible">' +
+                            '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
+                            '<i class="icon fa fa-check"></i>Vui lòng nhập đầy đủ thông tin!</div>');
                 }
             });
         </script>

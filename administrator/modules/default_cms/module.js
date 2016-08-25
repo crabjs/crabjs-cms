@@ -40,10 +40,10 @@ module.exports = function (module) {
             {
                 name: 'list_category',
                 title: 'Xem tất cả danh mục'
-            },{
+            }, {
                 name: 'update_category',
                 title: 'Cập nhật thông tin danh mục'
-            },{
+            }, {
                 name: 'delete_category',
                 title: 'Xóa danh mục'
             },
@@ -62,6 +62,7 @@ module.exports = function (module) {
             }
         ]
     };
+
     module.system = {
         group: 'Hệ thống',
         title: 'Hệ thống - Cấu hình',
@@ -81,12 +82,12 @@ module.exports = function (module) {
                     link: `/${__config.admin_prefix}/modules/install`,
                     icon: 'fa fa-upload',
                     ref: 'install_module'
-                },{
+                }, {
                     title: 'Giao diện',
                     link: `/${__config.admin_prefix}/themes`,
                     icon: 'fa fa-leaf',
                     ref: 'install_theme'
-                },{
+                }, {
                     title: 'Widget',
                     link: `/${__config.admin_prefix}/widget`,
                     icon: 'fa fa-clone',
@@ -107,7 +108,7 @@ module.exports = function (module) {
             }, {
                 name: 'install_theme',
                 title: 'Cài đặt giao diện'
-            },{
+            }, {
                 name: 'widget_theme',
                 title: 'Widget'
             }, {
@@ -116,6 +117,7 @@ module.exports = function (module) {
             }
         ]
     };
+
     module.users = {
         group: 'Hệ thống',
         title: 'Phân quyền - Quản lý người dùng',
@@ -173,8 +175,12 @@ module.exports = function (module) {
             }, {
                 name: 'view_user_profile',
                 title: 'Xem thông tin người dùng khác'
+            }, {
+                name: 'block_user',
+                title: 'Khóa tài khoản người dùng'
             }
         ]
     };
+
     return module;
 };

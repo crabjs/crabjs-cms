@@ -9,7 +9,7 @@
 
 "use strict";
 
-let module_name = 'mod_default',
+let module_name = 'mod_dashboard',
     _module = new __viewRender('backend', module_name);
 
 _module.view = function (req, res) {

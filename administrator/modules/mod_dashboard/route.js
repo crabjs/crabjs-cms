@@ -8,19 +8,10 @@
  */
 
 "use strict";
+let express = require('express'),
+    router = express.Router();
+let dashboard = require('./controllers/dashboard');
 
-let module_name = 'mod_default',
-    _module = new __viewRender('backend', module_name);
+router.route('/dashboard').get(dashboard.view);
 
-_module.index = function (req, res) {
-    let toolbar = new __.Toolbar();
-    toolbar.custom({
-        refreshButton: {link: `/${__config.admin_prefix}/messages`}
-    });
-    _module.render(req, res, 'system/messages/index', {
-        title: 'Messages',
-        toolbar: toolbar.render()
-    })
-};
-
-module.exports = _module;
+module.exports = router;

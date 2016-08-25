@@ -45,7 +45,6 @@
         }
         .btn-primary td a {
             background-color: #348eda;
-            border: solid 1px #348eda;
             border-radius: 25px;
             border-width: 10px 20px;
             display: inline-block;

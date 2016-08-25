@@ -86,7 +86,7 @@
 
 {% block jsExtends %}
     <script src="/bower_components/clipboard/dist/clipboard.min.js"></script>
-    <script src="/bower_components/AdminLTE/plugins/ckeditor/ckeditor.js"></script>
+    <script src="/plugins/ckeditor/ckeditor.js"></script>
     <script src="/js/hai100dayproject.js"></script>
     <script>
         var fileman = "/libs/fileman/dev.html?integration=ckeditor";

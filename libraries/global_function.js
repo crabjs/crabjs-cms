@@ -19,6 +19,9 @@ let i1n8 = require('./helpers/i18n');
 var ObjProto = Object.prototype,
     self = this;
 
+// Regular expression that checks for hex value
+exports.ObjectId = new RegExp("^[0-9a-fA-F]{24}$");
+
 /**
  * Add prototype
  * @returns {*}
@@ -97,6 +100,12 @@ exports.verifyCondition = function (queryString, condition) {
                     } else if (condition[j].toLocaleLowerCase() == 'boolean') {
                         if (queryString[i] !== 'all')
                             cond[j] = queryString[i];
+                    } else if (condition[j].toLocaleLowerCase() == 'size') {
+                        if (Number(queryString[i]) !== 'NaN') {
+                            cond[j] = {
+                                $size: Number(queryString[i]) || 0
+                            }
+                        }
                     }
                 }
             }
@@ -134,6 +143,17 @@ exports.isString = function (obj) {
     return ObjProto.toString.call(obj) === '[object String]';
 };
 
+exports.isFunction = function (obj) {
+    return ObjProto.toString.call(obj) == '[object Function]';
+};
+
+exports.isArray = Array.isArray || function (obj) {
+        return ObjProto.toString.call(obj) == '[object Array]';
+    };
+
+exports.isObject = function (obj) {
+    return obj === Object(obj);
+};
 
 winston.emitErrs = true;
 
@@ -254,7 +274,7 @@ exports.getDirectories = function (srcPath, ignore) {
     return _.uniq(dist);
 };
 
-exports.send_email = function (toEmail, subject, content, cb) {
+exports.send_email = function (toEmail, subject, content, attachments, cb) {
     let nodemailer = require('nodemailer');
 
     let transporter = nodemailer.createTransport({
@@ -264,12 +284,18 @@ exports.send_email = function (toEmail, subject, content, cb) {
         from: __config.email.auth.user,
         headers: __config.email.headers
     });
-    transporter.sendMail({
+    let mailOptions = {
         from: __config.email.from,
         to: toEmail,
         subject: subject,
         html: content
-    }, function (error, info) {
+    };
+
+    if (attachments) {
+        mailOptions.attachments = attachments;
+    }
+
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             return cb(error, null);
         } else {

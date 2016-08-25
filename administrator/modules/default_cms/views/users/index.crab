@@ -17,7 +17,10 @@
             <td>
                 {% if user.type == 0 %}
                     <span class="label label-danger">Quản trị</span>
-                {% elif user.type == -1 %}
+                    <a href="/{{ admin_prefix }}/roles/view/{{ user.role_id._id }}">
+                        <span class="label label-primary">{{ user.role_id.name }}</span>
+                    </a>
+                    {% elif user.type == -1 %}
                     <span class="label label-primary">Người dùng</span>
                 {% endif %}
             </td>

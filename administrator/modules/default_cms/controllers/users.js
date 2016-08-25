@@ -9,7 +9,7 @@
 
 "use strict";
 
-let module_name = 'mod_default',
+let module_name = 'default_cms',
     _module = new __viewRender('backend', module_name),
     Promise = require('bluebird');
 
@@ -84,12 +84,16 @@ _module.list = function (req, res) {
         __models.Users.count(cond, function (err, count) {
             return count;
         }),
-        __models.Users.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
+        __models.Users.find(cond)
+            .populate('role_id', 'name')
+            .sort(filter.sort)
+            .limit(__config.page_size)
+            .skip((filter.page - 1) * __config.page_size)
             .exec(function (err, users) {
                 return users;
             })
     ]).then(function (results) {
-        _module.render(req, res, 'users/users/index', {
+        _module.render(req, res, 'users/index', {
             title: 'Quản lý người dùng',
             toolbar: toolbar.render(),
             users: results[1],
@@ -106,34 +110,38 @@ _module.list = function (req, res) {
 };
 
 _module.view = function (req, res) {
-    __models.Objects.find({
-        key: 'objects:roles',
-        status: 0
-    }, {name: 1}).sort({created_at: -1}).exec(function (error, roles) {
-        if (error) {
-            __.logger.error(error);
-            _module.render_error(req, res, '500');
-        }
-        __models.Users.findOne({_id: req.params.id}, function (err, profile) {
-            if (err) {
-                __.logger.error(err);
-                _module.render_error(req, res, '500');
-            } else if (!profile || !profile._id) {
-                __.logger.warn(`Warning > Wrong parameter url: ${res.locals.route}`);
-                _module.render_error(req, res, '404');
-            } else {
-                _module.render(req, res, 'users/users/profile', {
-                    title: `Thông tin tài khoản: ${profile.display_name}`,
-                    profile: profile,
-                    roles: roles
-                })
+    if (__.ObjectId.test(req.params.id)) {
+        __models.Objects.find({
+            key: 'objects:roles',
+            status: 0
+        }, {name: 1}).sort({created_at: -1}).exec(function (error, roles) {
+            if (error) {
+                __.logger.error(error);
+                return _module.render_error(req, res, '500');
             }
-        })
-    });
+            __models.Users.findOne({_id: req.params.id}, function (err, profile) {
+                if (err) {
+                    __.logger.error(err);
+                    return _module.render_error(req, res, '500');
+                } else if (!profile || !profile._id) {
+                    __.logger.warn(`Warning > Wrong parameter url: ${res.locals.route}`);
+                    return _module.render_error(req, res, '404');
+                } else {
+                    return _module.render(req, res, 'users/profile', {
+                        title: `Thông tin tài khoản: ${profile.display_name}`,
+                        profile: profile,
+                        roles: roles
+                    })
+                }
+            })
+        });
+    } else {
+        return _module.render_error(req, res, '404');
+    }
 };
 
 _module.create = function (req, res) {
-    _module.render(req, res, 'users/users/profile', {
+    _module.render(req, res, 'users/profile', {
         title: 'Tạo tài khoản mới',
         create: true
     })
@@ -192,6 +200,21 @@ _module.update = function (req, res) {
     });
 };
 
+_module.api_update = function (req, res) {
+    __models.Users.update({_id: req.params.id}, req.body).exec(function (err, re) {
+        if (err) {
+            return res.jsonp({
+                status: 500,
+                message: err
+            })
+        }
+        return res.jsonp({
+            status: 200
+        })
+    })
+};
+
+
 _module.change_pass = function (req, res) {
     __models.Users.findOne({
         _id: req.body.user_id
@@ -214,14 +237,14 @@ _module.change_pass = function (req, res) {
                 } else {
                     res.send({
                         status: 200,
-                        content: 'Mật khẩu đã được thay đổi!'
+                        content: 'Mật khẩu của bạn đã được thay đổi thành công!'
                     })
                 }
             })
         } else {
             res.send({
-                status: 403,
-                content: 'Mật khẩu bạn nhập không đúng!'
+                status: 401,
+                content: 'Mật khẩu cũ chưa chính xác. Vui lòng kiểm tra lại!'
             })
         }
     });
