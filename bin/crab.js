@@ -9,7 +9,7 @@
 
 "use strict";
 
-require('../config/env').init('development');
+require('../config/env').init(process.env.NODE_ENV || 'production');
 
 global.__ = require("../libraries/global_function");
 global.__config = require('lodash').extend(__env, require("../config/config.json"));

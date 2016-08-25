@@ -10,7 +10,6 @@
 "use strict";
 
 module.exports = {
-    domain_prefix: "http://localhost:3000",
     db: {
         host: '127.0.0.1:27017',
         database: 'CrabJS',
@@ -21,10 +20,10 @@ module.exports = {
                 name: 'CrabJS',
                 status: false
             },
-            auth: false
+            auth: true
         },
         username: 'root',
-        password: 'social.ctx'
+        password: '&-qQg,dhm,Al.'
     },
     email: {
         auth: {
@@ -51,5 +50,6 @@ module.exports = {
         clientSecret: '5F07ksmH6HUoZRRum38rmuOp',
         callbackURL: '/auth/google/callback'
     },
-    authentication: true
+    authentication: true,
+    domain_prefix: "http://localhost:3000"
 };

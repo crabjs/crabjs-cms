@@ -436,50 +436,6 @@ $.fn.extend({
         // End modal
         html.push('</div></div></div>');
 
-
-        // var $btn_upload = $('#upload-input');
-        // $btn_upload.on('change', function () {
-        //     var files = $(this).get(0).files;
-        //
-        //     if (files.length > 0) {
-        //
-        //         var formData = new FormData();
-        //
-        //         for (var i = 0; i < files.length; i++) {
-        //             var file = files[i];
-        //
-        //             formData.append('uploads[]', file, file.name);
-        //         }
-        //
-        //         $.ajax({
-        //             url: '/upload',
-        //             type: 'POST',
-        //             data: formData,
-        //             processData: false,
-        //             contentType: false,
-        //             success: function (data) {
-        //                 $('.media-content img:first-child').before(`<img created_at="${data.created_at}" onclick="self.GetInformation(this)" src="/media/${data.file_name}" class="img-thumbnail" width="120" style="margin: 5px; cursor: pointer;">`);
-        //             },
-        //             xhr: function () {
-        //                 var xhr = new XMLHttpRequest();
-        //                 $('.media-content img:first-child').before(`<img src="/images/squarespinner_2x.gif" class="img-thumbnail" alt="hai100dayproject" width="100" style="margin: 5px; cursor: pointer;">`);
-        //                 xhr.upload.addEventListener('progress', function (evt) {
-        //                     if (evt.lengthComputable) {
-        //                         var percentComplete = evt.loaded / evt.total;
-        //                         percentComplete = parseInt(percentComplete * 100);
-        //                         if (percentComplete === 100) {
-        //                             $('.media-content img').first().remove();
-        //                         }
-        //                     }
-        //                 }, false);
-        //
-        //                 return xhr;
-        //             }
-        //         })
-        //     }
-        // });
-
-
         return html.join('');
     }
 });
