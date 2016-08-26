@@ -18,6 +18,8 @@ exports.routeLoader = function (app) {
      */
     require(__base + '/core/core_route')(app);
 
+    require(__base + '/core/api_upload')(app);
+
     /**
      * Backend interface routing loader
      * @type {Array}

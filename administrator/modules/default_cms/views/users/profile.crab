@@ -49,7 +49,7 @@
             max-height: 128px;
             cursor: pointer;
         }
-        input[name="avatar_doctors"] {
+        input[name="avatar_user"] {
             display: none;
         }
     </style>
@@ -58,7 +58,7 @@
 {% block content %}
     <form id="frm_create" method="post">
         <input type="hidden" name="_csrf" value="{{ _csrf }}">
-        <input type="file" hidden name="avatar_doctors">
+        <input type="file" hidden name="avatar_user">
         <div class="box box-solid box-primary">
             <div class="box-body">
                 <div class="row">
@@ -385,11 +385,11 @@
     <script>
 
         $('.choose_avatar').click(function () {
-            $('input[name="avatar_doctors"]').click();
+            $('input[name="avatar_user"]').click();
         });
 
-        $('input[name="avatar_doctors"]').on('change', function () {
-            var input_name = 'avatar_admin';
+        $('input[name="avatar_user"]').on('change', function () {
+            var input_name = 'avatar_user';
             var files = $(this).get(0).files;
             if (files.length > 0) {
                 var formData = new FormData();
@@ -399,7 +399,7 @@
                 formData.append(input_name, file);
             }
             $.ajax({
-                url: `/api/avatar_admin/upload?input_name=${input_name}`,
+                url: `/api/${input_name}/upload?input_name=${input_name}`,
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -412,7 +412,7 @@
                             url: `/{{ admin_prefix }}/api/users/{{ profile._id }}/update`,
                             type: 'PUT',
                             data: {
-                                avatar: `{{ domain_prefix }}/${data.path}`
+                                avatar: `${data.path}`
                             },
                             success: function (result) {
                                 if (result.status === 200) {
@@ -443,7 +443,6 @@
 
         $(document).keypress(function (e) {
             if (e.which === 13) {
-//                $('.box-body').find('button[type=submit]').trigger('click');
                 $('form#frm_create').submit();
                 return false;
             }
@@ -521,16 +520,6 @@
                                 confirm_pass: $confirm_pass
                             }
                         }).done(function (result) {
-//                            if (result.status) {
-//                                $('#checkPassword-msg').html('<div class="alert alert-success">' + result.content + '</div>');
-//                                hideLoading('#confirm_password');
-//                                $('#checkPassword').remove();
-//                            } else if (password.value != confirm_password.value) {
-//                                $('#checkPassword-msg').html('<div class="alert alert-error">Password confirmation does not match</div>');
-//                            }
-//                            else {
-//                                $('#checkPassword-msg').html('<div class="alert alert-error">' + result.content + '</div>')
-//                            }
                             if (result.status === 200) {
                                 $('#checkPassword-msg').html('<div class="alert alert-success alert-dismissible">' +
                                         '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>' +
