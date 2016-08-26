@@ -1,0 +1,26 @@
+{
+  "name": "hint.css",
+  "main": "hint.min.css",
+  "author": "Kushagra Gour",
+  "ignore": [
+    "CONTRIBUTING.md",
+    "Gruntfile.js"
+  ],
+  "keywords": [
+    "hint",
+    "tooltip",
+    "tooltips",
+    "ui"
+  ],
+  "homepage": "https://github.com/chinchang/hint.css",
+  "version": "2.3.1",
+  "_release": "2.3.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.3.1",
+    "commit": "8c6e3b59bbf87046a9d01867146f8ccb8bda0c72"
+  },
+  "_source": "https://github.com/chinchang/hint.css.git",
+  "_target": "^2.2.1",
+  "_originalSource": "hint.css"
+}

@@ -1,5 +1,5 @@
 {
-  "directory": "public/bower_components",
+  "directory": "public/custom_bower_components",
   "analytics": true,
   "color": true
 }
