@@ -36,8 +36,23 @@ module.exports = function (passport) {
                                 return done(null, false, {message: 'Connect server error!'});
                             }
                         });
+                        // Tracking user login
+                        __.loginTracking({
+                            user_id: user._id,
+                            user_agent: req.useragent,
+                            ip_address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                            login_status: "Success",
+                            strategy: 'Local'
+                        });
                         return done(null, user);
                     } else {
+                        // Tracking user login
+                        __.loginTracking({
+                            user_id: user._id,
+                            user_agent: req.useragent,
+                            ip_address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                            login_status: "Failed"
+                        });
                         return done(null, false, {message: 'Oops! Invalid login credentials.'});
                     }
                 } else {

@@ -163,10 +163,20 @@
 {% endblock %}
 <script>
     $(function () {
+        var url = "{{ url }}";
+
         var $menu_active = $('.sidebar').find('ul li ul a[href="{{ url }}"]');
-        $menu_active.css("color", "#fff");
-        $menu_active.parent().parent().addClass('menu-open');
-        $menu_active.parent().parent().parent().addClass('active');
+
+        if ($menu_active.length) {
+            $menu_active.css("color", "#fff");
+            $menu_active.parent().parent().addClass('menu-open');
+            $menu_active.parent().parent().parent().addClass('active');
+        } else {
+            var newUrl = url.split('/').slice(0,3).join('/');
+            var x = `a[href="${newUrl}"]`;
+            $menu_active =  $('.sidebar').find('ul').find('li').find('ul').find(x);
+            $menu_active.parent().parent().parent().addClass('active');
+        }
     })
 </script>
 </body>

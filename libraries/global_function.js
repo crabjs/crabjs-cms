@@ -31,6 +31,73 @@ String.prototype.toObjectId = function () {
     return new ObjectId(this.toString());
 };
 
+exports.loginTracking = function (objects) {
+    let newLog = new __models.LoginTracking(objects);
+
+    newLog.save(function (err) {
+        if (err) {
+            console.log("LoginTracking: " + err);
+        }
+    })
+};
+
+exports.randomText = function (length, specialCharacter) {
+    if (!length) {
+        length = 128;
+    }
+    let text = '';
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    if (specialCharacter) {
+        possible = '!@#$%^&*()-=' + possible + '!@#$%^&*()-=';
+    }
+
+    for (let i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+};
+
+exports.validObjectId = function () {
+    return function (req, res, next) {
+
+        let error_msg = "Truy cập chưa được xác thực.";
+
+        if (req.params.id) {
+            if (self.ObjectId.test(req.params.id)) {
+                next();
+            } else {
+                if (req.xhr) {
+                    return res.jsonp({
+                        status: 400,
+                        message: error_msg
+                    })
+                } else {
+                    req.flash('danger', error_msg);
+                    return res.redirect('/admin/dashboard');
+                }
+            }
+        } else if (req.body.id) {
+            if (self.ObjectId.test(req.body.id)) {
+                next();
+            } else {
+                if (req.xhr) {
+                    return res.jsonp({
+                        status: 400,
+                        message: error_msg
+                    })
+                } else {
+                    req.flash('danger', error_msg);
+                    return res.redirect('/admin/dashboard');
+                }
+            }
+
+        } else {
+            next();
+        }
+    }
+};
+
 exports.isAllow = function (action) {
     return function (req, res, next) {
         if (req.user.email == __config.admin_email) return next();

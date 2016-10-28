@@ -15,24 +15,24 @@ let mongoose = require('mongoose'),
 
 // define the schema for our user model
 let userSchema = new Schema({
-    email: {type: Schema.Types.String, required: true},
-    username: {type: Schema.Types.String},
-    password: {type: Schema.Types.String, required: true},
-    avatar: {type: Schema.Types.String},
-    token: {type: Schema.Types.String, required: true},
-    display_name: {type: Schema.Types.String, required: true},
+    email: {type: String, required: true},
+    username: {type: String},
+    password: {type: String, required: true},
+    avatar: {type: String},
+    token: {type: String, required: true},
+    display_name: {type: String, required: true},
     last_login_date: {type: Schema.Types.Date, default: Date.now},
     rules: {type: Schema.Types.Mixed, default: {}},
     settings: {
         updated_at: {type: Schema.Types.Date, default: Date.now},
-        menu: {type: Schema.Types.String}
+        menu: {type: String}
     },
-    status: {type: Schema.Types.String, enum: ['Available', 'Block', 'Pending']},
+    status: {type: String, enum: ['Available', 'Block', 'Pending']},
     created_date: {type: Schema.Types.Date, default: Date.now},
     role_id: {type: Schema.Types.ObjectId, ref: 'Objects'},
     type: {type: Schema.Types.Number, enum: [0, -1]},
-    activation_code: {type: Schema.Types.String},
-    reset_password_token: {type: Schema.Types.String},
+    activation_code: {type: String},
+    reset_password_token: {type: String},
     reset_password_expires: {type: Schema.Types.Date},
     logs: [{type: Schema.Types.Mixed}]
 }, {

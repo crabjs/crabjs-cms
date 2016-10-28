@@ -29,6 +29,15 @@ module.exports = function (passport) {
                         return done(err);
                     }
                     if (user) {
+                        // Tracking user login
+                        __.loginTracking({
+                            user_id: user._id,
+                            user_agent: req.useragent,
+                            ip_address: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+                            login_status: "Success",
+                            strategy: 'Google'
+                        });
+
                         __models.Users.findByIdAndUpdate(user.id, {
                             last_login_date: Date.now()
                         }).exec(function (err) {

@@ -91,8 +91,7 @@
                                         <div class="form-group">
                                             <label for="email">Email <span class="required">*</span></label>
                                             <input required type="email" class="form-control" id="email" name="email"
-                                                   value="{{ profile.email }}" autocomplete="off"
-                                                   {% if not create %}disabled=""{% endif %}>
+                                                   value="{{ profile.email }}" autocomplete="off">
                                         </div>
 
                                         <div class="form-group" style="position: relative;">
@@ -135,57 +134,51 @@
                                             </select>
                                         </div>
 
-                                        {% if not create %}
-                                            <div class="form-group">
-                                                <label for="last_login_date">Hoạt động gần đây</label>
-                                                <input type="text" id="last_login_date" name="last_login_date"
-                                                       value="{{ profile.last_login_date|moment }}"
-                                                       class="form-control require-input" disabled>
-                                            </div>
-                                        {% endif %}
-                                        {% if not create %}
-                                            <div class="form-group">
-                                                <button onclick="openDeleteConfirmModal()" type="button"
-                                                        class="btn btn-danger"><i class="fa fa-trash"></i> Xóa bộ nhớ
-                                                    tạm
+                                        <div class="form-group">
+                                            <label for="last_login_date">Hoạt động gần đây</label>
+                                            <input type="text" id="last_login_date" name="last_login_date"
+                                                   value="{{ profile.last_login_date|moment }}"
+                                                   class="form-control require-input" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <button onclick="openDeleteConfirmModal()" type="button"
+                                                    class="btn btn-danger"><i class="fa fa-trash"></i> Xóa bộ nhớ
+                                                tạm
+                                            </button>
+                                            {% if profile.status == 'Pending' %}
+                                                <button onclick="reSendUserActivation()" type="button"
+                                                        class="btn btn-warning pull-right"><i
+                                                            class="fa fa-paper-plane"></i> Gửi email xác minh
                                                 </button>
-                                                {% if profile.status == 'Pending' %}
-                                                    <button onclick="reSendUserActivation()" type="button"
-                                                            class="btn btn-warning pull-right"><i
-                                                                class="fa fa-paper-plane"></i> Gửi email xác minh
-                                                    </button>
-                                                {% endif %}
-                                            </div>
-                                        {% endif %}
+                                            {% endif %}
+                                        </div>
                                     </div>
 
-                                    {% if not create %}
-                                        <div class="modal fade" id="confirm-delete-cache-modal" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-hidden="true"></button>
-                                                        <h4 class="modal-title"></h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Dữ liệu tạm của bạn sẽ được cập nhật lại khi thực hiện hành
-                                                            động này.</p>
-                                                        <strong>Bạn chắc chắn muốn xóa thông tin này ?</strong>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn default" data-dismiss="modal">
-                                                            Hủy
-                                                            bỏ
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger"
-                                                                onclick="deleteCache()">Xác nhận
-                                                        </button>
-                                                    </div>
+                                    <div class="modal fade" id="confirm-delete-cache-modal" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true"></button>
+                                                    <h4 class="modal-title"></h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Dữ liệu tạm của bạn sẽ được cập nhật lại khi thực hiện hành
+                                                        động này.</p>
+                                                    <strong>Bạn chắc chắn muốn xóa thông tin này ?</strong>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn default" data-dismiss="modal">
+                                                        Hủy
+                                                        bỏ
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger"
+                                                            onclick="deleteCache()">Xác nhận
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    {% endif %}
+                                    </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -464,28 +457,26 @@
         }
     </script>
 
-    {% if not create %}
-        <script>
+    <script>
 
-            function reSendUserActivation() {
+        function reSendUserActivation() {
 
-            }
+        }
 
-            function openDeleteConfirmModal() {
-                $('#confirm-delete-cache-modal').modal('show');
-            }
+        function openDeleteConfirmModal() {
+            $('#confirm-delete-cache-modal').modal('show');
+        }
 
-            function deleteCache() {
-                $.ajax({
-                    url: `/{{ admin_prefix }}/users/view/{{ profile._id }}`,
-                    type: 'DELETE',
-                    success: function (result) {
-                        window.location.href = `/{{ admin_prefix }}/users/view/{{ profile._id }}`;
-                    }
-                });
-            }
-        </script>
-    {% endif %}
+        function deleteCache() {
+            $.ajax({
+                url: `/{{ admin_prefix }}/users/view/{{ profile._id }}`,
+                type: 'DELETE',
+                success: function (result) {
+                    window.location.href = `/{{ admin_prefix }}/users/view/{{ profile._id }}`;
+                }
+            });
+        }
+    </script>
 
     {% if user._id|toString() == profile._id|toString() %}
         <script>

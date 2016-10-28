@@ -156,38 +156,38 @@ _module.delete = function (req, res) {
 };
 
 _module.view = function (req, res) {
+    let toolbar = new __.Toolbar();
+    toolbar.custom({
+        backButton: {link: `/${__config.admin_prefix}/posts`},
+        saveButton: {access: true}
+    });
 
-    if (__.ObjectId.test(req.params.id)) {
-        let toolbar = new __.Toolbar();
-        toolbar.custom({
-            backButton: {link: `/${__config.admin_prefix}/posts`},
-            saveButton: {access: true}
-        });
-
-        Promise.all([
-            __models.Objects.find({key: 'objects:category'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
-                return categories;
-            }),
-            __models.Posts.findOne({
-                key: 'article',
-                _id: req.params.id
-            }).populate('category_id', 'name').exec(function (err, post) {
-                return post;
-            })
-        ]).then(function (results) {
+    Promise.all([
+        __models.Objects.find({key: 'objects:category'}, {name: 1}).sort({created_at: -1}).exec(function (err, categories) {
+            return categories;
+        }),
+        __models.Posts.findOne({
+            key: 'article',
+            _id: req.params.id
+        }).populate('category_id', 'name').exec(function (err, post) {
+            return post;
+        })
+    ]).then(function (results) {
+        if (results[1]) {
             _module.render(req, res, 'articles/view', {
                 title: results[1].title,
                 toolbar: toolbar.render(),
                 categories: results[0],
                 post: results[1]
             })
-        }).catch(function (error) {
-            __.logger.error(error);
-            return _module.render_error(req, res, '500');
-        });
-    } else {
-        return _module.render_error(req, res, '404');
-    }
+        } else {
+            return _module.render_error(req, res, '404');
+        }
+
+    }).catch(function (error) {
+        __.logger.error(error);
+        return _module.render_error(req, res, '500');
+    });
 };
 
 _module.update = function (req, res) {

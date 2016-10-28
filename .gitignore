@@ -3,3 +3,8 @@
 node_modules/
 /logs/exceptions.log
 /logs/webInstall.log
+.DS_Store
+dbBackup/.DS_Store
+dbBackup/dump/.DS_Store
+public/custom_bower_components/
+yarn.lock

@@ -31,7 +31,7 @@ module.exports = function () {
     // Initialization express application
     let app = express();
 
-    if (process.env.NODE_ENV === 'development' || os.hostname() == 'DESKTOP-PSSOURR' || os.hostname() == 'Razor') {
+    if (process.env.NODE_ENV === 'development' || os.hostname() == 'Razor') {
         app.use(logger('dev'));
 
         /** Disable views cache */

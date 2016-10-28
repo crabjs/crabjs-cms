@@ -1,0 +1,282 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+
+    <link rel="stylesheet" href="/custom_bower_components/cropper/dist/cropper.min.css">
+    <style>
+
+        .overlay {
+            margin: auto;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .alert {
+            -webkit-transition: all 0.35s;
+            transition: all 0.35s;
+        }
+
+        @media (min-width: 992px) {
+            .modal-lg {
+                width: 1208px;
+            }
+        }
+
+        .media-content img:hover {
+            outline: 2px solid #6A1B9A;
+        }
+
+        #mediaModal ::-webkit-scrollbar {
+            width: 5px;
+            height: 10px;
+        }
+
+        /* Handle */
+        #mediaModal ::-webkit-scrollbar-thumb {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background: #90949c;
+            width: 5px;
+        }
+
+        #mediaModal ::-webkit-scrollbar-thumb:window-inactive {
+            background: #90949c;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+        }
+
+        .choose_avatar {
+            margin: 15px 0;
+            max-width: 128px;
+            max-height: 128px;
+            cursor: pointer;
+        }
+
+        input[name="avatar_user"] {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form id="frm_create" method="post" action="/{{ admin_prefix }}/users/create?_csrf={{ _csrf }}" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{ _csrf }}">
+        <input type="file" hidden name="avatar_user">
+        <div class="box box-solid box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-1 col-sm-3 col-xs-3">
+                        <button onclick="window.history.back()" class="btn btn-default"
+                                style="margin-bottom: 15px"><i class="fa fa-angle-left"></i> Quay lại
+                        </button>
+                    </div>
+                    <div class="col-md-1 col-sm-3 col-xs-3">
+                        <button type="submit" class="btn btn-success" style="margin-bottom: 15px">Cập nhật</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- TAB NAVIGATION -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="active"><a href="#tab1" role="tab" data-toggle="tab" aria-expanded="true">Thông
+                                    tin tài khoản</a></li>
+                        </ul>
+                        <!-- TAB CONTENT -->
+                        <div class="tab-content" style="padding-top: 15px;">
+                            <div class="tab-pane fade active in" id="tab1">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email">Email <span class="required">*</span></label>
+                                            <input class="form-control" id="email" name="email" autocomplete="off">
+                                        </div>
+
+                                        <div class="form-group" style="position: relative;">
+                                            <label for="password">Mật khẩu<span class="required">*</span></label>
+                                            <input name="password" id="password" type="password" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="display_name">Tên hiển thị <span
+                                                        class="required">*</span></label>
+                                            <input id="display_name" type="text" class="form-control"
+                                                   name="display_name">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="status">Trạng thái</label>
+                                            <select class="form-control" name="status" id="status">
+                                                <option value="Available">Kích hoạt</option>
+                                                <option value="Pending">Chờ kích hoạt</option>
+                                                <option value="Block">Khóa</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="type">Loại tài khoản</label>
+                                            <div class="input-group">
+                                                <select onchange="change_user_type(this);" class="form-control"
+                                                        name="type"
+                                                        id="type">
+                                                    <option value="-1">Người dùng</option>
+                                                    <option ignore="7" value="0">Quản trị</option>
+                                                </select>
+                                                <span class="input-group-addon"
+                                                      style="border-color: #fff; cursor: pointer">
+                                                    <span style="font-size: 18px" class="label label-primary">+</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group group_permission"
+                                             style="display: {% if profile.type == 0 %} inherit {% else %} none {% endif %};">
+                                            <label for="role_id">Chọn nhóm quyền hạn</label>
+                                            <select class="form-control" name="role_id" id="role_id">
+                                                {% for role in roles %}
+                                                    {% if profile.role_id|toString() == role._id|toString() %}
+                                                        <option ignore="7" selected
+                                                                value={{ role._id }}>{{ role.name }}</option>
+                                                    {% else %}
+                                                        <option value={{ role._id }}>{{ role.name }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Ảnh đại diện<span class="help-block" style="display: inline;">(128x128px)</span></label>
+                                            <br>
+                                            <img class="choose_avatar img img-thumbnail"
+                                                 src="/images/no_avatar.gif">
+                                            <input value="/images/no_avatar.gif" type="hidden" id="input_previewImage"
+                                                   name="avatar">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+
+{% block jsExtends %}
+    <script src="/js/hai100dayproject.js"></script>
+    <script src="/custom_bower_components/cropper/dist/cropper.min.js"></script>
+
+    <script>
+
+
+        function initCropper() {
+            $.fn.cropper.setDefaults({
+                viewMode: 1,
+//                minContainerWidth: 100,
+//                minContainerHeight: 100
+
+            });
+
+            $('.choose_avatar').cropper();
+        }
+
+        $('.choose_avatar').click(function () {
+            $('input[name="avatar_user"]').click();
+        });
+
+        $('input[name="avatar_user"]').on('change', function (input) {
+
+            if (input.target.files && input.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.choose_avatar').attr('src', e.target.result)
+                            .width(150)
+                            .height(150)
+
+                    initCropper();
+
+                };
+
+                reader.readAsDataURL(input.target.files[0]);
+
+            }
+            /**
+             *
+             var input_name = 'avatar_user';
+             var files = $(this).get(0).files;
+             if (files.length > 0) {
+                var formData = new FormData();
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                }
+                formData.append(input_name, file);
+            }
+             $.ajax({
+                url: `/api/${input_name}/upload?input_name=${input_name}`,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data.status === 200) {
+                        // Update html resource
+                        // Update database
+                        $.ajax({
+                            url: `/{{ admin_prefix }}/api/users/{{ profile._id }}/update`,
+                            type: 'PUT',
+                            data: {
+                                avatar: `${data.path}`
+                            },
+                            success: function (result) {
+                                if (result.status === 200) {
+                                    $('.choose_avatar').attr('src', data.path);
+                                }
+                            }
+                        })
+                    }
+                },
+                xhr: function () {
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            if (percentComplete === 100) {
+                                console.log("Progress " + percentComplete + '%');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                }
+            })
+             */
+        });
+
+        var display_name = $('#display_name').val();
+        $('#confirm-delete-cache-modal').find('h4.modal-title').html(`Xác nhận xóa dữ liệu tạm trên tài khoản <span style="color: #3c8dbc;">${display_name}</span>`);
+
+        $(document).keypress(function (e) {
+            if (e.which === 13) {
+                $('form#frm_create').submit();
+                return false;
+            }
+        });
+
+        function change_user_type(sel) {
+            if ($("#type").find("option:selected").attr('ignore') == 7) {
+                $('.group_permission').css('display', 'inherit');
+                $('.group_permission select').attr('name', 'role_id');
+            } else {
+                $('.group_permission').css('display', 'none');
+                $('.group_permission select').removeAttr('name')
+            }
+        }
+    </script>
+
+{% endblock %}

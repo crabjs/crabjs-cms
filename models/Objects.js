@@ -12,6 +12,17 @@
 let mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
+/**
+ * KEY OBJECT STORE
+ *
+ * SEO Settings:        seo:settings
+ * Roles:               objects:roles
+ * User Type:           objects:user_type
+ * Theme:               objects:theme
+ * Article Category:    objects:category
+ *
+ */
+
 let Objects = new Schema({
     key: {type: String, required: true},
     favicon: {type: String},

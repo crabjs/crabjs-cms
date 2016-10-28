@@ -29,7 +29,7 @@ router.route('/categories')
     .delete(__.isAllow('delete_category'), categories.delete);
 
 router.route('/categories/:id')
-    .post(__.isAllow('update_category'), categories.update);
+    .post(__.validObjectId(), __.isAllow('update_category'), categories.update);
 
 /**
  * Articles
@@ -43,7 +43,7 @@ router.route('/posts/create')
     .post(__.isAllow('create_article'), articles.created);
 
 router.route('/posts/view/:id')
-    .get(__.isAllow('update_article'), articles.view)
+    .get(__.validObjectId(), __.isAllow('update_article'), articles.view)
     .post(__.isAllow('update_article'), articles.update);
 
 /**
@@ -92,11 +92,11 @@ router.route('/users')
     .delete(__.isAllow('delete_user'), users.delete);
 
 router.route('/users/view/:id')
-    .get(isMe(), users.view)
+    .get(__.validObjectId(), isMe(), users.view)
     .post(__.isAllow('update_user'), users.update)
     .delete(users.delete_cache); // Xóa cache settings của người dùng
 
-router.route('/api/users/:id/update').put(users.api_update);
+router.route('/api/users/:id/update').put(__.validObjectId(), users.api_update);
 
 router.route('/users/change_pass').post(users.change_pass);
 
@@ -105,7 +105,7 @@ router.route('/users/change_pass').post(users.change_pass);
  */
 router.route('/roles').get(__.isAllow('list_role'), roles.list).delete(__.isAllow('delete_role'), roles.delete);
 router.route('/roles/create').get(__.isAllow('create_role'), roles.create).post(__.isAllow('create_role'), roles.created);
-router.route('/roles/view/:id').get(__.isAllow('update_role'), roles.view).post(__.isAllow('update_role'), roles.update);
+router.route('/roles/view/:id').get(__.validObjectId(), __.isAllow('update_role'), roles.view).post(__.isAllow('update_role'), roles.update);
 
 
 module.exports = router;

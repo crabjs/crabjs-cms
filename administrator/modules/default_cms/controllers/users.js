@@ -110,59 +110,79 @@ _module.list = function (req, res) {
 };
 
 _module.view = function (req, res) {
-    if (__.ObjectId.test(req.params.id)) {
-        __models.Objects.find({
-            key: 'objects:roles',
-            status: 0
-        }, {name: 1}).sort({created_at: -1}).exec(function (error, roles) {
-            if (error) {
-                __.logger.error(error);
+    __models.Objects.find({
+        key: 'objects:roles',
+        status: 0
+    }, {name: 1}).sort({created_at: -1}).exec(function (error, roles) {
+        if (error) {
+            __.logger.error(error);
+            return _module.render_error(req, res, '500');
+        }
+        __models.Users.findOne({_id: req.params.id}, function (err, profile) {
+            if (err) {
+                __.logger.error(err);
                 return _module.render_error(req, res, '500');
+            } else if (!profile || !profile._id) {
+                __.logger.warn(`Warning > Wrong parameter url: ${res.locals.route}`);
+                return _module.render_error(req, res, '404');
+            } else {
+                return _module.render(req, res, 'users/view_profile', {
+                    title: `Thông tin tài khoản: ${profile.display_name}`,
+                    profile: profile,
+                    roles: roles
+                })
             }
-            __models.Users.findOne({_id: req.params.id}, function (err, profile) {
-                if (err) {
-                    __.logger.error(err);
-                    return _module.render_error(req, res, '500');
-                } else if (!profile || !profile._id) {
-                    __.logger.warn(`Warning > Wrong parameter url: ${res.locals.route}`);
-                    return _module.render_error(req, res, '404');
-                } else {
-                    return _module.render(req, res, 'users/profile', {
-                        title: `Thông tin tài khoản: ${profile.display_name}`,
-                        profile: profile,
-                        roles: roles
-                    })
-                }
-            })
-        });
-    } else {
-        return _module.render_error(req, res, '404');
-    }
+        })
+    });
 };
 
 _module.create = function (req, res) {
-    _module.render(req, res, 'users/profile', {
+    _module.render(req, res, 'users/create_profile', {
         title: 'Tạo tài khoản mới',
         create: true
     })
 };
 
 _module.created = function (req, res) {
-    delete req.body.old_pass;
-    delete req.body.user_pass;
 
-    req.body.token = 'nothing';
-    req.body.password = __models.Users.generateHash(req.body.password);
+    let formidable = require('formidable');
 
-    var newUser = __models.Users(req.body);
-    newUser.save(function (err) {
+    let form = new formidable.IncomingForm();
+    form.uploadDir = require('path').resolve(__base, 'public', 'uploads', 'images');
+
+    form.parse(req, function (err, fields, files) {
         if (err) {
-            __.logger.error(err);
-            req.flash('danger', 'Có lỗi xảy ra!');
-        } else {
-            req.flash('success', 'Tạo mới tài khoản thành công!');
-            res.redirect(`/${__config.admin_prefix}/users`);
+            return _module.render_error(req, res, '500');
         }
+        req.body = fields || {};
+
+        var file = files['avatar_user'];
+
+        var file_type = file.name.split('.').pop();
+
+        var new_file_name = __.randomText(12) + '_' + new Date().getTime() + '.' + file_type;
+
+        var file_path = require('path').join(form.uploadDir, new_file_name);
+
+        require('fs').rename(file.path, file_path);
+
+        req.body.avatar = '/uploads/images/' + new_file_name;
+
+        delete req.body.old_pass;
+        delete req.body.user_pass;
+
+        req.body.token = 'nothing';
+        req.body.password = __models.Users.generateHash(req.body.password);
+        var newUser = __models.Users(req.body);
+        newUser.save(function (err) {
+            if (err) {
+                __.logger.error(err);
+                req.flash('danger', 'Có lỗi xảy ra!');
+            } else {
+                req.flash('success', 'Tạo mới tài khoản thành công!');
+                res.redirect(`/${__config.admin_prefix}/users`);
+            }
+        });
     });
 };
 
