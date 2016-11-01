@@ -55,11 +55,16 @@
         input[name="avatar_user"] {
             display: none;
         }
+
+        .fa.fa-check {
+            color: green;
+        }
     </style>
 {% endblock %}
 
 {% block content %}
-    <form id="frm_create" method="post" action="/{{ admin_prefix }}/users/create?_csrf={{ _csrf }}" enctype="multipart/form-data">
+    <form id="frm_create" method="post" action="/{{ admin_prefix }}/users/create?_csrf={{ _csrf }}"
+          enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="{{ _csrf }}">
         <input type="file" hidden name="avatar_user">
         <div class="box box-solid box-primary">
@@ -87,21 +92,42 @@
                             <div class="tab-pane fade active in" id="tab1">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="email">Email <span class="required">*</span></label>
-                                            <input class="form-control" id="email" name="email" autocomplete="off">
+                                        <div class="form-group group-email">
+                                            <label class="control-label" for="email">Email <span
+                                                        class="required">*</span></label>
+                                            <div class="input-group">
+                                                <input onchange="validEmail()" name="email" type="text" class="form-control"
+                                                       id="email" placeholder="Email" autocomplete="off">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-envelope-o"></i>
+                                                </div>
+                                            </div>
+                                            <span class="help-block"></span>
                                         </div>
 
-                                        <div class="form-group" style="position: relative;">
+                                        <div class="form-group group-password">
                                             <label for="password">Mật khẩu<span class="required">*</span></label>
-                                            <input name="password" id="password" type="password" class="form-control">
+                                            <div class="input-group">
+                                                <input onchange="validPassword()" name="password" id="password"
+                                                       type="password" class="form-control">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-lock"></i>
+                                                </div>
+                                            </div>
+                                            <span class="help-block"></span>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group group-name">
                                             <label for="display_name">Tên hiển thị <span
                                                         class="required">*</span></label>
-                                            <input id="display_name" type="text" class="form-control"
-                                                   name="display_name">
+                                            <div class="input-group">
+                                                <input onchange="validDisplayName()" id="display_name" type="text"
+                                                       class="form-control" name="display_name">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <span class="help-block"></span>
                                         </div>
 
                                         <div class="form-group">
@@ -168,11 +194,124 @@
 
 
 {% block jsExtends %}
-    <script src="/js/hai100dayproject.js"></script>
+
     <script src="/custom_bower_components/cropper/dist/cropper.min.js"></script>
 
     <script>
 
+        "use strict";
+        var $email = $('#email'),
+                $password = $('#password'),
+                $display_name = $('#display_name'),
+                isEmailValid = false;
+
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        function validEmail() {
+            if ($email.val().trim().toLocaleLowerCase() == '' || !isEmail($email.val().trim().toLocaleLowerCase())) {
+                $('.group-email').addClass('has-error');
+                $('.group-email').find('.input-group-addon').css('border-color', '#dd4b39');
+                $('.group-email').find('.input-group-addon').find('i').attr('class', 'fa fa-envelope-o');
+            }
+
+            if ($email.val().trim().toLocaleLowerCase() == '') {
+                $('.group-email').find('.help-block').text("Vui lòng nhập địa chỉ email.");
+                isEmailValid = false;
+            } else if (!isEmail($email.val().trim().toLocaleLowerCase())) {
+                $('.group-email').find('.help-block').text("Vui lòng nhập địa chỉ email chính xác.");
+                isEmailValid = false;
+            } else {
+                $('.group-email').find('.input-group-addon').find('i').attr('class', 'fa fa-refresh fa-spin fa-fw');
+                // Check email exist
+                $.ajax({
+                    url: '/{{ admin_prefix }}/users/checkExistEmail',
+                    type: 'POST',
+                    data: {
+                        email: $email.val().trim().toLocaleLowerCase()
+                    },
+                    success: function(result){
+                        if (result.status === 200) {
+                            $('.group-email').removeClass('has-error');
+                            $('.group-email').find('.input-group-addon').css('border-color', '#d2d6de');
+                            $('.group-email').find('.input-group-addon').find('i').attr('class', 'fa fa-check');
+                            $('.group-email').find('.help-block').text('');
+                            isEmailValid = true;
+                        }  else if (result.status === 500) {
+                            $('.group-email').addClass('has-error');
+                            $('.group-email').find('.input-group-addon').css('border-color', '#dd4b39');
+                            $('.group-email').find('.input-group-addon').find('i').attr('class', 'fa fa-envelope-o');
+                            $('.group-email').find('.help-block').text('Kết nối tới máy chủ thất bại.');
+                            isEmailValid = false;
+                        } else if (result.status === 100) {
+                            $('.group-email').addClass('has-error');
+                            $('.group-email').find('.input-group-addon').css('border-color', '#dd4b39');
+                            $('.group-email').find('.input-group-addon').find('i').attr('class', 'fa fa-envelope-o');
+                            $('.group-email').find('.help-block').text('Địa chỉ email đã được đăng ký trước đây.');
+                            isEmailValid = false;
+                        }
+                    }
+                });
+            }
+        }
+
+        function validPassword() {
+            if ($password.val() == '' || $password.val().length < 6) {
+                $('.group-password').addClass('has-error');
+                $('.group-password').find('.input-group-addon').css('border-color', '#dd4b39');
+                $('.group-password').find('.input-group-addon').find('i').attr('class', 'fa fa-lock');
+            }
+
+            if ($password.val() == '') {
+                $('.group-password').find('.help-block').text("Vui lòng nhập mật khẩu.");
+            } else if ($password.val().length < 6) {
+                $('.group-password').find('.help-block').text("Mật khẩu phải ít nhất 6 ký tự.");
+            } else {
+                $('.group-password').find('.help-block').text('');
+                $('.group-password').removeClass('has-error');
+                $('.group-password').find('.input-group-addon').css('border-color', '#d2d6de');
+                $('.group-password').find('.input-group-addon').find('i').attr('class', 'fa fa-check');
+                return true;
+            }
+            return false;
+        }
+
+        function validDisplayName() {
+            if ($display_name.val() == '' || $display_name.val().length < 3) {
+                $('.group-name').addClass('has-error');
+                $('.group-name').find('.input-group-addon').css('border-color', '#dd4b39');
+                $('.group-name').find('.input-group-addon').find('i').attr('class', 'fa fa-user');
+            }
+
+            if ($display_name.val() == '') {
+                $('.group-name').find('.help-block').text("Vui lòng nhập tên người dùng.");
+            } else if ($display_name.val().length < 3) {
+                $('.group-name').find('.help-block').text("Tên người dùng phải ít nhất 3 ký tự.");
+            } else {
+                $('.group-name').find('.help-block').text('');
+                $('.group-name').removeClass('has-error');
+                $('.group-name').find('.input-group-addon').css('border-color', '#d2d6de');
+                $('.group-name').find('.input-group-addon').find('i').attr('class', 'fa fa-check');
+                return true;
+            }
+            return false;
+        }
+
+        function isValidate() {
+            if (isEmailValid) {
+                return validPassword() && validDisplayName() ? true : false;
+            } else {
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+            $('#frm_create').submit(function () {
+                return isValidate() ? true : false;
+            })
+        });
 
         function initCropper() {
             $.fn.cropper.setDefaults({
@@ -197,74 +336,14 @@
                 reader.onload = function (e) {
                     $('.choose_avatar').attr('src', e.target.result)
                             .width(150)
-                            .height(150)
+                            .height(150);
 
-                    initCropper();
+//                    initCropper();
 
                 };
 
                 reader.readAsDataURL(input.target.files[0]);
 
-            }
-            /**
-             *
-             var input_name = 'avatar_user';
-             var files = $(this).get(0).files;
-             if (files.length > 0) {
-                var formData = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                }
-                formData.append(input_name, file);
-            }
-             $.ajax({
-                url: `/api/${input_name}/upload?input_name=${input_name}`,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.status === 200) {
-                        // Update html resource
-                        // Update database
-                        $.ajax({
-                            url: `/{{ admin_prefix }}/api/users/{{ profile._id }}/update`,
-                            type: 'PUT',
-                            data: {
-                                avatar: `${data.path}`
-                            },
-                            success: function (result) {
-                                if (result.status === 200) {
-                                    $('.choose_avatar').attr('src', data.path);
-                                }
-                            }
-                        })
-                    }
-                },
-                xhr: function () {
-                    var xhr = new XMLHttpRequest();
-                    xhr.upload.addEventListener('progress', function (evt) {
-                        if (evt.lengthComputable) {
-                            var percentComplete = evt.loaded / evt.total;
-                            percentComplete = parseInt(percentComplete * 100);
-                            if (percentComplete === 100) {
-                                console.log("Progress " + percentComplete + '%');
-                            }
-                        }
-                    }, false);
-                    return xhr;
-                }
-            })
-             */
-        });
-
-        var display_name = $('#display_name').val();
-        $('#confirm-delete-cache-modal').find('h4.modal-title').html(`Xác nhận xóa dữ liệu tạm trên tài khoản <span style="color: #3c8dbc;">${display_name}</span>`);
-
-        $(document).keypress(function (e) {
-            if (e.which === 13) {
-                $('form#frm_create').submit();
-                return false;
             }
         });
 

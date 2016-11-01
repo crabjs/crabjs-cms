@@ -143,6 +143,27 @@ _module.create = function (req, res) {
     })
 };
 
+_module.checkExistEmail = function (req, res) {
+    __models.Users.findOne({email: req.body.email}, {email: 1}, function (err, re) {
+        if (err) {
+            return res.jsonp({
+                status: 500,
+                message: err
+            })
+        } else if (re) {
+            return res.jsonp({
+                status: 100,
+                message: 'Not Available'
+            })
+        } else {
+            return res.jsonp({
+                status: 200,
+                message: 'Available'
+            })
+        }
+    })
+};
+
 _module.created = function (req, res) {
 
     let formidable = require('formidable');
@@ -167,9 +188,6 @@ _module.created = function (req, res) {
         require('fs').rename(file.path, file_path);
 
         req.body.avatar = '/uploads/images/' + new_file_name;
-
-        delete req.body.old_pass;
-        delete req.body.user_pass;
 
         req.body.token = 'nothing';
         req.body.password = __models.Users.generateHash(req.body.password);

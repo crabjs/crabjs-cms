@@ -14,7 +14,7 @@
                     <div class="row">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-plus"></i></span>
-                            <input type="text" class="form-control" name="name" required>
+                            <input type="text" class="form-control" name="name">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary btn-flat" type="submit">Thêm mới</button>
                                     </span>

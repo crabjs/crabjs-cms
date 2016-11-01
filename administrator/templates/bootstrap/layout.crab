@@ -173,6 +173,9 @@
             $menu_active.parent().parent().parent().addClass('active');
         } else {
             var newUrl = url.split('/').slice(0,3).join('/');
+            if (newUrl.indexOf('?') >= 0) {
+                newUrl = newUrl.split('?')[0];
+            }
             var x = `a[href="${newUrl}"]`;
             $menu_active =  $('.sidebar').find('ul').find('li').find('ul').find(x);
             $menu_active.parent().parent().parent().addClass('active');

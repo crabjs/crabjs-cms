@@ -13,6 +13,21 @@ let module_name = 'mod_dashboard',
     _module = new __viewRender('backend', module_name);
 
 _module.view = function (req, res) {
+
+    /**
+     * cookie.maxAge is updated automatically by connect.session touch(), but only on server side.
+     * The updating of maxAge on client side has to be done manually with res.cookie
+     */
+
+    var hour = 3600000;
+    req.session.cookie.expires = new Date(Date.now() + hour);
+    req.session.cookie.maxAge = hour;
+    res.cookie('100dayproject', req.cookies['100dayproject'], {
+        maxAge: req.session.cookie.maxAge,
+        path: '/',
+        httpOnly: true
+    });
+
     Promise.all([
         __models.Posts.count({key: 'article'}).then(function(count){
             return count;

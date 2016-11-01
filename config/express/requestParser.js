@@ -29,6 +29,11 @@ exports.configure = function (app) {
     app.use(cookieParser());
 
     app.use(session({
+        genid: function (req) {
+            // Save for token ID
+            let uid = require('uid-safe').sync(18);
+            return uid;
+        },
         store: new RedisStore({
             host: __config.redis.host,
             port: __config.redis.port,

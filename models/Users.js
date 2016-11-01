@@ -34,7 +34,13 @@ let userSchema = new Schema({
     activation_code: {type: String},
     reset_password_token: {type: String},
     reset_password_expires: {type: Schema.Types.Date},
-    logs: [{type: Schema.Types.Mixed}]
+    logs: [{type: Schema.Types.Mixed}],
+    web_session: [{
+        session_id: {type: String},
+        ip_address: {type: String},
+        user_agent: {type: String},
+        created_at: {type: Schema.Types.Date, default: Date.now}
+    }]
 }, {
     timestamps: {
         createdAt: 'created_at',

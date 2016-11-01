@@ -419,6 +419,12 @@ module.exports = function (app) {
      * Sign out account and destroy session
      */
     app.route(`/logout`).get(function (req, res) {
+        __models.Users.findByIdAndUpdate(req.user._id, {
+            $pull: {web_session: {session_id: req.sessionID}  }
+        }).exec(function(err) {
+            console.log("LOGOUT ERROR: ", err);
+        });
+        res.clearCookie('100dayproject', {path: '/'});
         req.logout();
         req.session.destroy();
         res.redirect(`/`);

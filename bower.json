@@ -28,6 +28,7 @@
     "bootstrap": "~3.3.6",
     "ckeditor": "^4.5.8",
     "clipboard": "^1.5.10",
+    "cropper": "^2.3.4",
     "font-awesome": "fontawesome#^4.6.0",
     "highcharts": "^4.2.5",
     "highlightjs": "^9.2.0",
@@ -45,7 +46,6 @@
     "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.1.2",
     "polymer": "Polymer/polymer#^1.4.0",
     "snackbarjs": "https://github.com/FezVrasta/snackbarjs.git#^1.1.0",
-    "x-editable": "^1.5.1",
-    "cropper": "^2.3.4"
+    "x-editable": "^1.5.1"
   }
 }

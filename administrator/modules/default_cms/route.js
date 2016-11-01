@@ -60,7 +60,7 @@ router.route('/system/report').get(settings.report);
 
 router.route('/logs').get(__.isAllow('system_logs'), logs.list).delete(__.isAllow('system_logs'), logs.delete);
 
-router.route('/messages').get(messages.index);
+// router.route('/messages').get(messages.index);
 
 function isMe() {
     return function (req, res, next) {
@@ -86,6 +86,8 @@ function isMe() {
  * Account management
  */
 router.route('/users/create').get(__.isAllow('create_user'), users.create).post(__.isAllow('create_user'), users.created);
+
+router.route('/users/checkExistEmail').post(users.checkExistEmail);
 
 router.route('/users')
     .get(__.isAllow('list_user'), users.list)

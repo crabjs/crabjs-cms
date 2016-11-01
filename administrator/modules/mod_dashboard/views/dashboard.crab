@@ -29,7 +29,7 @@
                 <div class="icon">
                     <i class="fa fa-commenting-o"></i>
                 </div>
-                <a href="/{{ admin_prefix }}/messages" class="small-box-footer">Xem chi tiết <i
+                <a href="#messages" class="small-box-footer">Xem chi tiết <i
                             class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -153,36 +153,99 @@
                         <div class="box-title">Danh mục thống kê</div>
                     </div>
                     <div class="box-body">
-                        <div class="nav-tabs-custom">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Chuyên khoa</a></li>
-                                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Người dùng</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tab_1">
-                                    <ul class="nav nav-pills nav-stacked">
-                                        <li><a href="#"><i class="fa fa-inbox"></i> Số lượng bác sĩ của chuyên khoa</a></li>
-                                        <li><a href="#"><i class="fa fa-envelope-o"></i> Số lượng câu hỏi của chuyên khoa</a></li>
-                                        <li><a href="#"><i class="fa fa-file-text-o"></i> Số lượng người dùng theo dõi chuyên khoa</a></li>
-                                    </ul>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="chart-responsive">
+                                    <canvas id="pieChart" height="160" width="185" style="width: 185px; height: 160px;"></canvas>
                                 </div>
-                                <!-- /.tab-pane -->
-                                <div class="tab-pane" id="tab_2">
-                                    The European languages are members of the same family. Their separate existence is a myth.
-                                    For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                                    in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                                    new common language would be desirable: one could refuse to pay expensive translators. To
-                                    achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                                    words. If several languages coalesce, the grammar of the resulting language is more simple
-                                    and regular than that of the individual languages.
-                                </div>
-                                <!-- /.tab-pane -->
+                                <!-- ./chart-responsive -->
                             </div>
-                            <!-- /.tab-content -->
+                            <!-- /.col -->
+                            <div class="col-md-4">
+                                <ul class="chart-legend clearfix">
+                                    <li><i class="fa fa-circle-o text-red"></i> Android</li>
+                                    <li><i class="fa fa-circle-o text-green"></i> IOS</li>
+                                    <li><i class="fa fa-circle-o text-yellow"></i> Web</li>
+                                </ul>
+                            </div>
+                            <!-- /.col -->
                         </div>
+                    </div>
+
+                    <div class="box-footer no-padding">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="#">United States of America
+                                    <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
+                            <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
+                            </li>
+                            <li><a href="#">China
+                                    <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/bower_components/AdminLTE/plugins/chartjs/Chart.min.js"></script>
+    <script>
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+        var pieChart = new Chart(pieChartCanvas);
+        var PieData = [
+            {
+                value: 700,
+                color: "#f56954",
+                highlight: "#f56954",
+                label: "Android"
+            },
+            {
+                value: 500,
+                color: "#00a65a",
+                highlight: "#00a65a",
+                label: "IOS"
+            },
+            {
+                value: 400,
+                color: "#f39c12",
+                highlight: "#f39c12",
+                label: "Web"
+            }
+        ];
+        var pieOptions = {
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            //String - The colour of each segment stroke
+            segmentStrokeColor: "#fff",
+            //Number - The width of each segment stroke
+            segmentStrokeWidth: 1,
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            //Number - Amount of animation steps
+            animationSteps: 100,
+            //String - Animation easing effect
+            animationEasing: "easeOutBounce",
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: false,
+            //String - A tooltip template
+            tooltipTemplate: "<%=value %> <%=label%> users"
+        };
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        pieChart.Doughnut(PieData, pieOptions);
+        //-----------------
+        //- END PIE CHART -
+        //-----------------
+    </script>
 {% endblock %}
