@@ -25,14 +25,14 @@ let condition = {
     name: 'string'
 };
 
-describe('Global Function', function () {
-    describe('#Verify condition', function () {
-        it('Check verify condition', function () {
-
-            func.verifyCondition(query, condition).should.equal({
-               // return object $regex condition
-            });
-        })
-    });
-
-});
+// describe('Global Function', function () {
+//     describe('#Verify condition', function () {
+//         it('Check verify condition', function () {
+//
+//             func.verifyCondition(query, condition).should.equal({
+//                // return object $regex condition
+//             });
+//         })
+//     });
+//
+// });
