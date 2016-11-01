@@ -29,7 +29,7 @@ describe('Global Function', function () {
     describe('#Verify condition', function () {
         it('Check verify condition', function () {
 
-            func.verifyCondition(query, conditon).should.equal({
+            func.verifyCondition(query, condition).should.equal({
                // return object $regex condition
             });
         })
