@@ -10,7 +10,8 @@
 "use strict";
 
 let module_name = 'default_cms',
-    _module = new __viewRender('backend', module_name);
+    _module = new __viewRender('backend', module_name),
+    formidable = require('formidable');
 
 _module.web_settings = function (req, res) {
     let toolbar = new __.Toolbar();
@@ -33,14 +34,41 @@ _module.web_settings = function (req, res) {
 };
 
 _module.web_settings_update = function (req, res) {
-    __models.Objects.update({key: 'seo:settings'}, req.body).exec(function (err, re) {
+
+    let form = new formidable.IncomingForm();
+    form.uploadDir = require('path').resolve(__base, 'public', 'uploads', 'favicon');
+
+    form.parse(req, function (err, fields, files) {
         if (err) {
-            __.logger.error(err);
             return _module.render_error(req, res, '500');
         }
-        req.flash('success', 'Cập nhật thông tin thành công!');
-        res.redirect(`/${__config.admin_prefix}/settings`);
-    })
+        req.body = fields || {};
+
+        var file = files['favicon_image'];
+
+        if (file.size) {
+            var file_type = file.name.split('.').pop();
+
+            var new_file_name = __.randomText(12) + '_' + new Date().getTime() + '.' + file_type;
+
+            var file_path = require('path').join(form.uploadDir, new_file_name);
+
+            require('fs').rename(file.path, file_path);
+
+            req.body.favicon = '/uploads/favicon/' + new_file_name;
+        }
+
+        __models.Objects.update({key: 'seo:settings'}, req.body).exec(function (err, re) {
+            if (err) {
+                __.logger.error(err);
+                return _module.render_error(req, res, '500');
+            }
+            req.flash('success', 'Cập nhật thông tin thành công!');
+            res.redirect(`/${__config.admin_prefix}/settings`);
+        })
+
+
+    });
 };
 
 _module.report = function (req, res) {

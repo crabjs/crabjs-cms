@@ -56,7 +56,7 @@
 {% endblock %}
 
 {% block content %}
-    <form id="frm_create" method="post">
+    <form id="frm_create" method="post" action="/{{ admin_prefix }}/users/view/{{ profile._id }}?_csrf={{ _csrf }}" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="{{ _csrf }}">
         <input type="file" hidden name="avatar_user">
         <div class="box box-solid box-primary">
@@ -386,54 +386,18 @@
             $('input[name="avatar_user"]').click();
         });
 
-        $('input[name="avatar_user"]').on('change', function () {
-            var input_name = 'avatar_user';
-            var files = $(this).get(0).files;
-            if (files.length > 0) {
-                var formData = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                }
-                formData.append(input_name, file);
+        $('input[name="avatar_user"]').on('change', function (input) {
+            if (input.target.files && input.target.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.choose_avatar').attr('src', e.target.result)
+                            .width(150)
+                            .height(150);
+                };
+
+                reader.readAsDataURL(input.target.files[0]);
             }
-            $.ajax({
-                url: `/api/${input_name}/upload?input_name=${input_name}`,
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if (data.status === 200) {
-                        // Update html resource
-                        // Update database
-                        $.ajax({
-                            url: `/{{ admin_prefix }}/api/users/{{ profile._id }}/update`,
-                            type: 'PUT',
-                            data: {
-                                avatar: `${data.path}`
-                            },
-                            success: function (result) {
-                                if (result.status === 200) {
-                                    $('.choose_avatar').attr('src', data.path);
-                                }
-                            }
-                        })
-                    }
-                },
-                xhr: function () {
-                    var xhr = new XMLHttpRequest();
-                    xhr.upload.addEventListener('progress', function (evt) {
-                        if (evt.lengthComputable) {
-                            var percentComplete = evt.loaded / evt.total;
-                            percentComplete = parseInt(percentComplete * 100);
-                            if (percentComplete === 100) {
-                                console.log("Progress " + percentComplete + '%');
-                            }
-                        }
-                    }, false);
-                    return xhr;
-                }
-            })
         });
 
         var display_name = $('#display_name').val();

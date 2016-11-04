@@ -205,36 +205,64 @@ _module.created = function (req, res) {
 };
 
 _module.update = function (req, res) {
-    if (req.body.password && req.body.password.trim()) {
-        req.body.password = __models.Users.generateHash(req.body.password);
-    } else {
-        delete req.body.password;
-    }
+    let formidable = require('formidable');
 
-    if (req.body.type == -1) req.body.role_id = null;
+    let form = new formidable.IncomingForm();
+    form.uploadDir = require('path').resolve(__base, 'public', 'uploads', 'images');
 
-    __models.Users.findByIdAndUpdate(req.params.id, req.body, {
-        select: '_id'
-    }, function (err, re) {
+    form.parse(req, function (err, fields, files) {
         if (err) {
-            __.logger.error(err);
             return _module.render_error(req, res, '500');
         }
+        req.body = fields || {};
 
-        // Update data other collections
-        __models.Posts.update({authors: {$exists: true}, 'authors._id': re._id},
-            {'authors.display_name': req.body.display_name}, {
-                upsert: false,
-                multi: true
-            }).exec(function (err, re) {
+        var file = files['avatar_user'];
+
+        if (file.size) {
+            var file_type = file.name.split('.').pop();
+
+            var new_file_name = __.randomText(12) + '_' + new Date().getTime() + '.' + file_type;
+
+            var file_path = require('path').join(form.uploadDir, new_file_name);
+
+            require('fs').rename(file.path, file_path);
+
+            req.body.avatar = '/uploads/images/' + new_file_name;
+        }
+
+
+        if (req.body.password && req.body.password.trim()) {
+            req.body.password = __models.Users.generateHash(req.body.password);
+        } else {
+            delete req.body.password;
+        }
+
+        if (req.body.type == -1) req.body.role_id = null;
+        __models.Users.findByIdAndUpdate(req.params.id, req.body, {
+            select: '_id'
+        }, function (err, re) {
             if (err) {
                 __.logger.error(err);
                 return _module.render_error(req, res, '500');
             }
 
-            req.flash('success', 'Cập nhật thông tin tài khoản thành công!');
-            res.redirect(`/${__config.admin_prefix}/users/view/${req.params.id}`);
+            // Update data other collections
+            __models.Posts.update({authors: {$exists: true}, 'authors._id': re._id},
+                {'authors.display_name': req.body.display_name}, {
+                    upsert: false,
+                    multi: true
+                }).exec(function (err, re) {
+                if (err) {
+                    __.logger.error(err);
+                    return _module.render_error(req, res, '500');
+                }
+
+                req.flash('success', 'Cập nhật thông tin tài khoản thành công!');
+                res.redirect(`/${__config.admin_prefix}/users/view/${req.params.id}`);
+            });
         });
+
+
     });
 };
 
