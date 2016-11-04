@@ -48,7 +48,7 @@ mongoose.connection.on('error', function (err) {
 mongoose.set('debug', __config.db.options.logging);
 
 db.collections = [];
-__.getGlobbedFiles(__base + '/models/*.js').forEach(function (modelPath) {
+__.getGlobbedFiles(__base + '/models/**/*.js').forEach(function (modelPath) {
     let model = require(modelPath);
     db[model.modelName] = model;
     // db.collections.push(model.modelName);
