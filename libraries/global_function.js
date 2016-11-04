@@ -240,7 +240,7 @@ exports.logger = new winston.Logger({
         }),
         new winston.transports.File({
             level: 'verbose',
-            filename: "/logs/webInstall.log",
+            filename: __base + "/logs/webInstall.log",
             handleExceptions: true,
             json: true,
             maxsize: 1024 * 1024 * 10,
@@ -254,7 +254,7 @@ exports.logger = new winston.Logger({
     ],
     exceptionHandlers: [
         new winston.transports.File({
-            filename: "/logs/exceptions.log"
+            filename: __base + "/logs/exceptions.log"
         }),
         new winston.transports.Console({
             prettyPrint: true,

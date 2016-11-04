@@ -14,4 +14,6 @@ let dashboard = require('./controllers/dashboard');
 
 router.route('/dashboard').get(dashboard.view);
 
+router.route('/dashboard/users/online').post(dashboard.fetch_user_info);
+
 module.exports = router;

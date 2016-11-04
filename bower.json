@@ -46,6 +46,7 @@
     "paper-toggle-button": "PolymerElements/paper-toggle-button#^1.1.2",
     "polymer": "Polymer/polymer#^1.4.0",
     "snackbarjs": "https://github.com/FezVrasta/snackbarjs.git#^1.1.0",
-    "x-editable": "^1.5.1"
+    "x-editable": "^1.5.1",
+    "firebase": "^3.5.3"
   }
 }

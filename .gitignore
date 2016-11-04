@@ -8,3 +8,6 @@ dbBackup/.DS_Store
 dbBackup/dump/.DS_Store
 public/custom_bower_components/
 yarn.lock
+/config/fb_services-ccdc91ff3186.json
+public/uploads/images/avatar_user/_whynotbar_1478151260054.png
+public/uploads/images/avatar_user/giphy_1478060862265.gif

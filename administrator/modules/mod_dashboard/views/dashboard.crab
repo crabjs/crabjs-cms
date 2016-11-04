@@ -1,5 +1,47 @@
 {% extends 'layout.crab' %}
 
+{% block cssExtends %}
+    <style>
+        .users-list i {
+            color: #4CAF50;
+            position: absolute;
+            right: 22px;
+            font-size: 10px;
+        }
+
+        .box-loading {
+            padding: 10px;
+            text-align: center;
+            margin-left: -50px;
+        }
+
+        .loading {
+            display: inline-block;
+            margin: auto;
+            text-align: center;
+            width: 15px;
+            height: 15px;
+            background: transparent;
+            border-radius: 100%;
+            box-shadow: 15px 0 #0e66d4, 30px 0 #ff0080;
+            animation: flickr 1s linear infinite;
+        }
+
+        @keyframes flickr {
+            50% {
+                box-shadow: 30px 0 #0e66d4, 15px 0 #ff0080;
+            }
+            50.1% {
+                box-shadow: 15px 0 #ff0080, 30px 0 #0e66d4;
+            }
+            100% {
+                box-shadow: 30px 0 #ff0080, 15px 0 #0e66d4;
+            }
+        }
+
+    </style>
+{% endblock %}
+
 {% block content %}
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -147,105 +189,122 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="box box-default">
-                <div id="activity" class="box box-solid">
-                    <div class="box-header with-border">
-                        <div class="box-title">Danh mục thống kê</div>
-                    </div>
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="chart-responsive">
-                                    <canvas id="pieChart" height="160" width="185" style="width: 185px; height: 160px;"></canvas>
-                                </div>
-                                <!-- ./chart-responsive -->
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-md-4">
-                                <ul class="chart-legend clearfix">
-                                    <li><i class="fa fa-circle-o text-red"></i> Android</li>
-                                    <li><i class="fa fa-circle-o text-green"></i> IOS</li>
-                                    <li><i class="fa fa-circle-o text-yellow"></i> Web</li>
-                                </ul>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                    </div>
-
-                    <div class="box-footer no-padding">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li><a href="#">United States of America
-                                    <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
-                            <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
-                            </li>
-                            <li><a href="#">China
-                                    <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
-                        </ul>
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Đang trực tuyến</h3>
+                    <div class="box-tools pull-right">
+                        <span id="count_users" class="label label-danger"></span>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                    class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
                     </div>
                 </div>
+                <!-- /.box-header -->
+                <div class="box-body no-padding">
+                    <ul class="users-list clearfix">
+                        <div class="box-loading"><span class="loading"></span></div>
+
+                    </ul>
+                    <!-- /.users-list -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer text-center">
+                    <a href="javascript:void(0)" class="uppercase">Xem tất cả</a>
+                </div>
+                <!-- /.box-footer -->
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block jsExtends %}
-    <script src="/bower_components/AdminLTE/plugins/chartjs/Chart.min.js"></script>
     <script>
-        //-------------
-        //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
-        var pieChart = new Chart(pieChartCanvas);
-        var PieData = [
-            {
-                value: 700,
-                color: "#f56954",
-                highlight: "#f56954",
-                label: "Android"
-            },
-            {
-                value: 500,
-                color: "#00a65a",
-                highlight: "#00a65a",
-                label: "IOS"
-            },
-            {
-                value: 400,
-                color: "#f39c12",
-                highlight: "#f39c12",
-                label: "Web"
+
+        Array.prototype.getUnique = function(){
+            var u = {}, a = [];
+            for(var i = 0, l = this.length; i < l; ++i){
+                if(u.hasOwnProperty(this[i])) {
+                    continue;
+                }
+                a.push(this[i]);
+                u[this[i]] = 1;
             }
-        ];
-        var pieOptions = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke: true,
-            //String - The colour of each segment stroke
-            segmentStrokeColor: "#fff",
-            //Number - The width of each segment stroke
-            segmentStrokeWidth: 1,
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            //Number - Amount of animation steps
-            animationSteps: 100,
-            //String - Animation easing effect
-            animationEasing: "easeOutBounce",
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate: true,
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale: false,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive: true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: false,
-            //String - A tooltip template
-            tooltipTemplate: "<%=value %> <%=label%> users"
+            return a;
         };
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        pieChart.Doughnut(PieData, pieOptions);
-        //-----------------
-        //- END PIE CHART -
-        //-----------------
+
+        $(document).ready(function () {
+            var ref = firebase.database().ref('users');
+            var list_user_online = [];
+
+            function fetch_user_online(){
+                list_user_online = [];
+                ref.once('value', function (snap) {
+                    snap.forEach(function (userSnap) {
+                        if (userSnap.hasChild('connections')) {
+                            list_user_online.push(userSnap.key);
+                        }
+                    });
+                    if (list_user_online.length) {
+                        $('#count_users').text(list_user_online.getUnique().length + " người trực tuyến");
+                        $.ajax({
+                            url: `/{{ admin_prefix }}/dashboard/users/online`,
+                            type: 'POST',
+                            data: {
+                                users: list_user_online
+                            },
+                            success: function (result) {
+                                $('.box-loading').hide();
+                                if (result.status == 200) {
+                                    var users = result.data;
+                                    if (users.length) {
+                                        for (var i = 0; i < users.length; i++) {
+                                            var exists = $('.users-list').find('li[value="' + users[i]._id +'"]');
+                                            if (!exists.length) {
+                                                $('.users-list').append(`<li value="${users[i]._id}" style="position: relative">
+                                        <i class="fa fa-circle" aria-hidden="true"></i>
+                                        <img style="max-width: 70%" src="${users[i].avatar}" alt="${users[i].display_name}">
+                                        <a class="users-list-name" href="#">${users[i].display_name}</a></li>`)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        });
+                    } else {
+                        $('#count_users').text("Không có người trực tuyến");
+                        $('.box-loading').remove();
+                    }
+                });
+            }
+
+            fetch_user_online();
+
+
+            ref.on('child_added', function (snap) {
+                $('.users-list').empty();
+                $('.box-loading').show();
+                fetch_user_online();
+            });
+            ref.on('child_removed', function (snap) {
+                $('.users-list').empty();
+                $('.box-loading').show();
+                fetch_user_online();
+            });
+            ref.on('child_changed', function (snap) {
+                $('.users-list').empty();
+                $('.box-loading').show();
+                fetch_user_online();
+            });
+            ref.on('child_moved', function (snap) {
+                $('.users-list').empty();
+                $('.box-loading').show();
+                fetch_user_online();
+            });
+        });
+
+
     </script>
 {% endblock %}

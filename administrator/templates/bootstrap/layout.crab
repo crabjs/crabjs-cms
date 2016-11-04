@@ -118,6 +118,43 @@
         headers: {'X-CSRF-Token': '{{ _csrf }}'}
     });
 </script>
+<script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
+<script>
+
+    // Initialize Firebase
+    firebase.initializeApp({
+        apiKey: "AIzaSyDkzdcdIMAGF_8p-nzZKzcgSbYTDNbes6s",
+        databaseURL: "https://crab-cms.firebaseio.com"
+    });
+
+    firebase.auth().signInWithCustomToken("{{ fb_token }}").then(function (result) {
+        var myConnectionsRef = firebase.database().ref('users/{{ user._id }}/connections');
+
+        // stores the timestamp of my last disconnect (the last time I was seen online)
+        var lastOnlineRef = firebase.database().ref('users/{{ user._id }}/lastOnline');
+
+        var connectedRef = firebase.database().ref('.info/connected');
+        connectedRef.on('value', function (snap) {
+            if (snap.val() === true) {
+                // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
+
+                // add this device to my connections list
+                // this value could contain info about the device or a timestamp too
+                var con = myConnectionsRef.push(true);
+
+                // when I disconnect, remove this device
+                con.onDisconnect().remove();
+
+                // when I disconnect, update the last time I was seen online
+                lastOnlineRef.onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
+            }
+        });
+    }).catch(function (error) {
+        console.log("Firebase Error Authentication: ", error);
+    });
+
+
+</script>
 
 <!-- REQUIRED JS SCRIPTS -->
 {% block jsExtends %}
@@ -172,12 +209,12 @@
             $menu_active.parent().parent().addClass('menu-open');
             $menu_active.parent().parent().parent().addClass('active');
         } else {
-            var newUrl = url.split('/').slice(0,3).join('/');
+            var newUrl = url.split('/').slice(0, 3).join('/');
             if (newUrl.indexOf('?') >= 0) {
                 newUrl = newUrl.split('?')[0];
             }
             var x = `a[href="${newUrl}"]`;
-            $menu_active =  $('.sidebar').find('ul').find('li').find('ul').find(x);
+            $menu_active = $('.sidebar').find('ul').find('li').find('ul').find(x);
             $menu_active.parent().parent().parent().addClass('active');
         }
     })

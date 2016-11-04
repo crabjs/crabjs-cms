@@ -13,6 +13,8 @@ let passport = require('passport'),
     loginModule = new __viewRender('backend', 'mod_auth');
 
 let formidable = require('formidable');
+var firebase = require("firebase");
+
 
 module.exports = function (app) {
 
@@ -419,6 +421,10 @@ module.exports = function (app) {
      * Sign out account and destroy session
      */
     app.route(`/logout`).get(function (req, res) {
+
+        var refUser = firebase.database().ref('users/' + req.user._id +'/connections');
+        refUser.set(null);
+
         __models.Users.findByIdAndUpdate(req.user._id, {
             $pull: {web_session: {session_id: req.sessionID}  }
         }).exec(function(err) {
@@ -434,6 +440,17 @@ module.exports = function (app) {
      * Middleware get user account information
      */
     app.get('*', function (req, res, next) {
+
+        if (firebase.apps.length == 0) {
+            firebase.initializeApp({
+                databaseURL: 'https://crab-cms.firebaseio.com',
+                serviceAccount: __base + '/config/fb_services-ccdc91ff3186.json'
+            });
+        }
+        if (req.user) {
+            res.locals.fb_token = firebase.auth().createCustomToken(`${req.user._id}`);
+        }
+
         res.locals.user = req.user;
         next();
     });
