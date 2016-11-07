@@ -19,8 +19,26 @@ We've gives you:
 * Enhanced `models` with additional field types and functionality, building on those natively supported by Mongoose
 * Out of the box session management and authentication
 * Using passport authentication support multiple strategies (Local, Google, Facebook, Github and another service you want)
+* Touch friendly, that's easy for non-technical users to learn
 
 We'll be publishing a summary of the new features, changes and improvements as we get closer to the final release. In the meantime, see the [CHANGELOG](https://github.com/Vietworm/Crab.JS/blob/master/README.md) for information on what's changed.
+
+# Building and running Crab.JS from source
+
+Dependencies:
+
+* Node.js v4 or v5
+* Mongodb v3.2 or latest
+* Redis
+
+Commands:
+
+```bash
+git clone https://github.com/Vietworm/Crab.JS.git
+cd ./Crab.JS
+npm install
+node server.js
+```
 
 # Thanks
 
