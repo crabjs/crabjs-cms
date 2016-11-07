@@ -70,7 +70,9 @@ module.exports = function () {
      * Helmet module security express application.
      * Use helmet to security web application, xss vulnerability,..
      */
-    app.use(helmet.xframe());
+
+    // frameGuard to prevent clickjacking
+    app.use(helmet.frameguard({action: 'sameorigin'}));
     app.use(helmet.xssFilter());
     app.use(helmet.noSniff());
     app.use(helmet.ieNoOpen());

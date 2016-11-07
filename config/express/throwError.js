@@ -22,7 +22,7 @@ exports.configure = function (app) {
         }
 
         if (req.xhr) {
-            return res.ok({payload: null}, '403 invalid csrf token');
+            return res.status(403).send('403 invalid csrf token');
         }
 
         res.status(403);
