@@ -40,6 +40,10 @@ npm install
 node server.js
 ```
 
+# Report issues
+
+If you have questions, bug reports or anything else fo the sort, please use the [issue tracker](https://github.com/Vietworm/Crab.JS/issues)
+
 # Thanks
 
 CrabJS is a free and open source community-driven project. Thanks to our many contributors and users for making it great.
