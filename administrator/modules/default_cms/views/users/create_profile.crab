@@ -2,7 +2,7 @@
 
 {% block cssExtends %}
 
-    <link rel="stylesheet" href="/custom_bower_components/cropper/dist/cropper.min.css">
+    <link rel="stylesheet" href="/bower_components/cropper/dist/cropper.min.css">
     <style>
 
         .overlay {
@@ -195,7 +195,7 @@
 
 {% block jsExtends %}
 
-    <script src="/custom_bower_components/cropper/dist/cropper.min.js"></script>
+    <script src="/bower_components/cropper/dist/cropper.min.js"></script>
 
     <script>
 

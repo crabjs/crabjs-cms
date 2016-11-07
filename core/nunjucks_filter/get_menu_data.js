@@ -47,39 +47,42 @@ function menuGenerator(listModules, menu, role) {
 let listModuleExtends = {};
 module.exports = function (env) {
     env.addFilter('get_menu_data', function (group_name, user) {
+        if (user) {
+            let content = `<li class="header">${group_name}</li>`;
 
-        let content = `<li class="header">${group_name}</li>`;
+            __models.Objects.findOne({_id: user.role_id}, {values: 1}, function (error, role) {
+                if (error) {
+                    console.log('Find roles error!');
+                }
+                //!(blog)
+                let moduleIgnore = '' || '*';
+                __.getGlobbedFiles(__base + `/administrator/modules/${moduleIgnore}/module.js`).forEach(function (path) {
+                    require(path)(listModuleExtends);
+                });
 
-        __models.Objects.findOne({_id: user.role_id}, {values: 1}, function (error, role) {
-            if (error) {
-                console.log('Find roles error!');
-            }
-            //!(blog)
-            let moduleIgnore = '' || '*';
-            __.getGlobbedFiles(__base + `/administrator/modules/${moduleIgnore}/module.js`).forEach(function (path) {
-                require(path)(listModuleExtends);
-            });
-
-            for (let menu in listModuleExtends) {
-                if (listModuleExtends.hasOwnProperty(menu)) {
-                    if (listModuleExtends[menu].group == group_name) {
-                        content += menuGenerator(listModuleExtends, menu, role);
+                for (let menu in listModuleExtends) {
+                    if (listModuleExtends.hasOwnProperty(menu)) {
+                        if (listModuleExtends[menu].group == group_name) {
+                            content += menuGenerator(listModuleExtends, menu, role);
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        __models.Users.findOne({_id: user._id}, {settings: 1}, function (err, user_info) {
-            if (err) {
-                console.log('Caching user menu failed!')
-            }
-            user_info.settings = {
-                menu: content,
-                updated_at: new Date()
-            };
-            user_info.save();
-        });
+            __models.Users.findOne({_id: user._id}, {settings: 1}, function (err, user_info) {
+                if (err) {
+                    console.log('Caching user menu failed!')
+                }
+                user_info.settings = {
+                    menu: content,
+                    updated_at: new Date()
+                };
+                user_info.save();
+            });
 
-        return env.getFilter('safe')(content);
+            return env.getFilter('safe')(content);
+        } else {
+            return '';
+        }
     })
 };

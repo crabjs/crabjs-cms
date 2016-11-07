@@ -440,15 +440,21 @@ module.exports = function (app) {
      * Middleware get user account information
      */
     app.get('*', function (req, res, next) {
+        let fs = require('fs'),
+            path = require('path');
 
-        if (firebase.apps.length == 0) {
-            firebase.initializeApp({
-                databaseURL: 'https://crab-cms.firebaseio.com',
-                serviceAccount: __base + '/config/fb_services-ccdc91ff3186.json'
-            });
-        }
-        if (req.user) {
-            res.locals.fb_token = firebase.auth().createCustomToken(`${req.user._id}`);
+        var files = fs.readdirSync(__base + '/config/firebase');
+
+        if (path.extname(files[0]) === '.json') {
+            if (firebase.apps.length == 0) {
+                firebase.initializeApp({
+                    databaseURL: 'https://crab-cms.firebaseio.com',
+                    serviceAccount: __base + '/config/firebase/' + files[0]
+                });
+            }
+            if (req.user) {
+                res.locals.fb_token = firebase.auth().createCustomToken(`${req.user._id}`);
+            }
         }
 
         res.locals.user = req.user;
