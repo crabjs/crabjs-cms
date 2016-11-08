@@ -344,22 +344,22 @@ _module.delete_cache = function (req, res) {
 
 
     if (req.user._id == req.params.id || isAdmin) {
-        __models.Users.findOne({_id: req.params.id}, {settings: 1}, function (error, user_setting) {
+        __models.Users.findOne({_id: req.params.id}, {settings: 1, role_id: 1}, function (error, user) {
             if (error) {
                 __.logger.error(error);
                 req.flash('danger', 'Có lỗi xảy ra khi thực hiện xóa cache của tài khoản này.');
                 res.sendStatus(200);
             }
-            user_setting.settings.menu = '';
-            user_setting.save();
+            user.settings.menu = '';
+            user.save();
 
             let msg = '';
             if (isAdmin && !(req.user._id == req.params.id)) {
-                msg = `Khởi tạo Cache cho người dùng thành công. Ngày cập nhật: ${dateFormat(user_setting.settings.updated_at)}!`;
+                msg = `Khởi tạo Cache cho người dùng thành công. Ngày cập nhật: ${dateFormat(user.settings.updated_at)}!`;
                 req.flash('warning', msg);
                 res.sendStatus(200);
             } else {
-                msg = `Dữ liệu Cache từ ngày ${dateFormat(user_setting.settings.updated_at)} trên tài khoản của bạn đã được xóa!<br>
+                msg = `Dữ liệu Cache từ ngày ${dateFormat(user.settings.updated_at)} trên tài khoản của bạn đã được xóa!<br>
                         Vui lòng tải lại trang. <a style="text-decoration: none" href="javascript:location.reload()"><span class="label label-warning"><i class="fa fa-refresh fa-spin fa-fw"></i>Tải lại</span></a>`;
                 req.flash('success', msg);
                 res.sendStatus(200);
