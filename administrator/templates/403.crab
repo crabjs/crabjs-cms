@@ -6,7 +6,7 @@
         <div class="error-content">
             <h3><i class="fa fa-warning text-red"></i> Oops! Don't have permission to access.</h3>
             <p>
-                Please contact to <a href="mailto:hailp@novaon.vn">Administrator</a> to ask more permissions
+                Please contact to <a href="mailto:hailp@aboutme.vn">Administrator</a> to ask more permissions
                 Meanwhile, you may <a href="/{{ admin_prefix }}/dashboard">return to dashboard</a> or try another features.
             </p>
             <form class="search-form" method="post">

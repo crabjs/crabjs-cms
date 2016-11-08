@@ -106,3 +106,7 @@ $(document).ready(function () {
         return $email.hasClass('wrong-entry') ? false : true;
     }
 });
+
+$('input#email').change(function(){
+    validEmail();
+});

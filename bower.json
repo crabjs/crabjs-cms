@@ -22,6 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "cropper": "^2.3.4"
+    "cropper": "^2.3.4",
+    "animate.css": "^3.5.2"
   }
 }

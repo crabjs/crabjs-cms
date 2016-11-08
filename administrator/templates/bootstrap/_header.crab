@@ -107,7 +107,9 @@
                 </li>
                 <!-- Control Sidebar Toggle Button -->
                 <li>
-                    <a href="/{{ admin_prefix }}/system/report" class="hint--left" data-hint="Gửi tin nhắn tới hệ thống"><i class="fa fa-bug"></i></a>
+                    <a href="/{{ admin_prefix }}/system/report" class="hint--left" data-hint="Gửi tin nhắn tới hệ thống">
+                        <i class="fa fa-bug"></i>
+                        <span class="label label-danger">9</span></a>
                 </li>
             </ul>
         </div>

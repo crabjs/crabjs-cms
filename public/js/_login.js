@@ -14,7 +14,7 @@ var $email = $('#email'),
     $email_msg = $('.email-msg'),
     $password_msg = $('.password-msg');
 
-function remove_error(pwd){
+function remove_error(pwd) {
     if (pwd) {
         if ($password.hasClass('wrong-entry')) {
             $password.removeClass('wrong-entry');
@@ -27,8 +27,8 @@ function remove_error(pwd){
 
 
 }
-function remove_success(pwd){
-    if (pwd){
+function remove_success(pwd) {
+    if (pwd) {
         if ($password.hasClass('success-entry')) {
             $password.removeClass('success-entry');
         }
@@ -61,7 +61,7 @@ function validEmail() {
     }
 }
 
-function validPassword(){
+function validPassword() {
     if ($password.val().trim() == '') {
         remove_error(true);
         $password.addClass('wrong-entry');
@@ -107,4 +107,16 @@ $(document).ready(function () {
 
         return $email.hasClass('wrong-entry') || $password.hasClass('wrong-entry') ? false : true;
     }
+});
+
+$("input#email").change(function () {
+    validEmail();
+});
+$('input#password').change(function () {
+    validPassword();
+});
+
+$('#login-google').click(function () {
+    $('.crab-msg').css('display', 'block');
+    $(this).remove()
 });

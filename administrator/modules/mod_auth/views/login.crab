@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="/udoctor/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/uploads/icons/favicon.ico" type="image/x-icon">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Login - Udoctor</title>
+    <title>Login - Crab.JS</title>
     <script type="text/javascript">
         WebFontConfig = {
             google: {families: ['Open+Sans:400,300italic,300,600,400italic,600italic,700,700italic,800,800italic:latin']}
@@ -43,14 +43,14 @@
                 </div>
             </section>
         {% endif %}
-        <a href="/auth/google" onclick="$('.crab-msg').css('display', 'block'); $(this).remove()">
-            <button type="button" class="button button-large google-login" id="login-google">
+        <a id="login-google" href="/auth/google">
+            <button type="button" class="button button-large google-login">
                 <img src="/images/google_whiteg.png">
                 <span>Sign in with Google</span>
             </button>
         </a>
 
-        <div style="display: none" class="crab-msg">
+        <div class="crab-msg">
             <img src="/images/loader-small.gif">
             <span>One moment...</span>
         </div>
@@ -59,14 +59,11 @@
             <span>or</span>
         </div>
         <div class="form-group frm-email">
-            <input onchange="validEmail()" tabindex="1" autofocus type="text" class="form-control"
-                   placeholder="Email" id="email" name="email">
+            <input tabindex="1" autofocus type="text" class="form-control" placeholder="Email" id="email" name="email">
             <label class="error email-msg"></label>
         </div>
         <div class="form-group frm-password">
-            <input onchange="validPassword()" tabindex="2" type="password" class="form-control" placeholder="Password"
-                   id="password"
-                   name="password">
+            <input tabindex="2" type="password" class="form-control" placeholder="Password" id="password" name="password">
             <label class="error password-msg"></label>
         </div>
         <a tabindex="3" class="link" href="/forgot_password.crab">Lost your password?</a>

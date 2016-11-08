@@ -26,18 +26,9 @@
                             <!-- /btn-group -->
                             <input type="text" placeholder="Tiêu đề yêu cầu" name="subject" class="form-control">
                         </div>
-
-                        {#<input class="form-control" placeholder="Tiêu đề">#}
                     </div>
-                    {#<div class="form-group">#}
-                    {#<input class="form-control" placeholder="Subject:">#}
-                    {#</div>#}
                     <div class="form-group">
                         <label for="full_text">Nội dung</label>
-                        {#<div class="btn btn-default btn-file pull-right">#}
-                        {#<i class="fa fa-picture-o" aria-hidden="true"></i> Add media#}
-                        {#<input type="file" name="uploads[]" multiple="multiple" id="upload-input">#}
-                        {#</div>#}
                     </div>
 
                     <div class="form-group">
@@ -50,7 +41,6 @@
                         <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Lưu nháp</button>
                         <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Gửi đi</button>
                     </div>
-                    {#<button type="reset" class="btn btn-default"><i class="fa fa-paperclip"></i> Đính kèm tệp tin</button>#}
                     <div class="btn btn-default btn-file">
                         <i class="fa fa-paperclip" aria-hidden="true"></i> Đính kèm file
                         <input type="file" name="uploads[]" multiple="multiple" id="upload-input">
@@ -67,16 +57,75 @@
                         <div class="box-title">Yêu cầu hệ thống</div>
                     </div>
                     <div class="box-body">
-                        <ul class="todo-list">
-                            {% for i in range(1,10) %}
-                                <li>
-                                    <img style="width: 19px;border-radius: 50%;margin-right: 6px;"
-                                         src="/images/noAvatar.gif" alt=""><a href="#">Lê Phú Hải </a>
-                                    <span class="hint--top-left" data-hint="lỗi giao diện trên trang đăng nhập">lỗi giao diện trên trang..
-                                    <span class="label label-warning pull-right">đang xử lý</span></span>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                        <!-- Info Boxes Style 2 -->
+                        <div class="info-box bg-yellow">
+                            <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Đang xử lý</span>
+                                <span class="info-box-number">5,200</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 50%"></div>
+                                </div>
+                                <span class="progress-description">
+                    50% Increase in 30 Days
+                  </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="info-box bg-green">
+                            <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Đã xử lý</span>
+                                <span class="info-box-number">92,050</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 20%"></div>
+                                </div>
+                                <span class="progress-description">
+                    20% Increase in 30 Days
+                  </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="info-box bg-red">
+                            <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Lỗi hệ thống</span>
+                                <span class="info-box-number">114,381</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 70%"></div>
+                                </div>
+                                <span class="progress-description">
+                    70% Increase in 30 Days
+                  </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                        <div class="info-box bg-aqua">
+                            <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Thông tin hệ thống</span>
+                                <span class="info-box-number">163,921</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 40%"></div>
+                                </div>
+                                <span class="progress-description">
+                    40% Increase in 30 Days
+                  </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
                     </div>
                 </div>
             </div>
