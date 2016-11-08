@@ -280,7 +280,6 @@ _module.api_update = function (req, res) {
     })
 };
 
-
 _module.change_pass = function (req, res) {
     __models.Users.findOne({
         _id: req.body.user_id
@@ -371,6 +370,5 @@ _module.delete_cache = function (req, res) {
 _module.reSendUserActivation = function (req, res) {
 
 };
-
 
 module.exports = _module;

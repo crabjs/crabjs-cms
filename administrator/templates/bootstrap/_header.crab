@@ -61,16 +61,11 @@
                         <span class="label label-warning"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">Bạn không có thông báo mới</li>
+                        <li class="header"></li>
                         <li>
                             <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
-                                {#<li><!-- start notification -->#}
-                                    {#<a href="#">#}
-                                        {#<i class="fa fa-users text-aqua"></i> Câu hỏi của bác#}
-                                        {#sĩ {{ user.last_name }} {{ user.first_name }}#}
-                                    {#</a>#}
-                                {#</li>#}
+                                <!-- start notification -->
                                 <!-- end notification -->
                             </ul>
                         </li>
