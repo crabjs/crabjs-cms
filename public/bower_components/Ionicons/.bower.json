@@ -36,5 +36,6 @@
   },
   "_source": "https://github.com/driftyco/ionicons.git",
   "_target": "^2.0.1",
-  "_originalSource": "ionicons"
+  "_originalSource": "ionicons",
+  "_direct": true
 }

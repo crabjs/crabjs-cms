@@ -1,6 +1,6 @@
-/*! Hint.css - v2.3.1 - 2016-06-05
+/*! Hint.css - v2.4.1 - 2016-11-08
 * http://kushagragour.in/lab/hint/
-* Copyright (c) 2016 Kushagra Gour; Licensed  */
+* Copyright (c) 2016 Kushagra Gour */
 
 /*-------------------------------------*	HINT.css - A CSS tooltip library
 \*-------------------------------------*/
@@ -361,7 +361,8 @@
 .hint--medium:after,
 .hint--large:after {
   white-space: normal;
-  line-height: 1.4em; }
+  line-height: 1.4em;
+  word-wrap: break-word; }
 
 .hint--small:after {
   width: 80px; }

@@ -13,14 +13,15 @@
     "ui"
   ],
   "homepage": "https://github.com/chinchang/hint.css",
-  "version": "2.3.1",
-  "_release": "2.3.1",
+  "version": "2.4.1",
+  "_release": "2.4.1",
   "_resolution": {
     "type": "version",
-    "tag": "v2.3.1",
-    "commit": "8c6e3b59bbf87046a9d01867146f8ccb8bda0c72"
+    "tag": "v2.4.1",
+    "commit": "842c8d5f3da65142425e3489d55a01539669cf65"
   },
   "_source": "https://github.com/chinchang/hint.css.git",
-  "_target": "^2.2.1",
-  "_originalSource": "hint.css"
+  "_target": "^2.4.1",
+  "_originalSource": "hint.css",
+  "_direct": true
 }

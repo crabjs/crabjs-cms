@@ -34,7 +34,7 @@
         }
      </style>
     {% block cssExtends %}
-        <link rel="stylesheet" href="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css">
+        <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker-bs3.css">
     {% endblock %}
 </head>
 
@@ -195,7 +195,7 @@
 <!-- REQUIRED JS SCRIPTS -->
 {% block jsExtends %}
     <script src="/bower_components/AdminLTE/plugins/daterangepicker/moment.min.js"></script>
-    <script src="/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="/plugins/daterangepicker/daterangepicker.js"></script>
     <script>
         $('input[type="date-range"]').daterangepicker({
             "showISOWeekNumbers": true,
