@@ -25,8 +25,7 @@ module.exports = function (module) {
                     link: `/${__config.admin_prefix}/categories`,
                     icon: 'fa fa-tags',
                     ref: 'list_category'
-                },
-                {
+                }, {
                     title: 'Xem tất cả bài viết',
                     link: `/${__config.admin_prefix}/posts`,
                     ref: 'list_article'
@@ -41,13 +40,15 @@ module.exports = function (module) {
                 name: 'list_category',
                 title: 'Xem tất cả danh mục'
             }, {
+                name: 'create_category',
+                title: "Tạo mới danh mục"
+            }, {
                 name: 'update_category',
                 title: 'Cập nhật thông tin danh mục'
             }, {
                 name: 'delete_category',
                 title: 'Xóa danh mục'
-            },
-            {
+            }, {
                 name: 'list_article',
                 title: 'Xem tất cả bài viết'
             }, {
@@ -112,8 +113,11 @@ module.exports = function (module) {
                 name: 'widget_theme',
                 title: 'Widget'
             }, {
-                name: 'system_logs',
+                name: 'view_system_logs',
                 title: 'Xem logs của hệ thống'
+            }, {
+                name: 'delete_system_logs',
+                title: "Xóa logs của hệ thống"
             }
         ]
     };
@@ -133,8 +137,7 @@ module.exports = function (module) {
                     link: `/${__config.admin_prefix}/roles`,
                     icon: 'fa fa-users',
                     ref: 'list_role'
-                },
-                {
+                }, {
                     title: 'Danh sách tài khoản',
                     link: `/${__config.admin_prefix}/users`,
                     ref: 'list_user'
@@ -148,19 +151,19 @@ module.exports = function (module) {
             {
                 name: 'list_role',
                 title: 'Xem danh sách các nhóm quyền'
-            },
-            {
+            }, {
+                name: 'create_role',
+                title: 'Tạo nhóm quyền mới'
+            }, {
                 name: 'view_role',
                 title: 'Xem thông tin của nhóm quyền'
             }, {
                 name: 'update_role',
                 title: 'Cập nhật quyền hạn của nhóm quyền'
-            },
-            {
+            }, {
                 name: 'delete_role',
                 title: 'Xóa nhóm quyền người dùng'
-            },
-            {
+            }, {
                 name: 'list_user',
                 title: 'Xem danh sách người dùng'
             }, {

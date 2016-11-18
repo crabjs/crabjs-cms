@@ -29,6 +29,7 @@
     "jquery-ui": "^1.12.1",
     "snackbarjs": "^1.1.0",
     "hint.css": "^2.4.1",
-    "Ionicons": "ionicons#^2.0.1"
+    "Ionicons": "ionicons#^2.0.1",
+    "x-editable": "^1.5.1"
   }
 }

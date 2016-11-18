@@ -58,7 +58,9 @@ router.route('/themes').get(__.isAllow('install_theme'), settings.theme_install)
 router.route('/widget').get(__.isAllow('widget_theme'), settings.widget);
 router.route('/system/report').get(settings.report);
 
-router.route('/logs').get(__.isAllow('system_logs'), logs.list).delete(__.isAllow('system_logs'), logs.delete);
+router.route('/logs')
+    .get(__.isAllow('view_system_logs'), logs.list)
+    .delete(__.isAllow('delete_system_logs'), logs.delete);
 
 // router.route('/messages').get(messages.index);
 
@@ -85,9 +87,12 @@ function isMe() {
 /**
  * Account management
  */
-router.route('/users/create').get(__.isAllow('create_user'), users.create).post(__.isAllow('create_user'), users.created);
+router.route('/users/create')
+    .get(__.isAllow('create_user'), users.create)
+    .post(__.isAllow('create_user'), users.created);
 
-router.route('/users/checkExistEmail').post(users.checkExistEmail);
+router.route('/users/checkExistEmail')
+    .post(users.checkExistEmail);
 
 router.route('/users')
     .get(__.isAllow('list_user'), users.list)
@@ -98,16 +103,26 @@ router.route('/users/view/:id')
     .post(__.isAllow('update_user'), users.update)
     .delete(users.delete_cache); // Xóa cache settings của người dùng
 
-router.route('/api/users/:id/update').put(__.validObjectId(), users.api_update);
+router.route('/api/users/:id/update')
+    .put(__.validObjectId(), users.api_update);
 
-router.route('/users/change_pass').post(users.change_pass);
+router.route('/users/change_pass')
+    .post(users.change_pass);
 
 /**
  * Account roles
  */
-router.route('/roles').get(__.isAllow('list_role'), roles.list).delete(__.isAllow('delete_role'), roles.delete);
-router.route('/roles/create').get(__.isAllow('create_role'), roles.create).post(__.isAllow('create_role'), roles.created);
-router.route('/roles/view/:id').get(__.validObjectId(), __.isAllow('update_role'), roles.view).post(__.isAllow('update_role'), roles.update);
+router.route('/roles')
+    .get(__.isAllow('list_role'), roles.list)
+    .delete(__.isAllow('delete_role'), roles.delete);
+
+router.route('/roles/create')
+    .get(__.isAllow('create_role'), roles.create)
+    .post(__.isAllow('create_role'), roles.created);
+
+router.route('/roles/view/:id')
+    .get(__.validObjectId(), __.isAllow('view_role'), roles.view)
+    .post(__.isAllow('update_role'), roles.update);
 
 
 module.exports = router;
