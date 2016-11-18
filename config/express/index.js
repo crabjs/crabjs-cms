@@ -115,6 +115,11 @@ module.exports = function () {
      */
     app.use(flash());
     app.use(function (req, res, next) {
+        if (!req.session){
+            console.log("\nERROR: redis server does not start\n");
+            res.status(500).send('ERROR: redis server does not start');
+            process.exit(1);
+        }
         res.locals.messages = req.session.flash;
         delete req.session.flash;
         next();
