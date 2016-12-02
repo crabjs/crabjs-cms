@@ -29,16 +29,25 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="slug">Alias</label>
-                                    <input disabled title="alias" type="text" class="form-control" name="alias" id="alias"
+                                    <input disabled title="alias" type="text" class="form-control" name="alias"
+                                           id="alias"
                                            value="{{ center.alias }}" autocomplete="off" required>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="address">Địa chỉ</label>
+                                    <textarea name="address" id="address"
+                                              rows="5">{{ center.address }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="description">Mô tả</label>
-                                    <textarea name="description" id="description" rows="5">{{ center.description }}</textarea>
+                                    <textarea name="description" id="description"
+                                              rows="5">{{ center.description }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -48,12 +57,21 @@
                         <div class="form-group">
                             <label for="status">Trạng thái</label>
                             <select class="form-control" name="status" id="status">
-                                <option value="0">Chưa hoạt động</option>
-                                <option value="1">Đang hoạt động</option>
-                                <option value="-1">Dừng hoạt động</option>
+                                {% if center.status == 0 %}
+                                    <option value="0">Chưa hoạt động</option>
+                                    <option value="1">Đang hoạt động</option>
+                                    <option value="-1">Dừng hoạt động</option>
+                                    {% elif center.status == 1 %}
+                                    <option value="0">Chưa hoạt động</option>
+                                    <option selected value="1">Đang hoạt động</option>
+                                    <option value="-1">Dừng hoạt động</option>
+                                    {% elif center.status == -1 %}
+                                    <option value="0">Chưa hoạt động</option>
+                                    <option value="1">Đang hoạt động</option>
+                                    <option selected value="-1">Dừng hoạt động</option>
+                                {% endif %}
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label for="created_at">Ngày tạo</label>
                             <div class="input-group">
@@ -65,6 +83,22 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            {% for i in range(0,8) %}
+                <div class="col-md-3">
+                    <div class="box box-success">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Tiếng anh giao tiếp</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">Cô Nguyễn Thị Trang</div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
 
     </form>

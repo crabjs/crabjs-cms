@@ -79,6 +79,9 @@ module.exports = function (module) {
             }, {
                 name: 'ILEARN_create_class',
                 title: "Thêm mới thông tin lớp học"
+            }, {
+                name: 'ILEARN_view_class',
+                title: "Xem thông tin lớp học"
             }
         ]
     };

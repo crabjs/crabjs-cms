@@ -39,6 +39,9 @@ router.route('/ilearn/centers/view/:id')
 router.route('/ilearn/class')
     .get(__.isAllow('ILEARN_list_class'), iClass.list_class);
 
+router.route('/ilearn/class/view/:id')
+    .get(__.validObjectId(), __.isAllow('ILEARN_view_class'), iClass.view_class);
+
 /**
  * Customers router
  */
@@ -49,6 +52,6 @@ router.route('/ilearn/customers/create')
     .get(__.isAllow('ILEARN_create_customer'), customers.create);
 
 router.route('/ilearn/customers/view/:id')
-    .get(__.validObjectId(),__.isAllow('ILEARN_view_customer'), customers.view_customer);
+    .get(__.validObjectId(), __.isAllow('ILEARN_view_customer'), customers.view_customer);
 
 module.exports = router;

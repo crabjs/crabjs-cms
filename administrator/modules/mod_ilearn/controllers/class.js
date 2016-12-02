@@ -96,4 +96,8 @@ _module.list_class = function (req, res) {
     });
 };
 
+_module.view_class = (req, res) => {
+    console.log("X");
+};
+
 module.exports = _module;
