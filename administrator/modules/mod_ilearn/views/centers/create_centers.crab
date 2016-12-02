@@ -1,0 +1,85 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    <style>
+        textarea {
+            outline: none;
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <input type="hidden" name="_csrf" value="{{ _csrf }}">
+        {{ toolbar|safe }}
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-9 col-sm-9">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+
+                                    <label for="name">Tên trung tâm<span class="required">*</span></label>
+                                    <input title="name" type="text" class="form-control" name="name" id="name"
+                                           value="{{ center.name }}" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="slug">Alias</label>
+                                    <input disabled title="alias" type="text" class="form-control" name="alias" id="alias"
+                                           value="{{ center.alias }}" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="description">Mô tả</label>
+                                    <textarea name="description" id="description" rows="5">{{ center.description }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row list_image">
+                            {% for img in topic.images %}
+                                <div class="col-md-3">
+                                    <div class="image-item">
+                                        <img hai-index="{{ loop.index }}" width="100%" height="120px" src="{{ img }}">
+                                        <i onclick="remove_image(this)"
+                                           class="fa fa-trash-o fa-3x"
+                                           aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="{{ img }}" name="uploads[]">
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <label for="status">Trạng thái</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value="0">Chưa hoạt động</option>
+                                <option value="1">Đang hoạt động</option>
+                                <option value="-1">Dừng hoạt động</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="created_at">Ngày tạo</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
+                                <input style="cursor: pointer" disabled type="text" class="form-control" id="created_at">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}
+
+{% block jsExtends %}{% endblock %}

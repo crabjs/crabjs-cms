@@ -1,0 +1,54 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    {{ super() }}
+{% endblock %}
+
+{% block content_body %}
+    {% for center in centers %}
+        <tr>
+            <td><input type="checkbox" class="check-element" name="ids[]" value="{{ center._id }}" title="Center"></td>
+            <td>
+                <a href="/{{ admin_prefix }}/ilearn/centers/view/{{ center._id }}">{{ center.name }}</a>
+            </td>
+            <td>{{ center.alias }}</td>
+            <td>
+                <span style="cursor: pointer" class="hint--top hint--info"
+                      data-hint="{{ center.created_at|moment }}">{{ center.created_at|dateFormat }}</span>
+            </td>
+            <td>
+                {% if center.status == 1 %}
+                    <span class="label label-success">Đang hoạt động</span>
+                    {% elif center.status == 0 %}
+                    <span class="label label-danger">Chưa hoạt động</span>
+                    {% elif center.status == -1 %}
+                    <span class="label label-default">Dừng hoạt động</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block jsExtends %}
+    {{ super() }}
+    <script>
+        function deleteRecords() {
+            var ids = [];
+            $("input:checkbox[name='ids[]']:checked").each(function () {
+                ids.push($(this).val());
+            });
+            if (ids.length > 0) {
+                $.ajax({
+                    url: `/{{ admin_prefix }}/ilearn/centers`,
+                    type: 'DELETE',
+                    data: {
+                        ids: ids
+                    },
+                    success: function (result) {
+                        window.location.href = `/{{ admin_prefix }}/ilearn/centers`;
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

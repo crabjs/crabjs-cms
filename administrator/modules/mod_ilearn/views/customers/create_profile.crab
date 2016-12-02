@@ -2,7 +2,6 @@
 
 {% block cssExtends %}
 
-    <link rel="stylesheet" href="/bower_components/cropper/dist/cropper.min.css">
     <style>
 
         .overlay {
@@ -130,32 +129,36 @@
                                             <span class="help-block"></span>
                                         </div>
 
-                                        <div class="form-group">
-                                            <label for="status">Trạng thái</label>
-                                            <select class="form-control" name="status" id="status">
-                                                <option value="Available">Kích hoạt</option>
-                                                <option value="Pending">Chờ kích hoạt</option>
-                                                <option value="Block">Khóa</option>
-                                            </select>
+                                        <div class="col-md-6" style="padding-left: 0">
+                                            <div class="form-group">
+                                                <label for="gender">Giới tính</label>
+                                                <select class="form-control" name="gender" id="gender">
+                                                    <option value="MALE">Nam</option>
+                                                    <option value="FEMALE">Nữ</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="padding-right: 0">
+                                            <div class="form-group">
+                                                <label for="status">Trạng thái</label>
+                                                <select class="form-control" name="status" id="status">
+                                                    <option value="Available">Kích hoạt</option>
+                                                    <option value="Pending">Chờ kích hoạt</option>
+                                                    <option value="Block">Khóa</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
 
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="type">Loại tài khoản</label>
-                                            <div class="input-group">
-                                                <select onchange="change_user_type(this);" class="form-control"
-                                                        name="type"
-                                                        id="type">
-                                                    <option value="-1">Người dùng</option>
-                                                    <option ignore="7" value="0">Quản trị</option>
-                                                </select>
-                                                <span class="input-group-addon"
-                                                      style="border-color: #fff; cursor: pointer">
-                                                    <span style="font-size: 18px" class="label label-primary">+</span>
-                                                </span>
-                                            </div>
+                                            <label for="type">Chọn lớp học</label>
+                                            <select class="form-control" name="status" id="status">
+                                                <option value="Available">Kích hoạt</option>
+                                                <option value="Pending">Chờ kích hoạt</option>
+                                                <option value="Block">Khóa</option>
+                                            </select>
                                         </div>
 
                                         <div class="form-group group_permission"
@@ -194,8 +197,6 @@
 
 
 {% block jsExtends %}
-
-    <script src="/bower_components/cropper/dist/cropper.min.js"></script>
 
     <script>
 
@@ -347,15 +348,6 @@
             }
         });
 
-        function change_user_type(sel) {
-            if ($("#type").find("option:selected").attr('ignore') == 7) {
-                $('.group_permission').css('display', 'inherit');
-                $('.group_permission select').attr('name', 'role_id');
-            } else {
-                $('.group_permission').css('display', 'none');
-                $('.group_permission select').removeAttr('name')
-            }
-        }
     </script>
 
 {% endblock %}

@@ -9,5 +9,31 @@
  */
 
 "use strict";
- 
- 
+
+var uuid = require('node-uuid');
+
+module.exports = function logRequest(req, res, next) {
+    let startTime = Date.now(),
+        requestId = uuid.v1();
+
+    function logResponse() {
+        res.responseTime = (Date.now() - startTime) + 'ms';
+        req.requestId = requestId;
+
+        if (req.err) {
+            console.log(`\nError: \n + RequestId: ${requestId}\n + ResponseTime: ${res.responseTime}\n`);
+        } else {
+            console.log(`\nInfo: \n + RequestId: ${requestId}\n + ResponseTime: ${res.responseTime}\n`);
+        }
+
+        res.removeListener('finish', logResponse);
+        res.removeListener('close', logResponse);
+    }
+
+    res.on('finish', logResponse);
+    res.on('close', logResponse);
+
+    next();
+};
+
+

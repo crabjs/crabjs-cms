@@ -9,5 +9,37 @@
  */
 
 "use strict";
- 
- 
+
+let mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+
+let Customers = new Schema({
+    display_name: {type: String, required: true},
+    date_of_birth: {type: Schema.Types.Date, default: ''},
+    address: {type: String, default: ''},
+    phone_number: [{type: String, default: []}],
+    email: {type: String, default: ''},
+    gender: {type: String, uppercase: true, trim: true, default: ''},
+    avatar: {type: String, default: ''},
+    age: {type: Number, default: null},
+    class_id: [{
+        _id: {type: Schema.Types.ObjectId, ref: 'Class'},
+        status: {type: Number, default: 0}
+    }],
+    status: {type: Number, default: 0},
+    promotion: [
+        {
+            code: {type: String},
+            expire_date: {type: Date, default: null}
+        }
+    ],
+    logs_activity: [{type: String}]
+}, {
+    timestamps: {
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    },
+    collection: 'customers'
+});
+
+module.exports = mongoose.model('Customers', Customers);

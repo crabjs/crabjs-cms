@@ -1,0 +1,63 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    {{ super() }}
+{% endblock %}
+
+{% block content_body %}
+    {% for class in iClass %}
+        <tr>
+            <td><input type="checkbox" class="check-element" name="ids[]" value="{{ class._id }}" title="Center"></td>
+            <td>
+                <a href="/{{ admin_prefix }}/ilearn/class/view/{{ class._id }}">{{ class.name }}</a>
+            </td>
+            <td>{{ class.description }}</td>
+            <td>
+                {% if class.customers_id.length <= 5 %}
+                    <span class="label label-danger">{{ class.customers_id.length }}</span>
+                    {% elif class.customers_id.length <= 10 %}
+                    <span class="label label-primary">{{ class.customers_id.length }}</span>
+                {% else %}
+                    <span class="label label-success">{{ class.customers_id.length }}</span>
+                {% endif %}
+            </td>
+            <td>
+                <span style="cursor: pointer" class="hint--top hint--info"
+                      data-hint="{{ class.created_at|moment }}">{{ class.created_at|dateFormat }}</span>
+            </td>
+            <td>
+                {% if class.status == 1 %}
+                    <span class="label label-success">Đang học</span>
+                    {% elif class.status == 0 %}
+                    <span class="label label-warning">Chưa học</span>
+                    {% elif center.status == 2 %}
+                    <span class="label label-primary">Đã học xong</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block jsExtends %}
+    {{ super() }}
+    <script>
+        function deleteRecords() {
+            var ids = [];
+            $("input:checkbox[name='ids[]']:checked").each(function () {
+                ids.push($(this).val());
+            });
+            if (ids.length > 0) {
+                $.ajax({
+                    url: `/{{ admin_prefix }}/ilearn/class`,
+                    type: 'DELETE',
+                    data: {
+                        ids: ids
+                    },
+                    success: function (result) {
+                        window.location.href = `/{{ admin_prefix }}/ilearn/class`;
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

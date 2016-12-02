@@ -151,7 +151,7 @@
                     <div class="row">
                         <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
                             <div class="progress-group">
-                                <span class="progress-text">Add Products to Cart</span>
+                                <span class="progress-text">Học viên mới nhập học</span>
                                 <span class="progress-number"><b>160</b>/200</span>
 
                                 <div class="progress sm">
@@ -162,7 +162,7 @@
                         <!-- ./col -->
                         <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
                             <div class="progress-group">
-                                <span class="progress-text">Complete Purchase</span>
+                                <span class="progress-text">Học viên nghỉ nhiều</span>
                                 <span class="progress-number"><b>310</b>/400</span>
 
                                 <div class="progress sm">
@@ -173,7 +173,7 @@
                         <!-- ./col -->
                         <div class="col-xs-4 text-center">
                             <div class="progress-group">
-                                <span class="progress-text">Visit Premium Page</span>
+                                <span class="progress-text">Đã tốt nghiệp</span>
                                 <span class="progress-number"><b>480</b>/800</span>
 
                                 <div class="progress sm">

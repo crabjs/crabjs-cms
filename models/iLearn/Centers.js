@@ -13,18 +13,21 @@
 let mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-let Class = new Schema({
+let Centers = new Schema({
     name: {type: String, required: true, trim: true},
     alias: {type: String, maxlength: 255, trim: true, lowercase: true},
     description: {type: String, default: ''},
-    status: {type: Number, default: 0}
+    status: {type: Number, default: 0},
+    avatar: {type: String, default: ''},
+    gallery_images: [{type: String, default: []}],
+    logs_activity: [{type: String}]
 }, {
     timestamps: {
         createdAt: 'created_at',
         updatedAt: 'updated_at'
     },
-    collection: 'class'
+    collection: 'centers'
 });
 
-module.exports = mongoose.model('class', Class);
+module.exports = mongoose.model('Centers', Centers);
  

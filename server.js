@@ -22,3 +22,46 @@ if (require('fs').existsSync('./config/config.json')) {
 } else {
     require('./bin/generator')
 }
+
+// let newCenter = new __models.Centers({
+//     name: "ILearn - Chung cư linh đàm",
+//     alias: "ilearn-chung-cu-linh-dam",
+//     description: "Cơ sở 2, ILearn nằm trong chung cư Linh Đàm",
+//     status: 1,
+//     avartar: ""
+// });
+//
+// newCenter.save(function(err){
+//     console.log(err);
+// })
+
+// let newClass = new __models.Class({
+//     name: "Giao tiếp cơ bản - Cô Trang",
+//     alias: "giao-tiep-co-ban-co-trang",
+//     description: "Lớp giao tiếp cơ bản. Cô Nguyen Trang",
+//     status: 1,
+//     start_date: "10-20-2016",
+//     end_date: "04-20-2017"
+// });
+//
+// newClass.save(function(err){
+//     console.log(err);
+// })
+
+// let newStudent = new __models.Customers({
+//     display_name: "Lê Tâm Anh",
+//     date_of_birth: "05/12/1994",
+//     address: "Nguyễn Cảnh Dị, Hà Nội",
+//     phone_number: [
+//         "0984754855"
+//     ],
+//     email: "tamanh94@gmail.com",
+//     gender: "FEMALE",
+//     avatar: "",
+//     age: "23",
+//     status: 1
+// });
+//
+// newStudent.save(function(err){
+//     console.log(err);
+// });

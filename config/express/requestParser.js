@@ -13,7 +13,8 @@ let bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
-    RedisStore = require('connect-redis')(session);
+    RedisStore = require('connect-redis')(session),
+    logRequest = require('./middleware/log-request');
 
 // Request body parsing middleware should be above methodOverride
 exports.configure = function (app) {
@@ -44,4 +45,6 @@ exports.configure = function (app) {
         secret: '100dayproject.org',
         key: '100dayproject'
     }));
+
+    app.use(logRequest);
 };

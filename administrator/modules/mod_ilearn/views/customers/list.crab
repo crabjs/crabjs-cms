@@ -1,0 +1,83 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    {{ super() }}
+{% endblock %}
+
+{% block content_body %}
+    {% for student in customers %}
+        <tr>
+            <td><input type="checkbox" class="check-element" name="ids[]" value="{{ student._id }}" title="Customer">
+            </td>
+            <td>
+                <a href="/{{ admin_prefix }}/ilearn/customers/view/{{ student._id }}">{{ student.display_name }}</a>
+            </td>
+            <td>
+                {% if student.gender == 'MALE' %}
+                    <span class="label label-primary">Nam</span>
+                    {% elif student.gender == 'FEMALE' %}
+                    <span class="label label-warning">Nữ</span>
+                {% else %}
+                    <span class="label label-danger">Chờ cập nhật</span>
+                {% endif %}
+            </td>
+            <td>
+                {% for phone in student.phone_number %}
+                    <span class="label label-info">{{ phone }}</span>
+                {% endfor %}
+            </td>
+            <td>
+                {% if student.class_id.length %}
+                    {% for class in student.class_id %}
+                        {% if class.status == 2 %}
+                            <span class="label label-primary">{{ class.name }}</span>
+                            {% elif class.status == 1 %}
+                            <span class="label label-success">{{ class.name }}</span>
+                            {% elif class.status == 0 %}
+                            <span class="label label-warning">{{ class.name }}</span>
+                        {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <span class="label label-danger">Chưa có lớp</span>
+                {% endif %}
+
+            </td>
+            <td>{{ student.created_at|dateFormat }}</td>
+            <td>
+                {% if student.status == 1 %}
+                    <span class="label label-success">Đang học</span>
+                    {% elif student.status == 0 %}
+                    <span class="label label-warning">Chưa học</span>
+                    {% elif student.status == 2 %}
+                    <span class="label label-primary">Đã học xong</span>
+                    {% elif student.status == -2 %}
+                    <span class="label label-info">Đang học thử</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block jsExtends %}
+    {{ super() }}
+    <script>
+        function deleteRecords() {
+            var ids = [];
+            $("input:checkbox[name='ids[]']:checked").each(function () {
+                ids.push($(this).val());
+            });
+            if (ids.length > 0) {
+                $.ajax({
+                    url: `/{{ admin_prefix }}/ilearn/class`,
+                    type: 'DELETE',
+                    data: {
+                        ids: ids
+                    },
+                    success: function (result) {
+                        window.location.href = `/{{ admin_prefix }}/ilearn/class`;
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}
