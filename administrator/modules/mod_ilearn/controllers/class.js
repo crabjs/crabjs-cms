@@ -97,7 +97,14 @@ _module.list_class = function (req, res) {
 };
 
 _module.view_class = (req, res) => {
-    console.log("X");
+    let toolbar = new __.Toolbar();
+    toolbar.custom({
+        backButton: {link: `/${__config.admin_prefix}/posts`}
+    });
+    _module.render(req, res, 'class/view', {
+        title: "Lớp học",
+        toolbar: toolbar.render()
+    })
 };
 
 module.exports = _module;

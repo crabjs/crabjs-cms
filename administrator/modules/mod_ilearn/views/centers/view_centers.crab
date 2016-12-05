@@ -85,20 +85,80 @@
             </div>
         </div>
 
-        <div class="row">
-            {% for i in range(0,8) %}
-                <div class="col-md-3">
-                    <div class="box box-success">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Tiếng anh giao tiếp</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                        <div class="box-body">Cô Nguyễn Thị Trang</div>
-                    </div>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Danh sách lớp học</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                    </button>
                 </div>
-            {% endfor %}
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                        <tr>
+                            <th>Mã lớp học</th>
+                            <th>Tên lớp</th>
+                            <th>Trạng thái</th>
+                            <th>Số học viên</th>
+                            <th>Ngày mở lớp</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                            <td>Giao tiếp cơ bản</td>
+                            <td><span class="label label-success">Đang học</span></td>
+                            <td>10</td>
+                            <td>20/10/2016</td>
+                            <td>Cô Trang và cô olivia làm giảng viên</td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                            <td>Trẻ em 3 - 5 tuổi</td>
+                            <td><span class="label label-warning">Đang chờ</span></td>
+                            <td>16</td>
+                            <td>11/06/2016</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                            <td>Giao tiếp cơ bản cho người đi làm</td>
+                            <td><span class="label label-default">Đã kết thúc</span></td>
+                            <td>5</td>
+                            <td>05/11/2016</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <ul class="pagination pull-right">
+                    <li class="paginate_button previous disabled" aria-controls="sample_2" tabindex="0"
+                        id="sample_2_previous"><a class="page-link" href="#"><i
+                                    class="fa fa-angle-left"></i></a></li>
+                    <li class="paginate_button active" aria-controls="sample_2" tabindex="0"><a
+                                class="page-link"
+                                href="#">1</a>
+                    </li>
+                    <li class="paginate_button " aria-controls="sample_2" tabindex="0">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="paginate_button next " aria-controls="sample_2" tabindex="0" id="sample_2_next">
+                        <a class="page-link"
+                           href="#"><i
+                                    class="fa fa-angle-right"></i></a></li>
+                </ul>
+            </div>
+            <!-- /.box-footer -->
         </div>
 
     </form>
