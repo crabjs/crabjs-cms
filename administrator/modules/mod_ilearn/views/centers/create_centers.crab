@@ -35,7 +35,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="address">Địa chỉ</label>
+                                    <textarea name="address" id="address"
+                                              rows="5">{{ center.address }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="description">Mô tả</label>
                                     <textarea name="description" id="description" rows="5">{{ center.description }}</textarea>

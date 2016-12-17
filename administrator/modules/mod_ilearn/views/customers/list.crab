@@ -11,6 +11,8 @@
             </td>
             <td>
                 <a href="/{{ admin_prefix }}/ilearn/customers/view/{{ student._id }}">{{ student.display_name }}</a>
+
+                <span class="label label-danger">{{ student.parent_name }}</span>
             </td>
             <td>
                 {% if student.gender == 'MALE' %}
@@ -22,25 +24,19 @@
                 {% endif %}
             </td>
             <td>
-                {% for phone in student.phone_number %}
-                    <span class="label label-info">{{ phone }}</span>
-                {% endfor %}
+                <span class="label label-info">{{ student.phone_number }}</span>
+                <span class="label label-primary">{{ student.mobile_number }}</span>
             </td>
             <td>
                 {% if student.class_id.length %}
                     {% for class in student.class_id %}
-                        {% if class.status == 2 %}
+                        <a href="/{{ admin_prefix }}/ilearn/class/view/{{ class._id }}">
                             <span class="label label-primary">{{ class.name }}</span>
-                            {% elif class.status == 1 %}
-                            <span class="label label-success">{{ class.name }}</span>
-                            {% elif class.status == 0 %}
-                            <span class="label label-warning">{{ class.name }}</span>
-                        {% endif %}
+                        </a>
                     {% endfor %}
-                    {% else %}
+                {% else %}
                     <span class="label label-danger">Chưa có lớp</span>
                 {% endif %}
-
             </td>
             <td>{{ student.created_at|dateFormat }}</td>
             <td>

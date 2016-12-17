@@ -20,6 +20,7 @@ let Centers = new Schema({
     status: {type: Number, default: 0},
     avatar: {type: String, default: ''},
     gallery_images: [{type: String, default: []}],
+    address: {type: String},
     logs_activity: [{type: String}]
 }, {
     timestamps: {

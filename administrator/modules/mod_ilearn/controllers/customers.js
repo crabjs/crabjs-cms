@@ -11,13 +11,15 @@
 "use strict";
 
 let module_name = 'mod_ilearn',
-    _module = new __viewRender('backend', module_name);
+    _module = new __viewRender('backend', module_name),
+    formidable = require('formidable');
 
 _module.list_customers = function (req, res) {
 
     let toolbar = new __.Toolbar();
     toolbar.custom({
         refreshButton: {link: `/${__config.admin_prefix}/ilearn/customers`},
+        createButton: {access: true, link: `/${__config.admin_prefix}/ilearn/customers/create`, text: ' Thêm học viên'},
         searchButton: {},
         deleteButton: {access: true}
     });
@@ -91,7 +93,11 @@ _module.list_customers = function (req, res) {
         __models.Customers.count(cond, function (err, count) {
             return count;
         }),
-        __models.Customers.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
+        __models.Customers.find(cond)
+            .populate('class_id', 'name')
+            .sort(filter.sort)
+            .limit(__config.page_size)
+            .skip((filter.page - 1) * __config.page_size)
             .exec(function (err, iClass) {
                 return iClass;
             })
@@ -112,9 +118,53 @@ _module.list_customers = function (req, res) {
 };
 
 _module.create = function (req, res) {
-    _module.render(req, res, 'customers/create_profile', {
-        title: 'Tạo mới thông tin học viên'
-    })
+    if (req.method === 'GET') {
+        __models.Class.find({status: {$in: [0, 1]}}, {status: 1, name: 1}, function (err, iClass) {
+            _module.render(req, res, 'customers/create_profile', {
+                title: 'Tạo mới thông tin học viên',
+                iClass: iClass
+            })
+        });
+    } else if (req.method === 'POST') {
+        let form = new formidable.IncomingForm();
+        form.uploadDir = require('path').resolve(__base, 'public', 'uploads', 'images');
+
+        form.parse(req, function (err, fields, files) {
+            if (err) {
+                return _module.render_error(req, res, '500');
+            }
+            req.body = fields || {};
+
+            var file = files['avatar_user'];
+
+            var file_type = file.name.split('.').pop();
+
+            var new_file_name = __.randomText(12) + '_' + new Date().getTime() + '.' + file_type;
+
+            var file_path = require('path').join(form.uploadDir, new_file_name);
+
+            require('fs').rename(file.path, file_path);
+
+            req.body.avatar = '/uploads/images/' + new_file_name;
+
+            if (typeof req.body.class_id == 'string') {
+                req.body.class_id = [req.body.class_id]
+            }
+
+            var newCustomer = new __models.Customers(req.body);
+            newCustomer.save(function (err) {
+                if (err) {
+                    __.logger.error(err);
+                    req.flash('danger', 'Có lỗi xảy ra khi tạo thông tin khách hàng!');
+                } else {
+                    req.flash('success', 'Thông tin khách hàng đã được tạo thành công!');
+                    res.redirect(`/${__config.admin_prefix}/ilearn/customers`);
+                }
+            });
+        });
+    } else {
+        return _module.render_error(req, res, '500');
+    }
 };
 
 _module.view_customer = function (req, res) {
@@ -136,6 +186,10 @@ _module.view_customer = function (req, res) {
             return _module.render_error(req, res, '403');
         }
     });
+};
+
+_module.update_customer = function (req, res) {
+    console.log(req.body);
 };
 
 module.exports = _module;

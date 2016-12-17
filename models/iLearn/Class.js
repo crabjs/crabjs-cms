@@ -15,6 +15,7 @@ let mongoose = require('mongoose'),
 
 let Class = new Schema({
     name: {type: String, required: true, trim: true},
+    course_name: {type: String, default: ''},
     alias: {type: String, maxlength: 255, trim: true, lowercase: true},
     description: {type: String, default: ''},
     status: {type: Number, default: 0},
@@ -22,7 +23,10 @@ let Class = new Schema({
     logs_activity: [{type: String, default: []}],
     start_date: {type: Date, default: null},
     end_date: {type: Date, default: null},
-    customers_id: [{type: Schema.Types.ObjectId, ref: 'Customers', default: []}]
+    class_type: {type: Number, default: 1},
+    center_id: {type: Schema.Types.ObjectId, ref: 'Centers'},
+    customers_id: [{type: Schema.Types.ObjectId, ref: 'Customers', default: []}],
+    frequency: {type: Number, default: 2}
 }, {
     timestamps: {
         createdAt: 'created_at',

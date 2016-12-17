@@ -17,6 +17,7 @@ _module.list_class = function (req, res) {
     let toolbar = new __.Toolbar();
     toolbar.custom({
         refreshButton: {link: `/${__config.admin_prefix}/ilearn/class`},
+        createButton: {access: true, link: `/${__config.admin_prefix}/ilearn/class/create`, text: ' Thêm lớp học'},
         searchButton: {},
         deleteButton: {access: true}
     });
@@ -31,17 +32,21 @@ _module.list_class = function (req, res) {
             width: '20%',
             header: 'Tên lớp'
         }, {
+            column: 'center_id',
+            width: '17%',
+            header: 'Trung tâm'
+        }, {
             column: 'description',
             width: '20%',
             header: 'Ghi chú'
         }, {
             column: 'customers_id',
-            width: '10%',
+            width: '11%',
             header: 'Số học viên'
         }, {
-            column: 'created_at',
-            width: '15%',
-            header: 'Ngày tạo',
+            column: 'start_date',
+            width: '18%',
+            header: 'Thời gian học',
             type: 'date-range',
             buttonClass: 'fa fa-calendar',
             condition: {
@@ -49,7 +54,7 @@ _module.list_class = function (req, res) {
             }
         }, {
             column: 'status',
-            width: '15%',
+            width: '13%',
             header: 'Trạng thái',
             type: {
                 name: 'select',
@@ -76,7 +81,9 @@ _module.list_class = function (req, res) {
         __models.Class.count(cond, function (err, count) {
             return count;
         }),
-        __models.Class.find(cond).sort(filter.sort).limit(__config.page_size).skip((filter.page - 1) * __config.page_size)
+        __models.Class.find(cond).populate('center_id', 'name')
+            .sort(filter.sort).limit(__config.page_size)
+            .skip((filter.page - 1) * __config.page_size)
             .exec(function (err, iClass) {
                 return iClass;
             })
@@ -99,12 +106,56 @@ _module.list_class = function (req, res) {
 _module.view_class = (req, res) => {
     let toolbar = new __.Toolbar();
     toolbar.custom({
-        backButton: {link: `/${__config.admin_prefix}/posts`}
+        backButton: {link: `/${__config.admin_prefix}/ilearn/class`}
     });
     _module.render(req, res, 'class/view', {
         title: "Lớp học",
         toolbar: toolbar.render()
     })
+};
+
+_module.create_class = (req, res) => {
+    if (req.method === 'GET') {
+        let toolbar = new __.Toolbar();
+        toolbar.custom({
+            backButton: {link: `/${__config.admin_prefix}/ilearn/class`},
+            saveButton: {access: true}
+        });
+        __models.Centers.find({status: {$in: [0, 1]}}, {name: 1, status: 1}).exec((err, centers) => {
+            _module.render(req, res, 'class/create', {
+                title: "Thêm mới lớp học",
+                toolbar: toolbar.render(),
+                centers: centers
+            })
+        });
+    } else if (req.method === 'POST') {
+
+        if (req.body.start_date && req.body.end_date) {
+
+            let t1 = req.body.start_date.split('/'),
+                t2 = req.body.end_date.split('/');
+
+            let start_date = {day: t1[0], month: t1[1], year: t1[2]};
+            let end_date = {day: t2[0], month: t2[1], year: t2[2]};
+
+            req.body.start_date = `${start_date.month}/${start_date.day}/${start_date.year}`;
+            req.body.end_date = `${end_date.month}/${end_date.day}/${end_date.year}`;
+        }
+
+        var newClass = new __models.Class(req.body);
+        newClass.save(function (err) {
+            if (err) {
+                __.logger.error(err);
+                req.flash('danger', 'Có lỗi xảy ra!');
+            } else {
+                req.flash('success', 'Lớp học đã được tạo thành công!');
+                res.redirect(`/${__config.admin_prefix}/ilearn/class`);
+            }
+        });
+    } else {
+        __.logger.error(error);
+        return _module.render_error(req, res, '500');
+    }
 };
 
 module.exports = _module;

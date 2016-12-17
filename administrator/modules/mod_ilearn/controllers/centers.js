@@ -18,6 +18,7 @@ _module.list_centers = function (req, res) {
     let toolbar = new __.Toolbar();
     toolbar.custom({
         refreshButton: {link: `/${__config.admin_prefix}/ilearn/centers`},
+        createButton: {access: true, link: `/${__config.admin_prefix}/ilearn/centers/create`, text: ' Thêm trung tâm'},
         searchButton: {},
         deleteButton: {access: true}
     });
@@ -131,28 +132,36 @@ _module.center_created = function (req, res) {
 };
 
 _module.view_center = function (req, res) {
-
     let toolbar = new __.Toolbar();
     toolbar.custom({
         backButton: {link: `/${__config.admin_prefix}/ilearn/centers`},
         saveButton: {access: true}
     });
 
-    __models.Centers.findOne({_id: req.params.id}, function (err, result) {
-        if (err) {
-            return _module.render_error(req, res, '500');
-        } else if (result) {
+    Promise.all([
+        __models.Class.find({center_id: req.params.id}, function(err, result) {
+            return result;
+        }),
+        __models.Centers.findOne({_id: req.params.id}, function (err, result) {
+            return result;
+        })
+    ]).then(function(result) {
+        let iClass = result[0],
+            center = result[1];
+
+        if (center) {
             return _module.render(req, res, 'centers/view_centers', {
-                title: result.name,
+                title: center.name,
                 toolbar: toolbar.render(),
-                center: result
+                center: center,
+                iClass: iClass
             });
-        } else if (!result) {
+        } else {
             req.flash('warning', 'Không tìm thấy thông tin trung tâm!');
             res.redirect(`/${__config.admin_prefix}/ilearn/centers`);
-        } else {
-            return _module.render_error(req, res, '403');
         }
+    }).catch(function(error) {
+        return _module.render_error(req, res, '500');
     })
 };
 

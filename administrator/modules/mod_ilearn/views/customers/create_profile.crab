@@ -62,7 +62,7 @@
 {% endblock %}
 
 {% block content %}
-    <form id="frm_create" method="post" action="/{{ admin_prefix }}/users/create?_csrf={{ _csrf }}"
+    <form id="frm_create" method="post" action="/{{ admin_prefix }}/ilearn/customers/create?_csrf={{ _csrf }}"
           enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="{{ _csrf }}">
         <input type="file" hidden name="avatar_user">
@@ -92,25 +92,12 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group group-email">
-                                            <label class="control-label" for="email">Email <span
-                                                        class="required">*</span></label>
+                                            <label class="control-label" for="email">Email: <span style="font-style: italic;">(nếu có)</span></label>
                                             <div class="input-group">
                                                 <input onchange="validEmail()" name="email" type="text" class="form-control"
                                                        id="email" placeholder="Email" autocomplete="off">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-envelope-o"></i>
-                                                </div>
-                                            </div>
-                                            <span class="help-block"></span>
-                                        </div>
-
-                                        <div class="form-group group-password">
-                                            <label for="password">Mật khẩu<span class="required">*</span></label>
-                                            <div class="input-group">
-                                                <input onchange="validPassword()" name="password" id="password"
-                                                       type="password" class="form-control">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-lock"></i>
                                                 </div>
                                             </div>
                                             <span class="help-block"></span>
@@ -122,6 +109,17 @@
                                             <div class="input-group">
                                                 <input onchange="validDisplayName()" id="display_name" type="text"
                                                        class="form-control" name="display_name">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="form-group group-name">
+                                            <label for="parent_name">Tên phụ huynh</label>
+                                            <div class="input-group">
+                                                <input id="parent_name" type="text"
+                                                       class="form-control" name="parent_name">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
@@ -142,9 +140,10 @@
                                             <div class="form-group">
                                                 <label for="status">Trạng thái</label>
                                                 <select class="form-control" name="status" id="status">
-                                                    <option value="Available">Kích hoạt</option>
-                                                    <option value="Pending">Chờ kích hoạt</option>
-                                                    <option value="Block">Khóa</option>
+                                                    <option value="0">Chưa học</option>
+                                                    <option value="1">Đang học</option>
+                                                    <option value="2">Đã học xong</option>
+                                                    <option value="-2">Đang học thử</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -153,14 +152,13 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="type">Chọn lớp học</label>
-                                            <select class="form-control" name="status" id="status">
-                                                <option value="Available">Kích hoạt</option>
-                                                <option value="Pending">Chờ kích hoạt</option>
-                                                <option value="Block">Khóa</option>
+                                            <label for="class_id">Chọn lớp học</label>
+                                            <select title="class_id" class="form-control" name="class_id" id="class_id">
+                                              {% for class in iClass %}
+                                                  <option value="{{ class._id }}">{{ class.name }}</option>
+                                                {% endfor %}
                                             </select>
                                         </div>
-
                                         <div class="form-group group_permission"
                                              style="display: {% if profile.type == 0 %} inherit {% else %} none {% endif %};">
                                             <label for="role_id">Chọn nhóm quyền hạn</label>
@@ -174,6 +172,37 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </select>
+                                        </div>
+
+                                        <div class="col-md-6" style="padding-left: 0">
+                                            <div class="form-group">
+                                                <label for="phone_number">Điện thoại</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" id="phone_number" type="text" name="phone_number">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-phone"></i>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="padding-left: 0">
+                                            <div class="form-group">
+                                                <label for="mobile_number">Di động</label>
+                                               <div class="input-group">
+                                                   <input class="form-control" id="mobile_number" type="text" name="mobile_number">
+                                                   <div class="input-group-addon">
+                                                       <i class="fa fa-mobile-phone"></i>
+                                                   </div>
+                                               </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" style="padding-left: 0">
+                                            <div class="form-group">
+                                                <label for="address">Địa chỉ</label>
+                                                <textarea title="address" style="width: 100%" name="address" id="address" rows="5"></textarea>
+                                            </div>
                                         </div>
 
                                         <div class="form-group">

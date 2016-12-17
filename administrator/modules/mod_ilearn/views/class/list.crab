@@ -11,6 +11,11 @@
             <td>
                 <a href="/{{ admin_prefix }}/ilearn/class/view/{{ class._id }}">{{ class.name }}</a>
             </td>
+            <td>
+                <a href="/{{ admin_prefix }}/ilearn/centers/view/{{ class.center_id._id }}">
+                    <span class="label label-primary">{{ class.center_id.name }}</span>
+                </a>
+            </td>
             <td>{{ class.description }}</td>
             <td>
                 {% if class.customers_id.length <= 5 %}
@@ -22,8 +27,12 @@
                 {% endif %}
             </td>
             <td>
-                <span style="cursor: pointer" class="hint--top hint--info"
-                      data-hint="{{ class.created_at|moment }}">{{ class.created_at|dateFormat }}</span>
+                {% if class.start_date and class.end_date %}
+                    <span class="label label-primary">{{ class.start_date|dateFormat }}</span> →
+                    <span class="label label-warning">{{ class.start_date|dateFormat }}</span>
+                    {% else %}
+                    <span class="label label-danger">Chưa cập nhật</span>
+                {% endif %}
             </td>
             <td>
                 {% if class.status == 1 %}
