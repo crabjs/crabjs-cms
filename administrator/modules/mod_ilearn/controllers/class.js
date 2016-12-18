@@ -158,4 +158,19 @@ _module.create_class = (req, res) => {
     }
 };
 
+_module.delete_class = function (req, res) {
+    __models.Class.remove({_id: {$in: req.body.ids}})
+        .exec(function (err) {
+            if (err) {
+                __.logger.error(err);
+                req.flash('danger', 'Có lỗi xảy ra khi xóa thông tin lớp học!');
+                res.sendStatus(200);
+            } else {
+                req.flash('success', 'Xóa thông tin lớp học thành công!');
+                res.sendStatus(200);
+            }
+        })
+};
+
+
 module.exports = _module;

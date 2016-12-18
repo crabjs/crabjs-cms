@@ -96,26 +96,13 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group group-email">
-                                            <label class="control-label" for="email">Email <span
-                                                        class="required">*</span></label>
+                                            <label class="control-label" for="email">Email: <span style="font-style: italic;">(nếu có)</span></label>
                                             <div class="input-group">
                                                 <input onchange="validEmail()" name="email" type="text"
                                                        class="form-control" value="{{ profile.email }}"
                                                        id="email" placeholder="Email" autocomplete="off">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-envelope-o"></i>
-                                                </div>
-                                            </div>
-                                            <span class="help-block"></span>
-                                        </div>
-
-                                        <div class="form-group group-password">
-                                            <label for="password">Mật khẩu<span class="required">*</span></label>
-                                            <div class="input-group">
-                                                <input onchange="validPassword()" name="password" id="password"
-                                                       type="password" class="form-control">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-lock"></i>
                                                 </div>
                                             </div>
                                             <span class="help-block"></span>
@@ -128,6 +115,17 @@
                                                 <input onchange="validDisplayName()" id="display_name" type="text"
                                                        value="{{ profile.display_name }}"
                                                        class="form-control" name="display_name">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div class="form-group group-name">
+                                            <label for="parent_name">Tên phụ huynh</label>
+                                            <div class="input-group">
+                                                <input value="{{ profile.parent_name }}" id="parent_name" type="text"
+                                                       class="form-control" name="parent_name">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
@@ -203,6 +201,35 @@
                                             </select>
                                         </div>
 
+                                        <div class="col-md-6" style="padding-left: 0">
+                                            <div class="form-group">
+                                                <label for="phone_number">Điện thoại</label>
+                                                <div class="input-group">
+                                                    <input value="{{ profile.phone_number }}" class="form-control" id="phone_number" type="text" name="phone_number">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-phone"></i>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="padding-left: 0">
+                                            <div class="form-group">
+                                                <label for="mobile_number">Di động</label>
+                                                <div class="input-group">
+                                                    <input value="{{ profile.mobile_number }}" class="form-control" id="mobile_number" type="text" name="mobile_number">
+                                                    <div class="input-group-addon">
+                                                        <i class="fa fa-mobile-phone"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="padding-left: 0">
+                                            <div class="form-group">
+                                                <label for="address">Địa chỉ</label>
+                                                <textarea title="address" style="width: 100%" name="address" id="address" rows="5"></textarea>
+                                            </div>
+                                        </div>
                                         <div class="form-group">
                                             <label>Ảnh đại diện<span class="help-block" style="display: inline;">(128x128px)</span></label>
                                             <br>

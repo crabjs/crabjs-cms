@@ -188,6 +188,20 @@ _module.view_customer = function (req, res) {
     });
 };
 
+_module.delete_customers = function(req, res){
+    __models.Customers.remove({_id: {$in: req.body.ids}})
+        .exec(function (err) {
+            if (err) {
+                __.logger.error(err);
+                req.flash('danger', 'Có lỗi kiểm tra!');
+                res.sendStatus(200);
+            } else {
+                req.flash('success', 'Xóa thông tin học viên thành công!');
+                res.sendStatus(200);
+            }
+        })
+};
+
 _module.update_customer = function (req, res) {
     console.log(req.body);
 };

@@ -64,13 +64,13 @@
             });
             if (ids.length > 0) {
                 $.ajax({
-                    url: `/{{ admin_prefix }}/ilearn/class`,
+                    url: `/{{ admin_prefix }}/ilearn/customers`,
                     type: 'DELETE',
                     data: {
                         ids: ids
                     },
                     success: function (result) {
-                        window.location.href = `/{{ admin_prefix }}/ilearn/class`;
+                        window.location.href = `/{{ admin_prefix }}/ilearn/customers`;
                     }
                 });
             }
