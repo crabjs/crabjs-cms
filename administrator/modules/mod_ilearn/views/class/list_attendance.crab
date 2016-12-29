@@ -1,0 +1,45 @@
+{% extends 'layout.crab' %}
+
+{% block cssExtends %}
+    {{ super() }}
+{% endblock %}
+
+{% block content_body %}
+    {% for item in attendance %}
+        <tr>
+            <td><input type="checkbox" class="check-element" name="ids[]" value="{{ item._id }}" title="Attendance"></td>
+            <td>
+                <a href="/{{ admin_prefix }}/ilearn/class/attendance/view/{{ item._id }}">{{ item.class_id.name }}</a>
+            </td>
+            <td>{{ item.students|number_attendance }}</td>
+            <td>Nguyễn Thị Trang</td>
+            <td>
+                <span class="label label-primary">{{ item.date_time|dateFormat }}</span>
+            </td>
+            <td>{{ item.class_note }}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+{% block jsExtends %}
+    {{ super() }}
+    <script>
+        function deleteRecords() {
+            var ids = [];
+            $("input:checkbox[name='ids[]']:checked").each(function () {
+                ids.push($(this).val());
+            });
+            if (ids.length > 0) {
+                $.ajax({
+                    url: `/{{ admin_prefix }}/ilearn/class`,
+                    type: 'DELETE',
+                    data: {
+                        ids: ids
+                    },
+                    success: function (result) {
+                        window.location.href = `/{{ admin_prefix }}/ilearn/class`;
+                    }
+                });
+            }
+        }
+    </script>
+{% endblock %}

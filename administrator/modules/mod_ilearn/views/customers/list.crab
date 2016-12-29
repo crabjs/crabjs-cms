@@ -28,12 +28,10 @@
                 <span class="label label-primary">{{ student.mobile_number }}</span>
             </td>
             <td>
-                {% if student.class_id.length %}
-                    {% for class in student.class_id %}
-                        <a href="/{{ admin_prefix }}/ilearn/class/view/{{ class._id }}">
-                            <span class="label label-primary">{{ class.name }}</span>
-                        </a>
-                    {% endfor %}
+                {% if student.class_id %}
+                    <a href="/{{ admin_prefix }}/ilearn/class/view/{{ student.class_id._id }}">
+                        <span class="label label-primary">{{ student.class_id.name }}</span>
+                    </a>
                 {% else %}
                     <span class="label label-danger">Chưa có lớp</span>
                 {% endif %}
