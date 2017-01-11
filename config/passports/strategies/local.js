@@ -41,9 +41,10 @@ module.exports = function (passport) {
                             if (err) {
                                 __.logger.error(err);
                                 return done(null, false, {message: 'Connect server error!'});
-                            }
+                            } else {
+								return done(null, user);
+							}
                         });
-                        return done(null, user);
                     } else {
                         return done(null, false, {message: 'Oops! Invalid login credentials.'});
                     }
