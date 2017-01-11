@@ -31,7 +31,7 @@ module.exports = function (passport) {
                     // let user_agent = req.useragent;
 
                     if (user.validPassword(password)) {
-                        __models.Users.findByIdAndUpdate(user.id, {
+                        __models.Users.findByIdAndUpdate(user._id, {
                             last_login_date: Date.now(),
                             $addToSet: {web_session: {
                                 session_id: req.sessionID,
