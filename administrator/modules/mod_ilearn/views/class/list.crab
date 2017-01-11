@@ -18,15 +18,6 @@
             </td>
             <td>{{ class.description }}</td>
             <td>
-                {% if class.customers_id.length <= 5 %}
-                    <span class="label label-danger">{{ class.customers_id.length }}</span>
-                    {% elif class.customers_id.length <= 10 %}
-                    <span class="label label-primary">{{ class.customers_id.length }}</span>
-                {% else %}
-                    <span class="label label-success">{{ class.customers_id.length }}</span>
-                {% endif %}
-            </td>
-            <td>
                 {% if class.start_date and class.end_date %}
                     <span class="label label-primary">{{ class.start_date|dateFormat }}</span> →
                     <span class="label label-warning">{{ class.start_date|dateFormat }}</span>

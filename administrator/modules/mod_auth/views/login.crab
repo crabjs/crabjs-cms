@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="shortcut icon" href="/uploads/icons/favicon.ico" type="image/x-icon">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>Login - Crab.JS</title>
+    <title>Login - ILearn</title>
     <script type="text/javascript">
         WebFontConfig = {
             google: {families: ['Open+Sans:400,300italic,300,600,400italic,600italic,700,700italic,800,800italic:latin']}

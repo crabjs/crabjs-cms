@@ -67,6 +67,7 @@
     "passport-local": "^1.0.0",
     "password-hash": "^1.2.2",
     "rand-token": "^0.2.1",
+    "serve-favicon": "^2.3.2",
     "slug": "^0.9.1",
     "socket.io": "^1.4.5",
     "uid-safe": "^2.1.3",

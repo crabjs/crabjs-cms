@@ -102,9 +102,9 @@
                 </li>
                 <!-- Control Sidebar Toggle Button -->
                 <li>
-                    <a href="/{{ admin_prefix }}/system/report" class="hint--left" data-hint="Gửi tin nhắn tới hệ thống">
+                    <a href="mailto:lephuhai0511@gmail.com" class="hint--left" data-hint="Email hỗ trợ">
                         <i class="fa fa-bug"></i>
-                        <span class="label label-danger">9</span></a>
+                    </a>
                 </li>
             </ul>
         </div>

@@ -171,7 +171,7 @@
                             <div class="box-footer">
                                 <div class="caption">
                                     <h3>{{ theme.name }}</h3>
-                                    <button class="btn btn-primary">Chọn</button>
+                                    <button class="btn btn-default">Chọn</button>
                                 </div>
                             </div>
                         </div>

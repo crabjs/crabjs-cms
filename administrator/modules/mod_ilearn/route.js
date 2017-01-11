@@ -43,6 +43,10 @@ router.route('/ilearn/class')
 router.route('/ilearn/class/view/:id')
 	.get(__.validObjectId(), __.isAllow('ILEARN_view_class'), iClass.view_class);
 
+router.route('/ilearn/class/edit/:id')
+	.get(__.validObjectId(), __.isAllow('ILEARN_update_class'), iClass.edit_class)
+	.post(__.validObjectId(), __.isAllow('ILEARN_update_class'), iClass.edit_class);
+
 router.route('/ilearn/class/create')
 	.get(__.isAllow('ILEARN_create_class'), iClass.create_class)
 	.post(__.isAllow('ILEARN_create_class'), iClass.create_class);

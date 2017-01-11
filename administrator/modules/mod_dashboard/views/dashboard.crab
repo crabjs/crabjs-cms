@@ -211,7 +211,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
-                    <a href="javascript:void(0)" class="uppercase">Xem tất cả</a>
+                    <a href="javascript:void(0)" class="uppercase" style="color: gray">Xem tất cả</a>
                 </div>
                 <!-- /.box-footer -->
             </div>

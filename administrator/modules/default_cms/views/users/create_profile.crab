@@ -144,18 +144,12 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="type">Loại tài khoản</label>
-                                            <div class="input-group">
-                                                <select onchange="change_user_type(this);" class="form-control"
-                                                        name="type"
-                                                        id="type">
-                                                    <option value="-1">Người dùng</option>
-                                                    <option ignore="7" value="0">Quản trị</option>
-                                                </select>
-                                                <span class="input-group-addon"
-                                                      style="border-color: #fff; cursor: pointer">
-                                                    <span style="font-size: 18px" class="label label-primary">+</span>
-                                                </span>
-                                            </div>
+                                            <select onchange="change_user_type(this);" class="form-control"
+                                                    name="type"
+                                                    id="type">
+                                                <option value="-1">Người dùng</option>
+                                                <option ignore="7" value="0">Quản trị</option>
+                                            </select>
                                         </div>
 
                                         <div class="form-group group_permission"

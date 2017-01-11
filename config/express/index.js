@@ -24,12 +24,15 @@ let path = require('path'),
     requestParser = require('./requestParser'),
     appLoader = require('./appLoaders'),
     throwError = require('./throwError'),
-    passport = require('../passports');
+    passport = require('../passports'),
+	favicon = require('serve-favicon');
 
 module.exports = function () {
 
     // Initialization express application
     let app = express();
+
+    app.use(favicon(__base + '/public/images/logo.png'));
 
     if (process.env.NODE_ENV === 'development' || os.hostname() == 'Razor') {
         app.use(logger('dev'));

@@ -176,7 +176,7 @@
                                         <div class="form-group">
                                             <label for="type">Chọn lớp học</label>
                                             <select title="Class name" name="class_id" id="class_id" class="form-control">
-                                                {{ class_list|filter_select2(profile.class_id, '_id', 'name') }}
+                                                {{ class_list|filter_select(profile.class_id, '_id', 'name', 'Chọn lớp học') }}
                                             </select>
                                         </div>
 

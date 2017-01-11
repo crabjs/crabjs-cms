@@ -182,24 +182,26 @@ _module.api_view_customer = (req, res) => {
 };
 
 _module.view_customer = function (req, res) {
-	__models.Customers.findOne({_id: req.params.id}, function (err, result) {
-		if (err) {
-			return _module.render_error(req, res, '500');
-		} else if (result) {
-			__models.Class.find({status: {$ne: -1}}, {name: 1, status: 1}, function (error, class_list) {
-				return _module.render(req, res, 'customers/view_profile', {
-					title: result.display_name,
-					profile: result,
-					class_list: class_list
-				})
-			});
-		} else if (!result) {
-			req.flash('warning', 'Không tìm thấy thông tin trung tâm!');
-			res.redirect(`/${__config.admin_prefix}/ilearn/centers`);
-		} else {
-			return _module.render_error(req, res, '403');
-		}
-	});
+	__models.Customers.findOne({_id: req.params.id})
+		.populate('class_id', 'name')
+		.exec(function (err, result) {
+			if (err) {
+				return _module.render_error(req, res, '500');
+			} else if (result) {
+				__models.Class.find({status: {$ne: -1}}, {name: 1, status: 1}, function (error, class_list) {
+					return _module.render(req, res, 'customers/view_profile', {
+						title: result.display_name,
+						profile: result,
+						class_list: class_list
+					})
+				});
+			} else if (!result) {
+				req.flash('warning', 'Không tìm thấy thông tin trung tâm!');
+				res.redirect(`/${__config.admin_prefix}/ilearn/centers`);
+			} else {
+				return _module.render_error(req, res, '403');
+			}
+		});
 };
 
 _module.delete_customers = function (req, res) {

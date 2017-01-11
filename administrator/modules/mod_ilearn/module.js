@@ -104,6 +104,9 @@ module.exports = function (module) {
 				name: 'ILEARN_view_class',
 				title: "Xem thông tin lớp học"
 			}, {
+				name: 'ILEARN_update_class',
+				title: "Sửa, cập nhật thông tin lớp học"
+			}, {
 				name: 'ILEARN_delete_class',
 				title: "Xóa thông tin lớp học"
 			}

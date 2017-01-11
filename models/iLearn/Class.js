@@ -24,7 +24,7 @@ let Class = new Schema({
     start_date: {type: Date, default: null},
     end_date: {type: Date, default: null},
     class_type: {type: Number, default: 1},
-    center_id: {type: Schema.Types.ObjectId, ref: 'Centers'},
+    center_id: {type: Schema.Types.ObjectId, ref: 'Centers', default: null},
     customers_id: [{type: Schema.Types.ObjectId, ref: 'Customers', default: []}],
     frequency: {type: Number, default: 2}
 }, {

@@ -13,7 +13,7 @@ let _module = new __viewRender('default');
 
  _module.index = function(req, res){
      _module.render(req, res, 'index', {
-         title: 'Crab.JS - Easily build web application on Node.js'
+         title: 'ILearn - Smart Start for your Future'
      });
  };
 

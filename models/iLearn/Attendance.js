@@ -11,6 +11,7 @@ let Attendance = new Schema({
 	date_time: {type: Schema.Types.Date, default: ''},
 	class_note: {type: String, default: ''},
 	teacher: {type: String, default: ''},
+	admin: {type: String, default: 'ILEARN'}, // người điểm danh
 	students: [{
 		_id: false,
 		customer_id: {type: Schema.Types.ObjectId, ref: 'Customers'},

@@ -11,7 +11,8 @@
 "use strict";
 
 let module_name = 'mod_ilearn',
-	_module = new __viewRender('backend', module_name);
+	_module = new __viewRender('backend', module_name),
+	Promise = require('bluebird');
 
 _module.list_class = function (req, res) {
 	let toolbar = new __.Toolbar();
@@ -39,10 +40,6 @@ _module.list_class = function (req, res) {
 			column: 'description',
 			width: '20%',
 			header: 'Ghi chú'
-		}, {
-			column: 'customers_id',
-			width: '11%',
-			header: 'Số học viên'
 		}, {
 			column: 'start_date',
 			width: '18%',
@@ -105,6 +102,32 @@ _module.list_class = function (req, res) {
 
 _module.view_class = (req, res) => {
 
+	let resolve_attendance = (class_id, student_id) => {
+		return new Promise((fulfill, reject) => {
+			let arr = [];
+			__models.Attendance.find({
+				class_id: class_id,
+				students: {$elemMatch: {customer_id: {$in: [student_id]}, status: 1}}
+			}, {class_id: 1, students: 1}, (err, result) => {
+				if (err) {
+					reject(err)
+				}
+				arr.push(result.length);
+
+				__models.Attendance.find({
+					class_id: class_id,
+					students: {$elemMatch: {customer_id: {$in: [student_id]}}}
+				}, {class_id: 1, students: 1}, (e, re) => {
+					if (e) {
+						reject(e)
+					}
+					arr.push(re.length);
+					fulfill(arr);
+				})
+			})
+		})
+	};
+
 	Promise.all([
 		__models.Class.findById(req.params.id).populate('center_id', 'name')
 			.exec(function (err, iClass) {
@@ -122,16 +145,84 @@ _module.view_class = (req, res) => {
 		toolbar.custom({
 			backButton: {link: `/${__config.admin_prefix}/ilearn/class`}
 		});
-		_module.render(req, res, 'class/view', {
-			title: result[0].name,
-			iClass: result[0],
-			customers: result[1],
-			toolbar: toolbar.render()
+
+		let arr = [];
+		let customers = result[1];
+
+		customers.forEach(item => {
+			arr.push(resolve_attendance(req.params.id, item._id))
+		});
+
+		Promise.all(arr).then(attendance => {
+			_module.render(req, res, 'class/view', {
+				title: result[0].name,
+				iClass: result[0],
+				customers: customers,
+				attendance: attendance,
+				toolbar: toolbar.render()
+			})
+		}).catch(error => {
+			__.logger.error(error);
+			return _module.render_error(req, res, '500');
 		})
 	}).catch(error => {
 		__.logger.error(error);
 		return _module.render_error(req, res, '500');
 	})
+};
+
+_module.edit_class = (req, res) => {
+	if (req.method === 'GET') {
+		let toolbar = new __.Toolbar();
+		toolbar.custom({
+			backButton: {link: `/${__config.admin_prefix}/ilearn/class`, text: 'Danh sách lớp'},
+			saveButton: {access: true}
+		});
+		Promise.all([
+			__models.Centers.find({status: {$in: [0, 1]}}, {name: 1, status: 1}).exec((err, centers) => {
+				return centers;
+			}),
+			__models.Class.findById(req.params.id).exec((err, iClass) => {
+				return iClass;
+			})
+		]).then(result => {
+			_module.render(req, res, 'class/edit_class', {
+				title: result[1].name,
+				iClass: result[1],
+				centers: result[0],
+				toolbar: toolbar.render()
+			})
+		}).catch(error => {
+			__.logger.error(error);
+			return _module.render_error(req, res, '500');
+		})
+	} else if (req.method === 'POST') {
+		if (req.body.start_date && req.body.end_date) {
+
+			let t1 = req.body.start_date.split('/'),
+				t2 = req.body.end_date.split('/');
+
+			let start_date = {day: t1[0], month: t1[1], year: t1[2]};
+			let end_date = {day: t2[0], month: t2[1], year: t2[2]};
+
+			req.body.start_date = `${start_date.month}/${start_date.day}/${start_date.year}`;
+			req.body.end_date = `${end_date.month}/${end_date.day}/${end_date.year}`;
+		}
+		if (req.body.center_id == 0) delete req.body.center_id;
+
+		__models.Class.update({_id: req.params.id}, req.body).exec(function (err) {
+			if (err) {
+				__.logger.error(err);
+				return _module.render_error(req, res, '500');
+			} else {
+				req.flash('success', 'Cập nhật thông tin lớp học thành công!');
+				res.redirect(`/${__config.admin_prefix}/ilearn/class/view/${req.params.id}`);
+			}
+		});
+	} else {
+		__.logger.error(error);
+		return _module.render_error(req, res, '500');
+	}
 };
 
 _module.create_class = (req, res) => {
@@ -213,13 +304,22 @@ _module.update_attendance = (req, res) => {
 	let class_note = req.body.class_note,
 		students = [], status = 0;
 
-	for (let i = 0; i < req.body.customer_id.length; i++) {
-		status = req.body.status.indexOf(req.body.customer_id[i]) >= 0 ? 1 : 0;
+	if (typeof req.body.customer_id == 'string') {
+		status = req.body.status == req.body.customer_id ? 1 : 0;
 		students.push({
-			customer_id: req.body.customer_id[i],
-			note: req.body.note[i],
+			customer_id: req.body.customer_id,
+			note: req.body.note,
 			status: status
 		})
+	} else {
+		for (let i = 0; i < req.body.customer_id.length; i++) {
+			status = req.body.status.indexOf(req.body.customer_id[i]) >= 0 ? 1 : 0;
+			students.push({
+				customer_id: req.body.customer_id[i],
+				note: req.body.note[i],
+				status: status
+			})
+		}
 	}
 	__models.Attendance.update({_id: req.params.id}, {
 		class_note: class_note,
@@ -257,20 +357,30 @@ _module.create_attendance = (req, res) => {
 			class_note = req.body.class_note,
 			students = [],
 			status = 0;
-		for (let i = 0; i < req.body.customer_id.length; i++) {
-			status = req.body.status.indexOf(req.body.customer_id[i]) >= 0 ? 1 : 0;
+		if (typeof req.body.customer_id == 'string') {
+			status = req.body.status == req.body.customer_id ? 1 : 0;
 			students.push({
-				customer_id: req.body.customer_id[i],
-				note: req.body.note[i],
+				customer_id: req.body.customer_id,
+				note: req.body.note,
 				status: status
 			})
+		} else {
+			for (let i = 0; i < req.body.customer_id.length; i++) {
+				status = req.body.status.indexOf(req.body.customer_id[i]) >= 0 ? 1 : 0;
+				students.push({
+					customer_id: req.body.customer_id[i],
+					note: req.body.note[i],
+					status: status
+				})
+			}
 		}
 
 		let newAttendance = new __models.Attendance({
 			class_id: class_id,
 			date_time: date_time,
 			class_note: class_note,
-			students: students
+			students: students,
+			admin: req.user.display_name
 		});
 
 		newAttendance.save(function (err) {
@@ -306,9 +416,9 @@ _module.list_attendance = (req, res) => {
 			width: '10%',
 			header: 'Số học viên'
 		}, {
-			column: 'teacher',
+			column: 'admin',
 			width: '15%',
-			header: 'Giảng viên'
+			header: 'Người điểm danh'
 		}, {
 			column: 'date_time',
 			width: '13%',
