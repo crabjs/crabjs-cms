@@ -43,21 +43,8 @@ module.exports = function (passport) {
                                 return done(null, false, {message: 'Connect server error!'});
                             }
                         });
-                        // Tracking user login
-                        __.loginTracking({
-                            user_id: user._id,
-                            ip_address: ip_address,
-                            login_status: "Success",
-                            strategy: 'Local'
-                        });
                         return done(null, user);
                     } else {
-                        // Tracking user login
-                        __.loginTracking({
-                            user_id: user._id,
-                            ip_address: ip_address,
-                            login_status: "Failed"
-                        });
                         return done(null, false, {message: 'Oops! Invalid login credentials.'});
                     }
                 } else {
