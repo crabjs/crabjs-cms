@@ -33,15 +33,15 @@ Dependencies:
 Commands:
 
 ```bash
-git clone https://github.com/Vietworm/Crab.JS.git
-cd ./Crab.JS
+git clone https://github.com/crabjs/crabjs-cms.git
+cd ./crabjs-cms
 npm install
 node server.js
 ```
 
 # Report issues
 
-If you have questions, bug reports or anything else fo the sort, please use the [issue tracker](https://github.com/Vietworm/Crab.JS/issues)
+If you have questions, bug reports or anything else fo the sort, please use the [issue tracker](https://github.com/crabjs/crabjs-cms/issues)
 
 # Thanks
 
