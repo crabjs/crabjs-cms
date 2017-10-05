@@ -193,7 +193,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Đang trực tuyến</h3>
                     <div class="box-tools pull-right">
-                        <span id="count_users" class="label label-danger"></span>
+                        <span id="count_users" class="label label-success"></span>
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                     class="fa fa-minus"></i>
                         </button>
@@ -264,7 +264,7 @@
                                             if (!exists.length) {
                                                 $('.users-list').append(`<li value="${users[i]._id}" style="position: relative">
                                         <i class="fa fa-circle" aria-hidden="true"></i>
-                                        <img style="max-width: 70%" src="${users[i].avatar}" alt="${users[i].display_name}">
+                                        <img style="max-width: 70%; width: 35px; height: 35px" src="${users[i].avatar}" alt="${users[i].display_name}">
                                         <a class="users-list-name" href="/{{ admin_prefix }}/users/view/${users[i]._id}">${users[i].display_name}</a></li>`)
                                             }
                                         }

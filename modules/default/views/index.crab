@@ -19,9 +19,9 @@
 <section class="page-header">
     <h1 class="project-name">Crab.JS</h1>
     <h2 class="project-tagline">Easily build web application on Node.js</h2>
-    <a href="https://github.com/Vietworm/Crab.JS" class="btn">View on GitHub</a>
-    <a href="https://github.com/Vietworm/Crab.JS/zipball/master" class="btn">Download .zip</a>
-    <a href="https://github.com/Vietworm/Crab.JS/tarball/master" class="btn">Download .tar.gz</a>
+    <a href="https://github.com/crabjs/crabjs-cms" class="btn">View on GitHub</a>
+    <a href="https://github.com/crabjs/crabjs-cms/zipball/master" class="btn">Download .zip</a>
+    <a href="https://github.com/crabjs/crabjs-cms/tarball/master" class="btn">Download .tar.gz</a>
 </section>
 
 <section class="main-content">
@@ -49,8 +49,8 @@
                 href="http://100dayproject.org/contact">contact support</a> and we’ll help you sort it out.</p>
 
     <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/Vietworm/Crab.JS">Crab.JS</a> is maintained by <a
-                    href="https://github.com/Vietworm">Vietworm</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/crabjs/crabjs-cms">Crab.JS</a> is maintained by <a
+                    href="https://github.com/haipc">Vietworm</a>.</span>
     </footer>
 
 </section>

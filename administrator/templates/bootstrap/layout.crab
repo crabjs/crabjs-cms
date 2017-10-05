@@ -95,7 +95,7 @@
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2016 <a target="_blank" href="https://vietworm.github.io/Crab.JS/">{{ app_name }}</a>.</strong>
+        <strong>Copyright &copy; 2016 <a target="_blank" href="https://crabjs.github.io/crabjs-cms/">{{ app_name }}</a>.</strong>
         All rights reserved.
 
         <!-- To the right -->
@@ -132,44 +132,46 @@
         databaseURL: "https://crab-cms.firebaseio.com"
     });
 
+    // jquery define
+    var $bell_notify = $('.notifications-menu');
+
+    // firebase node
+    var commonNotificationRef = firebase.database().ref(`/common/notifications`);
+    var myConnectionsRef = firebase.database().ref('users/{{ user._id }}/connections');
+    var lastOnlineRef = firebase.database().ref('users/{{ user._id }}/lastOnline');     // stores the timestamp of my last disconnect (the last time I was seen online)
+    var connectedRef = firebase.database().ref('.info/connected');
+
     firebase.auth().signInWithCustomToken("{{ fb_token }}").then(function (result) {
-        var commonNotificationRef = firebase.database().ref(`/common/notifications`);
 
         var count_notifications = 0;
         commonNotificationRef.orderByChild('created_at').on('child_added', function (snap) {
             let icon = 'fa fa-bell-o';
-            if (snap.val().type == 'MESSAGE') {
+            if (snap.val().type === 'MESSAGE') {
                 icon = 'fa fa-envelope-o text-green';
-            } else if (snap.val().type == 'EVENT') {
+            } else if (snap.val().type === 'EVENT') {
                 icon = 'fa fa-flag-o text-aqua';
-            } else if (snap.val().type == 'WARNING') {
+            } else if (snap.val().type === 'WARNING') {
                 icon = 'fa fa-warning text-yellow';
-            } else if (snap.val().type == 'USER') {
+            } else if (snap.val().type === 'USER') {
                 icon = 'fa fa-user text-aqua';
-            } else if (snap.val().type == 'GROUP_USER') {
+            } else if (snap.val().type === 'GROUP_USER') {
                 icon = 'fa fa-users text-red';
             }
 
             if (snap.val().is_read && snap.val().is_read.indexOf("{{ user._id }}") >= 0) {
-                $('.notifications-menu').find('.menu')
+                $bell_notify.find('.menu')
                         .prepend(`<li><a class="is_read" href="#${snap.key}"><i class="${icon}"></i>${snap.val().message}</a></li>`);
             } else {
-                $('.notifications-menu').find('.menu')
+                $bell_notify.find('.menu')
                         .prepend(`<li><a href="#${snap.key}"><i class="${icon}"></i>${snap.val().message}</a></li>`);
 
                 count_notifications++;
             }
 
-            $('.notifications-menu').find('span').text(count_notifications);
-            $('.notifications-menu').find('.header').text(`Bạn có ${count_notifications} thông báo mới`);
+            $bell_notify.find('span').text(count_notifications);
+            $bell_notify.find('.header').text(`Bạn có ${count_notifications} thông báo mới`);
         });
 
-        var myConnectionsRef = firebase.database().ref('users/{{ user._id }}/connections');
-
-        // stores the timestamp of my last disconnect (the last time I was seen online)
-        var lastOnlineRef = firebase.database().ref('users/{{ user._id }}/lastOnline');
-
-        var connectedRef = firebase.database().ref('.info/connected');
         connectedRef.on('value', function (snap) {
             if (snap.val() === true) {
                 // We're connected (or reconnected)! Do anything here that should happen only if online (or on reconnect)
@@ -235,10 +237,14 @@
     </script>
 {% endblock %}
 <script>
+
+    // jquery define
+    $sidebar = $('.sidebar');
+
     $(function () {
         var url = "{{ url }}";
 
-        var $menu_active = $('.sidebar').find('ul li ul a[href="{{ url }}"]');
+        var $menu_active = $sidebar.find('ul li ul a[href="{{ url }}"]');
 
         if ($menu_active.length) {
             $menu_active.css("color", "#fff");
@@ -250,7 +256,7 @@
                 newUrl = newUrl.split('?')[0];
             }
             var x = `a[href="${newUrl}"]`;
-            $menu_active = $('.sidebar').find('ul').find('li').find('ul').find(x);
+            $menu_active = $sidebar.find('ul').find('li').find('ul').find(x);
             $menu_active.parent().parent().parent().addClass('active');
         }
     })

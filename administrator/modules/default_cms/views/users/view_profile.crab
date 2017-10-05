@@ -45,8 +45,8 @@
 
         .choose_avatar {
             margin: 15px 0;
-            max-width: 128px;
-            max-height: 128px;
+            width: 128px;
+            height: 128px;
             cursor: pointer;
         }
         input[name="avatar_user"] {

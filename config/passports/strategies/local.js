@@ -28,7 +28,6 @@ module.exports = function (passport) {
                 } else if (user) {
 
                     let ip_address = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-                    // let user_agent = req.useragent;
 
                     if (user.validPassword(password)) {
                         __models.Users.findByIdAndUpdate(user.id, {
